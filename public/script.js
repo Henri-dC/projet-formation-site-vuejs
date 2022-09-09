@@ -8,3 +8,11 @@ class Article {
       (this._author = author);
   }
 }
+
+class User {
+  constructor(id, firstName, lastName) {
+    (this._id = id), (this._firstName = firstName), (this._lastName = lastName);
+  }
+}
+
+var current_user = {};

@@ -16,7 +16,6 @@ import NewArticleForm from "./NewArticleForm.vue";
       </div>
       <div class="article-footer">
         <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
-        <span class="count-like">{{ count }}</span>
       </div>
     </article>
   </div>
@@ -30,10 +29,6 @@ export default {
     };
   },
   methods: {
-    like() {
-      this.count++;
-    },
-
     calcUrl(url) {
       let src = new URL(url, import.meta.url);
       return src;
@@ -57,7 +52,6 @@ export default {
           this.formErrors = result["errors"];
         } else {
           this.articles = result["data"];
-          console.log(this.article);
         }
       });
   },

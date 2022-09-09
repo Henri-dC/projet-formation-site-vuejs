@@ -13,17 +13,19 @@ import SignForm from "./SignForm.vue";
       </li>
       <li @click="toggleSignForm"><i class="fa-solid fa-user"></i></li>
     </ul>
-    <SignForm v-if="this.signForm" />
+    <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
   </div>
 </template>
 
 <script>
 export default {
+  props: ["current_user"],
   data() {
     return {
       signForm: false,
     };
   },
+
   methods: {
     toggleSignForm() {
       this.signForm = !this.signForm;

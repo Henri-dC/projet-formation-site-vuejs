@@ -98,6 +98,8 @@ export default {
         this.formData.author
       );
 
+      console.log(article);
+
       //On ferme la modale
 
       let modale = document.querySelector("#modale-new-article");

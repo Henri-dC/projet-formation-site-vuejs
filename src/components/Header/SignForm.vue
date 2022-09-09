@@ -2,7 +2,10 @@
   <div id="form-container">
     <h2 v-if="signUpForm">Inscription</h2>
     <h2 v-else>Connexion</h2>
-    <i class="fa-regular fa-circle-xmark fa-xl"></i>
+    <i
+      @click="$emit('toggleSignForm')"
+      class="fa-regular fa-circle-xmark fa-xl"
+    ></i>
     <p v-if="!signUpForm">
       Vous n'êtes pas inscrit ? :
       <span id="switch-mode" @click="switchMode">S'inscrire</span>
@@ -69,13 +72,90 @@
           v-else
           type="submit"
           name="accountSubmit"
-          value="Connexion"
+          value="Se connecter"
           @click="sendForm"
         />
+        <span id="error-account">{{ formErrors.account }}</span>
       </form>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  emits: ["toggleSignForm", "user"],
+  data() {
+    return {
+      signUpForm: false,
+      isCreated: false,
+      formErrors: {},
+      formData: {},
+      current_user: {},
+    };
+  },
+  methods: {
+    switchMode() {
+      this.signUpForm = !this.signUpForm;
+      this.formErrors = {};
+    },
+    async sendForm(event) {
+      event.preventDefault();
+      let url = new URL("http://localhost:8889/api/index.php");
+
+      this.formErrors = {};
+
+      if (this.signUpForm) {
+        url.search = "?route=/account";
+
+        return fetch(url, {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          header: {
+            "Content-Type": "application/json; charset=UTF-8",
+          },
+          body: JSON.stringify(this.formData),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result["errors"]) {
+              this.formErrors = result["errors"];
+            } else {
+              this.formErrors = {};
+              this.formData = {};
+              this.isCreated = true;
+            }
+          });
+      } else {
+        url.search = "?route=/login";
+
+        return fetch(url, {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          header: {
+            "Content-Type": "application/json; charset=UTF-8",
+          },
+          body: JSON.stringify(this.formData),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result["errors"]) {
+              this.formErrors = result["errors"];
+              console.log(this.formErrors);
+            } else {
+              this.current_user = new User(
+                result["data"]["id"],
+                result["data"]["firstName"],
+                result["data"]["lastName"]
+              );
+            }
+          });
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 /* ********************* GENERAL ************************/
@@ -120,6 +200,13 @@ input {
 span {
   color: red;
 }
+#error-account {
+  text-align: center;
+}
+
+.error {
+  font-size: 0.8em;
+}
 
 .fa-regular {
   position: absolute;
@@ -138,69 +225,3 @@ span {
   }
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      signUpForm: false,
-      isCreated: false,
-      formErrors: {},
-      formData: {},
-    };
-  },
-  methods: {
-    switchMode() {
-      this.signUpForm = !this.signUpForm;
-    },
-    async sendForm(event) {
-      let url = new URL("http://localhost:8889/api/index.php");
-
-      if (this.signUpForm) {
-        event.preventDefault();
-        url.search = "?route=/account";
-
-        return fetch(url, {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          header: {
-            "Content-Type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify(this.formData),
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            if (result["errors"]) {
-              this.formErrors = result["errors"];
-            } else {
-              this.formErrors = {};
-              this.formData = {};
-              this.isCreated = true;
-            }
-          });
-      } else {
-        url.search = "?route=/login";
-
-        return fetch(url, {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          header: {
-            "Content-Type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify(this.formData),
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            if (result["errors"]) {
-              this.formErrors = result["errors"];
-            } else {
-              this.users = result["data"];
-            }
-          });
-      }
-    },
-  },
-};
-</script>

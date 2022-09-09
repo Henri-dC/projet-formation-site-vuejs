@@ -1,12 +1,12 @@
-<template>
-  <div id="main-container">
-    <Article id="article-main-container" />
-  </div>
-</template>
-
 <script setup>
 import Article from "./Article.vue";
 </script>
+
+<template>
+  <div id="main-container">
+    <Article />
+  </div>
+</template>
 
 <style scoped>
 #main-container {
