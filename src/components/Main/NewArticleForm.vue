@@ -62,19 +62,14 @@ export default {
     loadPicture() {
       var input = document.querySelector('input[type="file"]');
 
-      var data = new FormData();
-      var url = new URL("http://localhost:8889/api/index.php", import.meta.url);
-      url.search = "?route=/image";
-      data.append("picture-article", input.files[0]);
-      console.log(input.files[0]);
+      let dataPic = new FormData();
+      dataPic.append("photo", input.files[0]);
+      console.log(dataPic.get("photo"));
 
-      var header = new Headers();
-      header.append("Content-Type", "image/jpeg");
-
-      fetch(url, {
-        method: "POST",
-        body: data,
-      });
+      fetch("http://localhost:8889/api/index.php", {
+        method: "post",
+        body: dataPic,
+      }).then(alert("hello"));
 
       let modale = document.querySelector("#modale-new-article");
       modale.style.display = "none";

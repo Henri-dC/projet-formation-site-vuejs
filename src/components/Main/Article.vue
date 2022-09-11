@@ -10,7 +10,9 @@ import NewArticleForm from "./NewArticleForm.vue";
   <div class="article-container" v-for="article in articles" :key="article">
     <article>
       <h2>{{ article.title }}</h2>
-      <img :src="calcUrl(article.src)" alt="" />
+      <img
+        :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
+      />
       <div class="content">
         <p>{{ article.content }}</p>
       </div>
@@ -52,6 +54,7 @@ export default {
           this.formErrors = result["errors"];
         } else {
           this.articles = result["data"];
+          console.log(this.calcUrl(this.articles.picture));
         }
       });
   },
