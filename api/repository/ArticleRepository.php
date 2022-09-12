@@ -35,9 +35,10 @@ class ArticleRepository {
   }
 
   public function createArticle(Article $article): Article {
+   
     $stmt = $this->_connexion->prepare('
         INSERT INTO Articles (id, title, picture, content, category, author) 
-             VALUES (UUID(), :title, :picture, :content, :category, :author);
+        VALUES (UUID(), :title, :picture, :content, :category, :author);
     ');
     $stmt->execute([
         'title' => $article->getTitle(),
@@ -97,7 +98,7 @@ class ArticleRepository {
   public function listArticles(): array {
     $stmt = $this->_connexion->prepare('
       SELECT id, title, picture, content
-        FROM Articles
+        FROM Articles;
     ');
     $stmt->execute();
 
@@ -105,9 +106,9 @@ class ArticleRepository {
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $article = new Article();
       $article->setId($row['id']);
-      $article->setTitle($row['title']);
-      $article->setPicture($row['picture']);
-      $article->setContent($row['content']);
+      $article->setTitle(html_entity_decode($row['title']));
+      $article->setPicture(html_entity_decode($row['picture']));
+      $article->setContent(html_entity_decode($row['content']));
 
       array_push($articles, $article);
     }

@@ -10,12 +10,14 @@ class Api {
     private function decodeJsonFromInput(): array {
         $result = array();
         $rawData = file_get_contents('php://input');
+        
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT') {
             if (empty($rawData)) {
                 $result['error'] = 'No data provided';
             } else {
                 $result['jsonData'] = json_decode($rawData, true);
+               
                 // Check if there is errors on JSON encode
                 $jsonError = json_last_error();
                 // Crash if an errors occurs
@@ -24,7 +26,7 @@ class Api {
                 }
             }
         }
-
+        
         return $result;
     }
 
@@ -33,6 +35,7 @@ class Api {
         $result = $this->decodeJsonFromInput();
         if (empty($result['error'])) {
             $request = new Request($_SERVER['REQUEST_METHOD'], $_GET, $result['jsonData'] ?? []);
+          
             $response = $this->_router->processRequest($request);
         } else {
             $response = new Response();

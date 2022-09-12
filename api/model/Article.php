@@ -26,6 +26,7 @@ class Article implements \JsonSerializable {
     public function setTitle(string $title): string {
         if (!empty($title)) {
             $this->title = $title;
+           
             return '';
         }
         return 'Veuillez renseigner votre titre';

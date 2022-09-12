@@ -22,6 +22,7 @@ class ArticleApiControler {
 
     // Création de l'entité Article et validation des données fournies par le client
     $article = new Article();
+    
     $errors = [
       'title'     => $article->setTitle(htmlentities($payload['_title'] ?? '')),
       'picture'  => $article->setPicture($payload['_picture'] ?? ''),
@@ -29,7 +30,7 @@ class ArticleApiControler {
       'category'  => $article->setCategory(htmlentities($payload['_category'] ?? '')),
       'author'  => $article->setAuthor(htmlentities($payload['_author'] ?? '')),
     ];
-
+   
     // Remove empty errors from the errors array
     $errors = array_filter($errors, function($error, $key) {
         return !empty($error);
