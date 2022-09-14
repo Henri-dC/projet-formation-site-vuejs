@@ -1,6 +1,6 @@
 <script setup>
-import Main from "../components/Main/Main.vue";
-import ListAccount from "../components/ListAccount.vue";
+import Main from "../../components/Main/Main.vue";
+import ListAccount from "../../components/ListAccount.vue";
 </script>
 
 <template>

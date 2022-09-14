@@ -36,8 +36,8 @@ export default {
       return src;
     },
     addArticleDisplay() {
-      let modale = document.querySelector("#modale-new-article");
-      modale.style.display = "block";
+      let container = document.querySelector(".container-for-scroll");
+      container.style.display = "block";
     },
   },
   mounted: function getArticles() {

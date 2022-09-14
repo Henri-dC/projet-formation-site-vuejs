@@ -1,47 +1,71 @@
 <template>
-  <div id="modale-new-article">
-    <div id="overlaye"></div>
-    <form>
-      <fieldset>
-        <legend>Ajouter un article</legend>
+  <div class="container-for-scroll">
+    <div id="modale-new-article">
+      <div id="overlaye"></div>
+      <form>
+        <fieldset>
+          <legend>Ajouter un article</legend>
 
-        <input
-          type="text"
-          placeholder="Titre"
-          name="title"
-          id="title-article"
-          v-model="formData.title"
-        />
-        <input type="file" name="picture-article" id="picture-article" />
-        <textarea
-          v-model="formData.content"
-          name="content"
-          cols="30"
-          rows="10"
-          placeholder="Votre contenu ici..."
-          id="content-article"
-        ></textarea>
+          <label for="title-article"
+            ><span>{{ formErrors.title }}</span></label
+          >
+          <input
+            type="text"
+            placeholder="Titre"
+            name="title"
+            id="title-article"
+            v-model="formData.title"
+          />
 
-        <select
-          name="category"
-          id="category-article"
-          v-model="formData.category"
-        >
-          <option value="musique">Musique</option>
-          <option value="cuisine">Cuisine</option>
-          <option value="sport">Sport</option>
-        </select>
+          <label id="label-picture-article" for="picture-article">
+            <i class="fa-regular fa-image"></i>
+            Ajouter une photo
+            <p>{{ fileName }}</p>
+            <span>{{ formErrors.picture }}</span>
+          </label>
+          <input type="file" name="picture-article" id="picture-article" />
 
-        <input type="text" name="author" v-model="formData.author" />
+          <label for="content-article">
+            <span>{{ formErrors.content }}</span>
+          </label>
+          <textarea
+            v-model="formData.content"
+            name="content"
+            rows="7"
+            placeholder="Votre contenu ici..."
+            id="content-article"
+          ></textarea>
 
-        <div id="button-container">
-          <button id="close-modale-new-article" @click="closeModaleNewArticle">
-            Annuler
-          </button>
-          <button @click="createArticle" type="submit">Publier</button>
-        </div>
-      </fieldset>
-    </form>
+          <select
+            name="category"
+            id="category-article"
+            v-model="formData.category"
+          >
+            <option value="-1" disabled>Sélectionnez une catégorie</option>
+            <option value="musique">Musique</option>
+            <option value="cuisine">Cuisine</option>
+            <option value="sport">Sport</option>
+          </select>
+
+          <input
+            id="author-article"
+            type="text"
+            name="author"
+            v-model="formData.author"
+          />
+
+          <div id="button-container">
+            <button
+              id="close-modale-new-article"
+              @click="closeModaleNewArticle"
+            >
+              Annuler
+            </button>
+            <button @click="createArticle" type="submit">Publier</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -49,40 +73,54 @@
 export default {
   data() {
     return {
-      formData: {},
+      formData: { category: -1 },
+      formErrors: {},
       article: {},
+      input: "",
     };
   },
+  mounted() {
+    this.input = document.querySelector("#picture-article");
+    console.log(this.input);
+  },
+  computed: {
+    fileName() {
+      console.log(this.input.files);
+      if (this.input.files > 0) {
+        return this.input.files[0].name;
+      }
+    },
+  },
   methods: {
+    //FONCTION: Fermer la modale
+
     closeModaleNewArticle(e) {
       e.preventDefault();
-      let modale = document.querySelector("#modale-new-article");
-      modale.style.display = "none";
+      let container = document.querySelector(".container-for-scroll");
+      container.style.display = "none";
     },
+
+    //FONCTION: charger la photo
+
     loadPicture() {
       var input = document.querySelector('input[type="file"]');
 
       let dataPic = new FormData();
       dataPic.append("photo", input.files[0]);
-      console.log(dataPic.get("photo"));
 
       fetch("http://localhost:8889/api/index.php", {
         method: "post",
         body: dataPic,
-      }).then(alert("hello"));
-
-      let modale = document.querySelector("#modale-new-article");
-      modale.style.display = "none";
+      });
     },
+
+    //FONCTION: Enregistrer l'article en base de données
 
     async createArticle(e) {
       e.preventDefault();
-      this.loadPicture();
-      //création d'une instance Article
-      //On récupère le nom du fichier dans input file
+      this.loadPicture(); /*On charge la photo*/
 
-      var input = document.querySelector('input[type="file"]');
-      this.formData.picture = input.files[0]["name"];
+      //création d'une instance Article
 
       let article = new Article(
         "",
@@ -92,13 +130,6 @@ export default {
         this.formData.category,
         this.formData.author
       );
-
-      console.log(article);
-
-      //On ferme la modale
-
-      let modale = document.querySelector("#modale-new-article");
-      modale.style.display = "none";
 
       //Envoie au serveur PHP la requête avec article en JSON
 
@@ -117,9 +148,16 @@ export default {
         .then((response) => response.json())
         .then((result) => {
           if (result["errors"]) {
+            /* Si il y a une erreur... */
             this.formErrors = result["errors"];
           } else {
+            /* Sinon... */
             this.article = result["data"];
+
+            //On ferme la modale
+
+            let container = document.querySelector(".container-for-scroll");
+            container.style.display = "none";
           }
         });
     },
@@ -139,15 +177,29 @@ export default {
   z-index: -1;
 }
 
-#modale-new-article {
+.container-for-scroll {
   display: none;
   position: fixed;
+  bottom: 0;
+  top: 4em;
+  width: 90%;
+  max-height: 90%;
+  margin-left: 5%;
+}
+#modale-new-article::-webkit-scrollbar {
+  display: none;
+}
+
+#modale-new-article {
+  display: block;
   top: 4em;
   width: 90%;
   margin-left: 5%;
+  height: 100%;
   text-align: center;
   border-radius: 1em;
   z-index: 20;
+  overflow-y: scroll;
 }
 
 fieldset {
@@ -158,29 +210,64 @@ fieldset {
 legend {
   font-size: 2em;
   font-weight: 700;
-  padding: 1em;
-  border-radius: 1em;
+  padding: 0.6em;
+  border-radius: 0em 1em;
   color: white;
   background-color: var(--main-bg-color);
   border-block: 4px solid black;
+}
+
+input::placeholder,
+textarea::placeholder {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: black;
 }
 
 input,
 select {
   display: block;
   margin: auto;
-  margin-top: 2em;
-  width: 60%;
+  margin-bottom: 2em;
+  width: 85%;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 2em 0em;
+}
+
+#label-picture-article {
+  cursor: pointer;
+}
+
+#picture-article {
+  display: none;
 }
 
 textarea {
   margin-top: 2em;
-  width: 90%;
-  height: auto;
+  width: 85%;
+  resize: none;
+}
+
+select {
+  height: 2.6em;
+}
+
+#author-article {
+  width: 60%;
 }
 
 #button-container {
   display: flex;
   justify-content: space-around;
+  width: 60%;
+  margin: auto;
+  margin-top: 2em;
+}
+
+button {
+  line-height: 1.7em;
+  border-radius: 10em;
 }
 </style>

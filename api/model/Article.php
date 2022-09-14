@@ -29,7 +29,7 @@ class Article implements \JsonSerializable {
            
             return '';
         }
-        return 'Veuillez renseigner votre titre';
+        return 'Veuillez renseigner un titre';
     }
 
     public function setPicture(string $picture): string {
@@ -53,7 +53,7 @@ class Article implements \JsonSerializable {
             $this->category = $category;
             return '';
         }
-        return 'Veuillez renseigner une category';
+        return 'Veuillez renseigner une categorie';
     }
 
     public function setAuthor(string $author): string {

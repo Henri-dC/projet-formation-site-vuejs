@@ -1,5 +1,9 @@
 <?php
 
+session_set_cookie_params(["SameSite" => "None"]); //none, lax, strict
+session_set_cookie_params(["Secure" => "true"]); //false, true
+session_set_cookie_params(["HttpOnly" => "true"]); //false, true
+
 session_start();
 
 error_reporting(E_ALL);
@@ -16,12 +20,7 @@ if(isset($_FILES['photo'])){
     $size = $_FILES['photo']['size'];
     $error = $_FILES['photo']['error'];
     if(move_uploaded_file($tmpName, '../src/assets/images/'.$name));
-
-    
 }
     
-
-
-
 $api = new Api();
 $api->init();

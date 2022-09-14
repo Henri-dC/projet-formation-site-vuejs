@@ -36,7 +36,10 @@
                 //contrôle login et password
                
                 if($connexion['password']===$credentials->getPassword()){
-                setcookie('id', $connexion['id'],0,"/");
+             
+                setcookie('id', $connexion['id'],['samesite'=>'None', 'Secure'=>true]);
+                setcookie('firstName', $connexion['firstName'],['samesite'=>'None', 'Secure'=>true]);
+                setcookie('lastName', $connexion['lastName'],['samesite'=>'None', 'Secure'=>true]);
     
                  // Remove empty errors from the errors array
                 $errors = array_filter($errors, function($error, $key) {

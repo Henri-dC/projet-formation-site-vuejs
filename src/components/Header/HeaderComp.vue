@@ -45,8 +45,6 @@ export default {
 
 h1 {
   margin: 0;
-  margin-left: 4em;
-  margin-right: 4em;
   padding: 0.2em;
   font-size: 1em;
   outline: 5px solid var(--second-bg-color);
@@ -75,5 +73,12 @@ a {
   color: var(--second-bg-color);
   color: white;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (min-width: 600px) {
+  h1 {
+    margin-left: 4em;
+    margin-right: 4em;
+  }
 }
 </style>
