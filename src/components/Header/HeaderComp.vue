@@ -1,5 +1,7 @@
 <script setup>
 import SignForm from "./SignForm.vue";
+import { useUserStore } from "@/store/UserStore.js";
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -11,9 +13,16 @@ import SignForm from "./SignForm.vue";
           <a href="/">Deskiñ</a>
         </h1>
       </li>
-      <li @click="toggleSignForm"><i class="fa-solid fa-user"></i></li>
+      <li @click="toggleSignForm">
+        <i class="fa-solid fa-user"></i>
+      </li>
     </ul>
     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
+    <div id="menu-user" v-show="userStore.user">
+      <i class="fa-solid fa-caret-down"></i>
+      <h5>{{ userStore.user ? userStore.user._firstName : "" }}</h5>
+      <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
+    </div>
   </div>
 </template>
 
@@ -58,6 +67,10 @@ a {
   text-shadow: #aaa;
 }
 
+i {
+  cursor: pointer;
+}
+
 #menu {
   display: flex;
   list-style-type: none;
@@ -73,6 +86,30 @@ a {
   color: var(--second-bg-color);
   color: white;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
+#user-name {
+  font-size: 0.3em;
+  display: inline;
+  margin: 0.5em;
+}
+
+h5 {
+  margin: 0;
+}
+
+#menu-user {
+  position: absolute;
+  right: 0em;
+  top: 103%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+  font-size: 1.8em;
+  background-color: var(--second-bg-color);
+  width: 10%;
+  border-bottom: 2px solid black;
+  border-left: 2px solid black;
 }
 
 @media screen and (min-width: 600px) {

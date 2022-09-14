@@ -1,3 +1,8 @@
+<script setup>
+import { useUserStore } from "@/store/UserStore.js";
+const userStore = useUserStore();
+</script>
+
 <template>
   <div id="form-container">
     <h2 v-if="signUpForm">Inscription</h2>
@@ -104,6 +109,8 @@ export default {
 
       this.formErrors = {};
 
+      //FORMULAIRE D'INSCRIPTION
+
       if (this.signUpForm) {
         url.search = "?route=/account";
 
@@ -127,6 +134,8 @@ export default {
             }
           });
       } else {
+        //FORMULAIRE DE CONNEXION
+
         url.search = "?route=/login";
 
         return fetch(url, {
@@ -142,13 +151,14 @@ export default {
           .then((result) => {
             if (result["errors"]) {
               this.formErrors = result["errors"];
-              console.log(this.formErrors);
             } else {
               this.current_user = new User(
                 result["data"]["id"],
                 result["data"]["firstName"],
                 result["data"]["lastName"]
               );
+              localStorage.setItem("user", JSON.stringify(this.current_user));
+              window.location = "http://127.0.0.1:5173";
             }
           });
       }

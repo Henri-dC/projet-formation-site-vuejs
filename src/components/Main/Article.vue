@@ -54,7 +54,6 @@ export default {
           this.formErrors = result["errors"];
         } else {
           this.articles = result["data"];
-          console.log(this.calcUrl(this.articles.picture));
         }
       });
   },

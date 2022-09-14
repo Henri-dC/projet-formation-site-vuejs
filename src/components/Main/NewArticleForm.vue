@@ -1,3 +1,8 @@
+<script setup>
+import { useUserStore } from "@/store/UserStore.js";
+const userStore = useUserStore();
+</script>
+
 <template>
   <div class="container-for-scroll">
     <div id="modale-new-article">
@@ -46,13 +51,6 @@
             <option value="cuisine">Cuisine</option>
             <option value="sport">Sport</option>
           </select>
-
-          <input
-            id="author-article"
-            type="text"
-            name="author"
-            v-model="formData.author"
-          />
 
           <div id="button-container">
             <button
@@ -104,7 +102,7 @@ export default {
 
     loadPicture() {
       var input = document.querySelector('input[type="file"]');
-
+      this.formData.picture = input.files[0].name;
       let dataPic = new FormData();
       dataPic.append("photo", input.files[0]);
 
@@ -128,7 +126,8 @@ export default {
         this.formData.picture,
         this.formData.content,
         this.formData.category,
-        this.formData.author
+        this.formData.author,
+        (this.formData.author = this.userStore.user._firstName)
       );
 
       //Envoie au serveur PHP la requête avec article en JSON
