@@ -1,12 +1,4 @@
-<script setup>
-import NewArticleForm from "./NewArticleForm.vue";
-</script>
-
 <template>
-  <button id="add-article" @click="addArticleDisplay">
-    <i class="fa-duotone fa-plus"></i>
-  </button>
-  <NewArticleForm />
   <div class="article-container" v-for="article in articles" :key="article">
     <article>
       <h2>{{ article.title }}</h2>
@@ -34,10 +26,6 @@ export default {
     calcUrl(url) {
       let src = new URL(url, import.meta.url);
       return src;
-    },
-    addArticleDisplay() {
-      let container = document.querySelector(".container-for-scroll");
-      container.style.display = "block";
     },
   },
   mounted: function getArticles() {

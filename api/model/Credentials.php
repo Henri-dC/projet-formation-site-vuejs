@@ -1,7 +1,7 @@
 <?php
 
 class Credentials {
-    private string $_login;
+    private string $_email;
     private string $_password;
     
     public function setPassword(string $password): string {
@@ -11,15 +11,15 @@ class Credentials {
         }
         return 'Veuillez renseigner votre mot de passe';
     }
-    public function setLogin(string $login): string {
-        if (!empty($login)) {
-            $this->_login = $login;
+    public function setEmail(string $email): string {
+        if (!empty($email)) {
+            $this->_email = $email;
             return '';
         }
-        return 'Veuillez renseigner votre login';
+        return 'Veuillez renseigner votre email';
     }
-    public function getLogin(): string {
-        return $this->_login;
+    public function getEmail(): string {
+        return $this->_email;
     }
     public function getPassword(): string {
         return $this->_password;

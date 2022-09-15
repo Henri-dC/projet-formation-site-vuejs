@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Account` (
   `id` char(36) NOT NULL,
-  `login` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
   `password` char(64) NOT NULL,
   `firstName` varchar(40) NOT NULL,
   `lastName` varchar(40) NOT NULL
@@ -59,5 +59,14 @@ CREATE TABLE `Articles`(
   `picture` varchar(30),
   `content` varchar(255) NOT NULL,
   `category` char(36),
-  `author` char(36)
+  `author` char(36),
+  'date' 
+  FOREIGN KEY (`author`) REFERENCES Account(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--Index pour la table `Account`
+
+ALTER TABLE `Articles`
+  ADD PRIMARY KEY (`id`);
+COMMIT;

@@ -44,14 +44,14 @@ const userStore = useUserStore();
           v-model="formData.lastName"
         />
 
-        <label for="inputLogin"
-          >Login <span class="error">{{ formErrors.login }}</span></label
+        <label for="inputMail"
+          >Email<span class="error">{{ formErrors.email }}</span></label
         >
         <input
-          name="formLogin"
-          id="inputLogin"
-          type="text"
-          v-model="formData.login"
+          name="formMail"
+          id="inputMail"
+          type="email"
+          v-model="formData.email"
         />
 
         <label for="inputPassword"
@@ -136,7 +136,16 @@ export default {
       } else {
         //FORMULAIRE DE CONNEXION
 
-        url.search = "?route=/login";
+        if(!this.formData.password||!this.formData.email){
+          if(!this.formData.password){
+          this.formErrors.password = 'Veuillez renseigner votre mot de passe'
+        }
+        if(!this.formData.email){
+          this.formErrors.email = 'Veuillez renseigner votre email'
+        }
+        }
+        else{
+          url.search = "?route=/login";
 
         return fetch(url, {
           method: "POST",
@@ -158,9 +167,11 @@ export default {
                 result["data"]["lastName"]
               );
               localStorage.setItem("user", JSON.stringify(this.current_user));
-              window.location = "http://127.0.0.1:5173";
+              window.location = "http://localhost:5173";
             }
           });
+        }
+        
       }
     },
   },
@@ -172,7 +183,7 @@ export default {
 
 #form-container {
   position: fixed;
-  top: 50%;
+  top: 79%;
   left: 50%;
   transform: translate(-50%, -90%);
   width: 80%;

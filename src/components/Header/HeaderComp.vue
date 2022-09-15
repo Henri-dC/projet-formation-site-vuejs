@@ -7,21 +7,27 @@ const userStore = useUserStore();
 <template>
   <div class="nav-container">
     <ul id="menu">
-      <li><i class="fa-solid fa-bug"></i></li>
+      <li><i class="fa-solid fa-bars" @click="toggleMenu"></i>
+      <ul v-if="this.userMenu" id="user-menu">
+        <li>Mes articles</li>
+      </ul>
+      </li>
       <li id="logo-title">
         <h1>
           <a href="/">Deskiñ</a>
         </h1>
       </li>
-      <li @click="toggleSignForm">
+      <li id="user-logo" @click="toggleSignForm">
         <i class="fa-solid fa-user"></i>
       </li>
     </ul>
     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
-    <div id="menu-user" v-show="userStore.user">
-      <i class="fa-solid fa-caret-down"></i>
-      <h5>{{ userStore.user ? userStore.user._firstName : "" }}</h5>
+    <div id="disconnect-user" v-show="userStore.user">
+      <h5 id="user-name">{{ userStore.user ? userStore.user._firstName : "" }}</h5>
       <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
+    </div>
+    <div v-show="userStore.user" @click="addArticleDisplay" id="new-article">
+      Ecrire un article
     </div>
   </div>
 </template>
@@ -32,12 +38,20 @@ export default {
   data() {
     return {
       signForm: false,
+      userMenu:false
     };
   },
 
   methods: {
+    toggleMenu(){
+      this.userMenu=!this.userMenu
+    },
     toggleSignForm() {
       this.signForm = !this.signForm;
+    },
+    addArticleDisplay() {
+      let container = document.querySelector(".container-for-scroll");
+      container.style.display = "block";
     },
   },
 };
@@ -88,17 +102,16 @@ i {
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
+
 #user-name {
-  font-size: 0.3em;
-  display: inline;
-  margin: 0.5em;
-}
-
-h5 {
   margin: 0;
+  margin-left:1em;
+  margin-right:1em;
+
+  
 }
 
-#menu-user {
+#disconnect-user {
   position: absolute;
   right: 0em;
   top: 103%;
@@ -107,15 +120,58 @@ h5 {
   padding: 0.5em;
   font-size: 1.8em;
   background-color: var(--second-bg-color);
-  width: 10%;
   border-bottom: 2px solid black;
   border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+#user-menu>li{
+  list-style-type: none;
+  font-size: 0.6em;
+  background-color: var(--second-bg-color);
+  cursor:pointer;
+  color:black;
+  border-bottom: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+#user-menu>li:hover{
+  background-color: white;
+}
+
+#user-menu{
+  position:absolute;
+  top:103%;
+  left: 0;
+  z-index: 20;
+  padding: 0;
+  
+}
+
+#new-article{
+  position: absolute;
+  top: 103%;
+  left:5%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2em;
+  font-size: 1.5em;
+  background-color: var(--second-bg-color);
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  cursor: pointer;
+  display: none;
 }
 
 @media screen and (min-width: 600px) {
   h1 {
     margin-left: 4em;
     margin-right: 4em;
+  }
+  #new-article{
+    display:block
   }
 }
 </style>

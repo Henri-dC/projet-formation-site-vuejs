@@ -23,7 +23,7 @@ class AccountApiControler {
     // Création de l'entité Account et validation des données fournies par le client
     $account = new Account();
     $errors = [
-      'login'     => $account->setLogin(htmlentities($payload['login'] ?? '')),
+      'email'     => $account->setEmail(htmlentities($payload['email'] ?? '')),
       'password'  => $account->setPassword($payload['password'] ?? ''),
       'firstName' => $account->setFirstName(htmlentities($payload['firstName'] ?? '')),
       'lastName'  => $account->setLastName(htmlentities($payload['lastName'] ?? '')),
@@ -65,7 +65,7 @@ class AccountApiControler {
     }
 
     $errors = [
-      'login'     => $account->setLogin(htmlentities($payload['login'] ?? '')),
+      'email'     => $account->setEmail(htmlentities($payload['email'] ?? '')),
       'firstName' => $account->setFirstName(htmlentities($payload['firstName'] ?? '')),
       'lastName'  => $account->setLastName(htmlentities($payload['lastName'] ?? '')),
     ];

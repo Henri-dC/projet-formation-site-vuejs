@@ -2,7 +2,7 @@
 
 class Account implements \JsonSerializable {
     private string $id;
-    private string $login;
+    private string $email;
     private string $password;
     private string $firstName;
     private string $lastName;
@@ -34,12 +34,12 @@ class Account implements \JsonSerializable {
         $this->password = $password;
     }
 
-    public function setLogin(string $login): string {
-        if (!empty($login)) {
-            $this->login = $login;
+    public function setEmail(string $email): string {
+        if (!empty($email)) {
+            $this->email = $email;
             return '';
         }
-        return 'Veuillez renseigner votre login';
+        return 'Veuillez renseigner votre email';
     }
     
     public function setFirstName(string $firstName): string {
@@ -62,8 +62,8 @@ class Account implements \JsonSerializable {
         return $this->id;
     }
 
-    public function getLogin(): string {
-        return $this->login;
+    public function getEmail(): string {
+        return $this->email;
     }
 
     public function getPassword(): string {

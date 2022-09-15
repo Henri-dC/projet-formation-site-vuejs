@@ -13,11 +13,14 @@
            
             //Création d'un crédential avec contrôle des données et hashage mot de passe
             $credentials = new Credentials;
+
+            
             $errors=[
                 'password' => $credentials->setPassword($payload['password']),
-                'login' => $credentials->setLogin($payload['login'])
+                'email' => $credentials->setEmail($payload['email'])
             ];
 
+            
             // Remove empty errors from the errors array
             $errors = array_filter($errors, function($error, $key) {
             return !empty($error);
@@ -29,11 +32,11 @@
 
              if($connexion===NULL){
                 $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
-                $response->setErrors(['account'=>'Couple login/mot de passe inconnu']);
+                $response->setErrors(['account'=>'Couple email/mot de passe inconnu']);
                 return $response;
                 }
                 
-                //contrôle login et password
+                //contrôle email et password
                
                 if($connexion['password']===$credentials->getPassword()){
              
@@ -51,7 +54,7 @@
                 }else{
                
                 $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
-                $response->setErrors(['Couple login/mot de passe inconnu']);
+                $response->setErrors(['Couple email/mot de passe inconnu']);
                 }
                 return $response;
             }else{

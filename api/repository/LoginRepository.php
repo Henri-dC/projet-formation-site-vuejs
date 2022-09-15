@@ -9,12 +9,12 @@ class LoginRepository {
 
   public function getConnexion(Credentials $credentials) {
     $stmt = $this->_connexion->prepare('
-      SELECT id, login, password, firstName, lastName
+      SELECT id, email, password, firstName, lastName
         FROM Account
-       WHERE login = :login
+       WHERE email = :email
     ');
     $stmt->execute([
-        'login' => $credentials->getLogin()
+        'email' => $credentials->getEmail()
     ]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 

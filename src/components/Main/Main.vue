@@ -1,10 +1,12 @@
 <script setup>
 import Article from "./Article.vue";
+import NewArticleForm from "./NewArticleForm.vue";
 </script>
 
 <template>
   <div id="main-container">
     <Article />
+    <NewArticleForm />
   </div>
 </template>
 

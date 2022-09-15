@@ -9,7 +9,7 @@ class AccountRepository {
 
   public function getAccount(string $id): ?Account {
     $stmt = $this->_connexion->prepare('
-      SELECT id, login, password, firstName, lastName
+      SELECT id, email, password, firstName, lastName
         FROM Account
        WHERE id = :id
     ');
@@ -24,7 +24,7 @@ class AccountRepository {
   
     $account = new Account();
     $account->setId($row['id']);
-    $account->setLogin($row['login']);
+    $account->setEmail($row['email']);
     $account->setFirstName($row['firstName']);
     $account->setLastName($row['lastName']);
     $account->setEncryptedPassword($row['password']);
@@ -34,24 +34,24 @@ class AccountRepository {
 
   public function createAccount(Account $account): Account {
     $stmt = $this->_connexion->prepare('
-        INSERT INTO Account (id, firstName, lastName, login, password) 
-             VALUES (UUID(), :firstName, :lastName, :login, :password);
+        INSERT INTO Account (id, firstName, lastName, email, password) 
+             VALUES (UUID(), :firstName, :lastName, :email, :password);
     ');
     $stmt->execute([
         'firstName' => $account->getFirstName(),
         'lastName' => $account->getLastName(),
-        'login' => $account->getLogin(),
+        'email' => $account->getEmail(),
         'password' => $account->getPassword()
     ]);
     $stmt = $this->_connexion->prepare('
         SELECT id
           FROM Account
-         WHERE firstName = :firstName AND lastName = :lastName AND login = :login;
+         WHERE firstName = :firstName AND lastName = :lastName AND email = :email;
     ');
     $stmt->execute([
         'firstName' => $account->getFirstName(),
         'lastName' => $account->getLastName(),
-        'login' => $account->getLogin(),
+        'email' => $account->getEmail(),
     ]);
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -63,7 +63,7 @@ class AccountRepository {
   public function updateAccount(Account $account): Account {
     $stmt = $this->_connexion->prepare('
         UPDATE Account
-           SET login = :login,
+           SET email = :email,
                password = :password,
                firstName = :firstName,
                lastName = :lastName
@@ -73,7 +73,7 @@ class AccountRepository {
     $stmt->execute([
       'firstName' => $account->getFirstName(),
       'lastName' => $account->getLastName(),
-      'login' => $account->getLogin(),
+      'email' => $account->getEmail(),
       'password' => $account->getPassword(),
       'id' => $account->getId()
     ]);
@@ -93,7 +93,7 @@ class AccountRepository {
 
   public function listAccounts(): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, login, firstName, lastName
+      SELECT id, email, firstName, lastName
         FROM Account
     ');
     $stmt->execute();
@@ -102,7 +102,7 @@ class AccountRepository {
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $account = new Account();
       $account->setId($row['id']);
-      $account->setLogin($row['login']);
+      $account->setEmail($row['email']);
       $account->setFirstName($row['firstName']);
       $account->setLastName($row['lastName']);
 
