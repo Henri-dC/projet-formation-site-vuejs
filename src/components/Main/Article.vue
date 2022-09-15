@@ -1,5 +1,18 @@
+<script setup>
+import { useUserStore } from "../../store/UserStore";
+const UserStore = useUserStore();
+import { useArticleStore } from "../../store/ArticleStore";
+const store = useArticleStore();
+store.queryArticles();
+</script>
+
 <template>
-  <div class="article-container" v-for="article in articles" :key="article">
+  <button @click="queryArticlesUser">Articles</button>
+  <div
+    class="article-container"
+    v-for="article in store.articles"
+    :key="article"
+  >
     <article>
       <h2>{{ article.title }}</h2>
       <img
@@ -17,33 +30,14 @@
 
 <script>
 export default {
-  data() {
-    return {
-      articles: [],
-    };
-  },
   methods: {
     calcUrl(url) {
       let src = new URL(url, import.meta.url);
       return src;
     },
-  },
-  mounted: function getArticles() {
-    let url = new URL("http://localhost:8889/api/index.php");
-    url.search = "?route=/article";
-    return fetch(url, {
-      method: "GET",
-      credentials: "include",
-      methode: "cors",
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        if (result["errors"]) {
-          this.formErrors = result["errors"];
-        } else {
-          this.articles = result["data"];
-        }
-      });
+    queryArticlesUser() {
+      this.store.queryArticlesByUser(this.UserStore.user._id);
+    },
   },
 };
 </script>

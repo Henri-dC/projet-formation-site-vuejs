@@ -7,10 +7,11 @@ const userStore = useUserStore();
 <template>
   <div class="nav-container">
     <ul id="menu">
-      <li><i class="fa-solid fa-bars" @click="toggleMenu"></i>
-      <ul v-if="this.userMenu" id="user-menu">
-        <li>Mes articles</li>
-      </ul>
+      <li>
+        <i class="fa-solid fa-bars" @click="toggleMenu"></i>
+        <ul v-if="this.userMenu" id="user-menu">
+          <li>Mes articles</li>
+        </ul>
       </li>
       <li id="logo-title">
         <h1>
@@ -23,7 +24,9 @@ const userStore = useUserStore();
     </ul>
     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
     <div id="disconnect-user" v-show="userStore.user">
-      <h5 id="user-name">{{ userStore.user ? userStore.user._firstName : "" }}</h5>
+      <h5 id="user-name">
+        {{ userStore.user ? userStore.user._firstName : "" }}
+      </h5>
       <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
     </div>
     <div v-show="userStore.user" @click="addArticleDisplay" id="new-article">
@@ -38,13 +41,13 @@ export default {
   data() {
     return {
       signForm: false,
-      userMenu:false
+      userMenu: false,
     };
   },
 
   methods: {
-    toggleMenu(){
-      this.userMenu=!this.userMenu
+    toggleMenu() {
+      this.userMenu = !this.userMenu;
     },
     toggleSignForm() {
       this.signForm = !this.signForm;
@@ -102,13 +105,10 @@ i {
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
-
 #user-name {
   margin: 0;
-  margin-left:1em;
-  margin-right:1em;
-
-  
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 #disconnect-user {
@@ -125,34 +125,33 @@ i {
   border-right: 2px solid black;
 }
 
-#user-menu>li{
+#user-menu > li {
   list-style-type: none;
   font-size: 0.6em;
   background-color: var(--second-bg-color);
-  cursor:pointer;
-  color:black;
+  cursor: pointer;
+  color: black;
   border-bottom: 2px solid black;
   border-left: 2px solid black;
   border-right: 2px solid black;
 }
 
-#user-menu>li:hover{
+#user-menu > li:hover {
   background-color: white;
 }
 
-#user-menu{
-  position:absolute;
-  top:103%;
+#user-menu {
+  position: absolute;
+  top: 103%;
   left: 0;
   z-index: 20;
   padding: 0;
-  
 }
 
-#new-article{
+#new-article {
   position: absolute;
   top: 103%;
-  left:5%;
+  left: 5%;
   display: flex;
   justify-content: space-between;
   padding: 0.2em;
@@ -170,8 +169,8 @@ i {
     margin-left: 4em;
     margin-right: 4em;
   }
-  #new-article{
-    display:block
+  #new-article {
+    display: block;
   }
 }
 </style>

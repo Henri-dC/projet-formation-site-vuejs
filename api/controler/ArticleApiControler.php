@@ -29,6 +29,7 @@ class ArticleApiControler {
       'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
       'category'  => $article->setCategory(htmlentities($payload['_category'] ?? '')),
       'author'  => $article->setAuthor(htmlentities($payload['_author'] ?? '')),
+      'author_Id'  => $article->setAuthor_Id(htmlentities($payload['_author_Id'] ?? '')),
     ];
    
     // Remove empty errors from the errors array
@@ -95,11 +96,22 @@ class ArticleApiControler {
   public function proceedDeleteArticle(Request $request): Response {
     $articleId = $request->getQueryParam('id');
 
-    $this->_articleRepo->deleteArticle($articleId);
+    $this->_articleRepo->deleteArticle($articleId['id']);
 
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::NO_CONTENT);
 
+    return $response;
+  }
+
+  public function proceedListArticlesById(Request $request): Response {
+    $articleId = $request->getData();
+   
+   $article = $this->_articleRepo->listArticlesById($articleId['id']);
+
+    $response = new Response();
+    $response->setHttpStatusCode(HttpStatusCode::OK);
+    $response->setData($article);
     return $response;
   }
 }

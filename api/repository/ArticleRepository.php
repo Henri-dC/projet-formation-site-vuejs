@@ -37,15 +37,16 @@ class ArticleRepository {
   public function createArticle(Article $article): Article {
    
     $stmt = $this->_connexion->prepare('
-        INSERT INTO Articles (id, title, picture, content, category, author) 
-        VALUES (UUID(), :title, :picture, :content, :category, :author);
+        INSERT INTO Articles (id, title, picture, content, category, author, author_id) 
+        VALUES (UUID(), :title, :picture, :content, :category, :author, :author_id);
     ');
     $stmt->execute([
         'title' => $article->getTitle(),
         'picture' => $article->getpicture(),
         'content' => $article->getcontent(),
         'category' => $article->getCategory(),
-        'author' => $article->getAuthor()
+        'author' => $article->getAuthor(),
+        'author_id' => $article->getAuthor_Id()
     ]);
     $stmt = $this->_connexion->prepare('
         SELECT id
@@ -101,6 +102,30 @@ class ArticleRepository {
         FROM Articles;
     ');
     $stmt->execute();
+
+    $articles = [];
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $article = new Article();
+      $article->setId($row['id']);
+      $article->setTitle(html_entity_decode($row['title']));
+      $article->setPicture(html_entity_decode($row['picture']));
+      $article->setContent(html_entity_decode($row['content']));
+
+      array_push($articles, $article);
+    }
+
+    return $articles;
+  }
+
+  public function listArticlesById(string $id): array {
+    $stmt = $this->_connexion->prepare('
+      SELECT id, title, picture, content, author_id
+        FROM Articles
+          WHERE author_id =:id
+    ');
+    $stmt->execute([
+      'id' => $id
+  ]);
 
     $articles = [];
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

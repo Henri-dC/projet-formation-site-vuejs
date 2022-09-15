@@ -3,21 +3,24 @@
 class Router {
     public function processRequest(Request $request): Response {
         $page = isset($_GET['route']) ? $_GET['route'] : '';
-
+       
         switch($page) {
             case '/account':
                 $controler = new AccountApiControler();
                 switch($request->getMethod()) {
                     case 'GET':
+                       
                         return $controler->proceedListAccounts($request);
                     case 'POST':
+                      
                         return $controler->proceedCreateAccount($request);
                     case 'PUT':
+                     
                         return $controler->proceedUpdateAccount($request);
                     case 'DELETE':
                         return $controler->proceedDeleteAccount($request);
                 }
-
+               
             case '/article':
                 $controler = new ArticleApiControler();
                 switch($request->getMethod()) {
@@ -30,6 +33,13 @@ class Router {
                     case 'DELETE':
                         return $controler->proceedDeleteArticle($request);
                 }
+
+            case '/article/list':
+                
+                $controler = new ArticleApiControler();
+                
+                return $controler->proceedListArticlesById($request);
+                
 
             case '/login':
                 $controler = new LoginApiControler();

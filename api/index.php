@@ -21,6 +21,7 @@ if(isset($_FILES['photo'])){
     $error = $_FILES['photo']['error'];
     if(move_uploaded_file($tmpName, '../src/assets/images/'.$name));
 }
-    
+
+
 $api = new Api();
 $api->init();

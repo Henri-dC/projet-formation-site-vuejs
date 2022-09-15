@@ -126,8 +126,8 @@ export default {
         this.formData.picture,
         this.formData.content,
         this.formData.category,
-        this.formData.author,
-        (this.formData.author = this.userStore.user._firstName)
+        (this.formData.author = this.userStore.user._firstName),
+        (this.formData.author_Id = this.userStore.user._id)
       );
 
       //Envoie au serveur PHP la requête avec article en JSON

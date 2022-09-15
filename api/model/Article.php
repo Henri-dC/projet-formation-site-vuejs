@@ -7,6 +7,7 @@ class Article implements \JsonSerializable {
     private string $content;
     private string $category;
     private string $author;
+    private string $author_Id;
 
     public function __construct() {
     }
@@ -63,6 +64,13 @@ class Article implements \JsonSerializable {
         }
         return 'Veuillez renseigner un auteur';
     }
+    public function setAuthor_Id(string $author_Id): string {
+        if (!empty($author_Id)) {
+            $this->author_Id = $author_Id;
+            return '';
+        }
+        return 'Veuillez renseigner un identifiant auteur';
+    }
     
     public function getId(): string {
         return $this->id;
@@ -86,5 +94,9 @@ class Article implements \JsonSerializable {
 
     public function getAuthor(): string {
         return $this->author;
+    }
+
+    public function getAuthor_Id(): string {
+        return $this->author_Id;
     }
 }
