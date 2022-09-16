@@ -114,6 +114,17 @@ class ArticleApiControler {
     $response->setData($article);
     return $response;
   }
+
+  public function proceedListArticlesByCategory(Request $request): Response {
+    $category = $request->getQueryParam('category');
+   
+    $article = $this->_articleRepo->listArticlesByCategory($category);
+
+    $response = new Response();
+    $response->setHttpStatusCode(HttpStatusCode::OK);
+    $response->setData($article);
+    return $response;
+  }
 }
 
 ?>

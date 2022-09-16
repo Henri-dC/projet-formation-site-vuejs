@@ -25,7 +25,7 @@ class ArticleRepository {
     $article = new Article();
     $article->setId($row['id']);
     $article->setTitle($row['title']);
-    $article->Picture($row['picture']);
+    $article->setPicture($row['picture']);
     $article->setContent($row['content']);
     $article->setCategory($row['category']);
     $article->setAuthor($row['author']);
@@ -69,7 +69,6 @@ class ArticleRepository {
     $stmt = $this->_connexion->prepare('
         UPDATE Articles
            SET title = :title,
-               password = :password,
                picture = :picture,
                content = :content
          WHERE id = :id
@@ -79,7 +78,6 @@ class ArticleRepository {
       'picture' => $article->getpicture(),
       'content' => $article->getcontent(),
       'title' => $article->gettitle(),
-      'password' => $article->getPassword(),
       'id' => $article->getId()
     ]);
 
@@ -125,6 +123,30 @@ class ArticleRepository {
     ');
     $stmt->execute([
       'id' => $id
+  ]);
+
+    $articles = [];
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $article = new Article();
+      $article->setId($row['id']);
+      $article->setTitle(html_entity_decode($row['title']));
+      $article->setPicture(html_entity_decode($row['picture']));
+      $article->setContent(html_entity_decode($row['content']));
+
+      array_push($articles, $article);
+    }
+
+    return $articles;
+  }
+
+  public function listArticlesByCategory(string $category): array {
+    $stmt = $this->_connexion->prepare('
+      SELECT id, title, picture, content, author_id, category
+        FROM Articles
+          WHERE category =:category
+    ');
+    $stmt->execute([
+      'category' => $category
   ]);
 
     $articles = [];

@@ -1,6 +1,8 @@
 <script setup>
 import SignForm from "./SignForm.vue";
 import { useUserStore } from "@/store/UserStore.js";
+import { useArticleStore } from "../../store/ArticleStore";
+const store = useArticleStore();
 const userStore = useUserStore();
 </script>
 
@@ -8,9 +10,10 @@ const userStore = useUserStore();
   <div class="nav-container">
     <ul id="menu">
       <li>
-        <i class="fa-solid fa-bars" @click="toggleMenu"></i>
+        <i v-show="userStore.user" class="fa-solid fa-bars" @click="toggleMenu"></i>
         <ul v-if="this.userMenu" id="user-menu">
-          <li>Mes articles</li>
+          <li @click="queryArticlesUser">Mes articles</li>
+          <li @click="addArticleDisplay">Ecrire un article</li>
         </ul>
       </li>
       <li id="logo-title">
@@ -28,9 +31,6 @@ const userStore = useUserStore();
         {{ userStore.user ? userStore.user._firstName : "" }}
       </h5>
       <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
-    </div>
-    <div v-show="userStore.user" @click="addArticleDisplay" id="new-article">
-      Ecrire un article
     </div>
   </div>
 </template>
@@ -55,6 +55,9 @@ export default {
     addArticleDisplay() {
       let container = document.querySelector(".container-for-scroll");
       container.style.display = "block";
+    },
+    queryArticlesUser() {
+      this.store.queryArticlesByUser(this.userStore.user._id);
     },
   },
 };
@@ -146,22 +149,6 @@ i {
   left: 0;
   z-index: 20;
   padding: 0;
-}
-
-#new-article {
-  position: absolute;
-  top: 103%;
-  left: 5%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.2em;
-  font-size: 1.5em;
-  background-color: var(--second-bg-color);
-  border-bottom: 2px solid black;
-  border-right: 2px solid black;
-  border-left: 2px solid black;
-  cursor: pointer;
-  display: none;
 }
 
 @media screen and (min-width: 600px) {

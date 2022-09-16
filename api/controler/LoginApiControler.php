@@ -54,7 +54,7 @@
                 }else{
                
                 $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
-                $response->setErrors(['Couple email/mot de passe inconnu']);
+                $response->setErrors(['account'=>'Couple email/mot de passe inconnu']);
                 }
                 return $response;
             }else{

@@ -1,13 +1,12 @@
 <script setup>
 import { useUserStore } from "../../store/UserStore";
-const UserStore = useUserStore();
 import { useArticleStore } from "../../store/ArticleStore";
+const UserStore = useUserStore();
 const store = useArticleStore();
 store.queryArticles();
 </script>
 
 <template>
-  <button @click="queryArticlesUser">Articles</button>
   <div
     class="article-container"
     v-for="article in store.articles"
@@ -34,9 +33,6 @@ export default {
     calcUrl(url) {
       let src = new URL(url, import.meta.url);
       return src;
-    },
-    queryArticlesUser() {
-      this.store.queryArticlesByUser(this.UserStore.user._id);
     },
   },
 };

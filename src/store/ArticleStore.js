@@ -43,16 +43,22 @@ export const useArticleStore = defineStore("ArticleStore", {
           this.articles = result["data"];
         });
     },
-    async getArticlesByDate() {
-      try {
-        const data = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        this.users = data.data;
-      } catch (error) {
-        alert(error);
-        console.log(error);
-      }
+    async getArticlesByCategory(cat) {
+      let url = new URL("http://localhost:8889/api/index.php");
+      url.search = "?route=/article/list&category="+cat;
+     
+      return fetch(url, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        header: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          this.articles = result["data"];
+        });
     },
   },
 });
