@@ -96,7 +96,7 @@ class ArticleRepository {
 
   public function listArticles(): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, title, picture, content
+      SELECT id, title, picture, content, author_id
         FROM Articles;
     ');
     $stmt->execute();
@@ -108,6 +108,7 @@ class ArticleRepository {
       $article->setTitle(html_entity_decode($row['title']));
       $article->setPicture(html_entity_decode($row['picture']));
       $article->setContent(html_entity_decode($row['content']));
+      $article->setAuthor_Id(html_entity_decode($row['author_id']));
 
       array_push($articles, $article);
     }
@@ -132,6 +133,7 @@ class ArticleRepository {
       $article->setTitle(html_entity_decode($row['title']));
       $article->setPicture(html_entity_decode($row['picture']));
       $article->setContent(html_entity_decode($row['content']));
+      $article->setAuthor_Id(html_entity_decode($row['author_id']));
 
       array_push($articles, $article);
     }
@@ -156,6 +158,7 @@ class ArticleRepository {
       $article->setTitle(html_entity_decode($row['title']));
       $article->setPicture(html_entity_decode($row['picture']));
       $article->setContent(html_entity_decode($row['content']));
+      $article->setAuthor_Id(html_entity_decode($row['author_id']));
 
       array_push($articles, $article);
     }

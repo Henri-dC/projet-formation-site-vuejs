@@ -6,15 +6,17 @@ const store = useArticleStore();
 </script>
 
 <template>
-  <div id="main-container">
-    <div id="select-category">
+  <div>
+  <div id="select-category">
     <button @click="getArticlesByCategory('musique')">Musique</button>
     <button @click="getArticlesByCategory('sport')">Sport</button>
-    <button @click="getArticlesByCategory('')">Musique</button>
+    <button @click="getAllArticles()">Tous</button>
   </div>
+  <div id="main-container">
     <Article />
-    <NewArticleForm />
   </div>
+  <NewArticleForm />
+</div>
 </template>
 
 <script>
@@ -22,6 +24,9 @@ const store = useArticleStore();
     methods: {
       getArticlesByCategory(cat){
         this.store.getArticlesByCategory(cat)
+      },
+      getAllArticles(){
+        this.store.queryArticles()
       }
     },
   };
@@ -29,8 +34,10 @@ const store = useArticleStore();
   
 
 <style scoped>
-#main-container {
-  margin-top: 10em;
+
+#select-category{
+  margin-top:10em;
+  text-align: center;
 }
 
 @media screen and (min-width: 900px) {
@@ -39,4 +46,6 @@ const store = useArticleStore();
     flex-wrap: wrap;
   }
 }
+
+
 </style>

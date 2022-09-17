@@ -3,7 +3,6 @@ import { useUserStore } from "../../store/UserStore";
 import { useArticleStore } from "../../store/ArticleStore";
 const UserStore = useUserStore();
 const store = useArticleStore();
-store.queryArticles();
 </script>
 
 <template>
@@ -13,7 +12,7 @@ store.queryArticles();
     :key="article"
   >
     <article>
-      <h2>{{ article.title }}</h2>
+      <h2>{{ article.title}}</h2>
       <img
         :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
       />
@@ -24,6 +23,7 @@ store.queryArticles();
         <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
       </div>
     </article>
+    <router-link id="edit-article" v-if="UserStore.getUserId==article.author_Id" :to="`/article/edit/${article.id}`">Modifier</router-link>
   </div>
 </template>
 
@@ -35,6 +35,9 @@ export default {
       return src;
     },
   },
+  mounted(){
+    this.store.queryArticles();
+  }
 };
 </script>
 
@@ -66,11 +69,8 @@ img {
   margin-left: 0.3em;
 }
 
-#add-article {
-  position: fixed;
-  right: 2%;
-  top: 20%;
-  border-radius: 50%;
+#edit-article{
+  text-decoration: none;
 }
 
 .fa-duotone {

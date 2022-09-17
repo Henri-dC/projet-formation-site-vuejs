@@ -35,7 +35,6 @@ class Router {
                 switch($request->getMethod()) {
                     case 'POST':
                         $controler = new ArticleApiControler();
-                        var_dump($request);
                         return $controler->proceedListArticlesById($request);
                     case 'GET':
                         $controler = new ArticleApiControler();
