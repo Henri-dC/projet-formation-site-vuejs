@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useArticleStore = defineStore("ArticleStore", {
   state: () => ({
     articles: [],
+    editArticle: [],
   }),
   getters: {
     getArticle(state) {
@@ -45,8 +46,8 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
     async getArticlesByCategory(cat) {
       let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article/list&category="+cat;
-     
+      url.search = "?route=/article/list&category=" + cat;
+
       return fetch(url, {
         method: "GET",
         mode: "cors",
@@ -59,6 +60,36 @@ export const useArticleStore = defineStore("ArticleStore", {
         .then((result) => {
           this.articles = result["data"];
         });
+    },
+    async updateArticle(article) {
+      let url = new URL("http://localhost:8889/api/index.php");
+      url.search = "?route=/article";
+
+      return fetch(url, {
+        method: "PUT",
+        mode: "cors",
+        credentials: "include",
+        header: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify(article),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+        });
+    },
+
+    queryArticleById(id) {
+      for (let i = 0; i < this.articles.length - 1; i++) {
+        if (this.articles[i].id == id) {
+          this.editArticle = this.articles[i];
+        }
+      }
+    },
+
+    resetEditArticle() {
+      this.editArticle = [];
     },
   },
 });

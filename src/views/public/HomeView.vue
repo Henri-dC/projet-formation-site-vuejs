@@ -9,5 +9,3 @@ import ListAccount from "../../components/ListAccount.vue";
     <ListAccount />
   </main>
 </template>
-
-<style scoped></style>

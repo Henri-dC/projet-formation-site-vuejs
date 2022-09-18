@@ -1,7 +1,7 @@
 <template>
   <div id="footer-container">
     <p>Informations légales</p>
-    <p>Contact : <a href="henri.dc@hotmail.fr">email</a></p>
+    <p>Contact : <a href="mailto:henri.dc@hotmail.fr">email</a></p>
   </div>
 </template>
 

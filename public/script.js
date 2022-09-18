@@ -8,6 +8,10 @@ class Article {
       (this._author = author),
       (this._author_Id = author_Id);
   }
+
+  setArticleId(id) {
+    this._id = id;
+  }
 }
 
 class User {

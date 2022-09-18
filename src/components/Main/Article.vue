@@ -12,7 +12,7 @@ const store = useArticleStore();
     :key="article"
   >
     <article>
-      <h2>{{ article.title}}</h2>
+      <h2>{{ article.title }}</h2>
       <img
         :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
       />
@@ -23,7 +23,13 @@ const store = useArticleStore();
         <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
       </div>
     </article>
-    <router-link id="edit-article" v-if="UserStore.getUserId==article.author_Id" :to="`/article/edit/${article.id}`">Modifier</router-link>
+    <button
+      id="edit-article"
+      v-if="UserStore.getUserId == article.author_Id"
+      @click="editDisplay(article.id)"
+    >
+      Modifier
+    </button>
   </div>
 </template>
 
@@ -34,10 +40,16 @@ export default {
       let src = new URL(url, import.meta.url);
       return src;
     },
+    editDisplay(id) {
+      let container = document.querySelector(".container-for-scroll");
+      container.style.display = "block";
+
+      this.store.queryArticleById(id);
+    },
   },
-  mounted(){
+  beforeMount() {
     this.store.queryArticles();
-  }
+  },
 };
 </script>
 
@@ -69,7 +81,7 @@ img {
   margin-left: 0.3em;
 }
 
-#edit-article{
+#edit-article {
   text-decoration: none;
 }
 

@@ -9,7 +9,7 @@ class ArticleRepository {
 
   public function getArticle(string $id): ?Article {
     $stmt = $this->_connexion->prepare('
-      SELECT title, picture, content, category
+      SELECT id, title, picture, content, category, author
         FROM Articles
        WHERE id = :id
     ');
@@ -96,7 +96,7 @@ class ArticleRepository {
 
   public function listArticles(): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, title, picture, content, author_id
+      SELECT id, title, picture, content, author_id,category
         FROM Articles;
     ');
     $stmt->execute();
@@ -107,6 +107,7 @@ class ArticleRepository {
       $article->setId($row['id']);
       $article->setTitle(html_entity_decode($row['title']));
       $article->setPicture(html_entity_decode($row['picture']));
+      $article->setCategory(html_entity_decode($row['category']));
       $article->setContent(html_entity_decode($row['content']));
       $article->setAuthor_Id(html_entity_decode($row['author_id']));
 

@@ -1,6 +1,9 @@
 <script setup>
 import { useUserStore } from "@/store/UserStore.js";
+import { useArticleStore } from "../../store/ArticleStore";
+const articleStore = useArticleStore();
 const userStore = useUserStore();
+const editArticle = articleStore.editArticle;
 </script>
 
 <template>
@@ -9,7 +12,8 @@ const userStore = useUserStore();
       <div id="overlaye"></div>
       <form>
         <fieldset>
-          <legend>Ajouter un article</legend>
+          <legend v-if="!editMode">Ajouter un article</legend>
+          <legend v-else>Modifier un article</legend>
 
           <label for="title-article"
             ><span>{{ formErrors.title }}</span></label
@@ -59,7 +63,12 @@ const userStore = useUserStore();
             >
               Annuler
             </button>
-            <button @click="createArticle" type="submit">Publier</button>
+            <button v-if="!editMode" @click="createArticle" type="submit">
+              Publier
+            </button>
+            <button v-else @click="createArticle" type="submit">
+              Modifier
+            </button>
           </div>
         </fieldset>
       </form>
@@ -75,41 +84,47 @@ export default {
       formErrors: {},
       article: {},
       input: "",
+      update: 0,
     };
   },
-  mounted() {
+  onMounted() {
     this.input = document.querySelector("#picture-article");
-    console.log(this.input);
   },
+  updated() {
+    if (this.update < 1) {
+      if (this.editMode) {
+        this.formData = {
+          title: this.articleStore.editArticle.title,
+          picture: this.articleStore.editArticle.picture,
+          content: this.articleStore.editArticle.content,
+          category: this.articleStore.editArticle.category,
+        };
+        this.update++;
+      }
+    }
+  },
+
   computed: {
     fileName() {
-      console.log(this.input.files);
       if (this.input.files > 0) {
         return this.input.files[0].name;
       }
     },
+    editMode() {
+      return this.articleStore.editArticle == "" ? false : true;
+    },
   },
+
   methods: {
     //FONCTION: Fermer la modale
 
     closeModaleNewArticle(e) {
       e.preventDefault();
+      this.articleStore.resetEditArticle();
+      this.formData = { category: -1 };
       let container = document.querySelector(".container-for-scroll");
       container.style.display = "none";
-    },
-
-    //FONCTION: charger la photo
-
-    loadPicture() {
-      var input = document.querySelector('input[type="file"]');
-      this.formData.picture = input.files[0].name;
-      let dataPic = new FormData();
-      dataPic.append("photo", input.files[0]);
-
-      fetch("http://localhost:8889/api/index.php", {
-        method: "post",
-        body: dataPic,
-      });
+      this.update--;
     },
 
     //FONCTION: Enregistrer l'article en base de données
@@ -135,30 +150,48 @@ export default {
       let url = new URL("http://localhost:8889/api/index.php");
       url.search = "?route=/article";
 
-      return fetch(url, {
-        method: "POST",
-        credentials: "include",
-        methode: "cors",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify(article),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          if (result["errors"]) {
-            /* Si il y a une erreur... */
-            this.formErrors = result["errors"];
-          } else {
-            /* Sinon... */
-            this.article = result["data"];
+      if (this.editMode) {
+        article.setArticleId(this.articleStore.editArticle.id),
+          this.articleStore.updateArticle(article);
+      } else {
+        return fetch(url, {
+          method: "POST",
+          credentials: "include",
+          methode: "cors",
+          header: {
+            "Content-Type": "application/json; charset=UTF-8",
+          },
+          body: JSON.stringify(article),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result["errors"]) {
+              /* Si il y a une erreur... */
+              this.formErrors = result["errors"];
+            } else {
+              /* Sinon... */
+              this.article = result["data"];
 
-            //On ferme la modale
+              //On ferme la modale
 
-            let container = document.querySelector(".container-for-scroll");
-            container.style.display = "none";
-          }
-        });
+              let container = document.querySelector(".container-for-scroll");
+              container.style.display = "none";
+            }
+          });
+      }
+    },
+    //FONCTION: charger la photo
+
+    loadPicture() {
+      var input = document.querySelector('input[type="file"]');
+      this.formData.picture = input.files[0].name;
+      let dataPic = new FormData();
+      dataPic.append("photo", input.files[0]);
+
+      fetch("http://localhost:8889/api/index.php", {
+        method: "post",
+        body: dataPic,
+      });
     },
   },
 };
@@ -232,7 +265,7 @@ select {
   width: 85%;
   line-height: 2em;
   text-align: center;
-  border-radius: 2em 0em;
+  border-radius: 2em;
 }
 
 #label-picture-article {

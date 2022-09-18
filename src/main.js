@@ -10,7 +10,7 @@ app.use(router);
 app.mount("#app");
 
 import { getCurrentInstance } from "vue";
-import { createPinia } from 'pinia'
+import { createPinia } from "pinia";
 export default {
   setup() {
     // accessible inside setup function

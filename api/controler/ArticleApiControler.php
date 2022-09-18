@@ -56,8 +56,9 @@ class ArticleApiControler {
   }
 
   public function proceedUpdateArticle(Request $request): Response {
-    $articleId = $request->getQueryParam('id');
-    $article = $this->_articleRepo->getArticle($articleId);
+
+    $articleId = $request->getData();
+    $article = $this->_articleRepo->getArticle($articleId['_id']);
     $payload = $request->getData();
 
     if (empty($article)) {
@@ -68,9 +69,9 @@ class ArticleApiControler {
     }
 
     $errors = [
-      'title'     => $article->setTitle(htmlentities($payload['title'] ?? '')),
-      'picture' => $article->setPicture(htmlentities($payload['picture'] ?? '')),
-      'content'  => $article->setContent(htmlentities($payload['content'] ?? '')),
+      'title' => $article->setTitle(htmlentities($payload['_title'] ?? '')),
+      'picture' => $article->setPicture(htmlentities($payload['_picture'] ?? '')),
+      'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
     ];
    
 
