@@ -21,6 +21,7 @@ if(isset($_FILES['photo'])){
     $size = $_FILES['photo']['size'];
     $error = $_FILES['photo']['error'];
     if(move_uploaded_file($tmpName, '../src/assets/images/'.$name));
+    die();
 }
 
 

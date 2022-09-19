@@ -122,6 +122,7 @@ export default {
       e.preventDefault();
       this.articleStore.resetEditArticle();
       this.formData = { category: -1 };
+      this.formErrors={};
       let container = document.querySelector(".container-for-scroll");
       container.style.display = "none";
       this.update--;
@@ -145,33 +146,38 @@ export default {
         (this.formData.author_Id = this.userStore.user._id)
       );
 
-      //Envoie au serveur PHP la requête avec article en JSON
-
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article";
 
       if (this.editMode) {
+
           article.setArticleId(this.articleStore.editArticle.id);
           let result = await this.articleStore.updateArticle(article);
-          this.formErrors = result['errors'];
-          console.log(this.formErrors)
+          if (result["errors"]) {
+            /* Si il y a une erreur... */
+            this.formErrors = result["errors"];
+          } else {
+            /* Sinon... */
+            this.article = result["data"];
+
+             //On ferme la modale
+
+            let container = document.querySelector(".container-for-scroll");
+            container.style.display = "none";
+          }
+         
       } else {
-        let result = await this.articleStore.updateArticle
-          .then((response) => response.json())
-          .then((result) => {
-            if (result["errors"]) {
-              /* Si il y a une erreur... */
-              this.formErrors = result["errors"];
-            } else {
-              /* Sinon... */
-              this.article = result["data"];
+          let result = await this.articleStore.createArticle(article);
+          if (result["errors"]) {
+            /* Si il y a une erreur... */
+            this.formErrors = result["errors"];
+          } else {
+            /* Sinon... */
+            this.article = result["data"];
 
-              //On ferme la modale
+            //On ferme la modale
 
-              let container = document.querySelector(".container-for-scroll");
-              container.style.display = "none";
-            }
-          });
+            let container = document.querySelector(".container-for-scroll");
+            container.style.display = "none";
+          }
       }
     },
     //FONCTION: charger la photo

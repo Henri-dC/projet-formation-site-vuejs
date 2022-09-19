@@ -12,6 +12,8 @@ export const useArticleStore = defineStore("ArticleStore", {
   },
   actions: {
     async createArticle(article){
+      let url = new URL("http://localhost:8889/api/index.php");
+      url.search = "?route=/article";
       return fetch(url, {
         method: "POST",
         credentials: "include",
