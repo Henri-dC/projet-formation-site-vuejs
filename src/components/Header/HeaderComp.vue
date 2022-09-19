@@ -10,7 +10,11 @@ const userStore = useUserStore();
   <div class="nav-container">
     <ul id="menu">
       <li>
-        <i v-show="userStore.user" class="fa-solid fa-bars" @click="toggleMenu"></i>
+        <i
+          v-show="userStore.user"
+          class="icon fa-solid fa-bars"
+          @click="toggleMenu"
+        ></i>
         <ul v-if="this.userMenu" id="user-menu">
           <li @click="queryArticlesUser">Mes articles</li>
           <li @click="addArticleDisplay">Ecrire un article</li>
@@ -18,18 +22,21 @@ const userStore = useUserStore();
       </li>
       <li id="logo-title">
         <h1>
-          <a href="/">Deskiñ</a>
+          <a id="title-link" href="/">Deskiñ</a>
         </h1>
       </li>
-      <li id="user-logo" @click="toggleSignForm">
-        <i class="fa-solid fa-user"></i>
+      <li v-if="!userStore.user" id="user-connect" @click="toggleSignForm">
+        <i class="icon fa-solid fa-user"></i>
+      </li>
+      <li v-else id="user-disconnect" class="icon" @click="toggleSignForm">
+        User : {{ userStore.user._firstName }}
       </li>
     </ul>
     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
     <div id="disconnect-user" v-show="userStore.user">
-      <h5 id="user-name">
+      <p id="user-name">
         {{ userStore.user ? userStore.user._firstName : "" }}
-      </h5>
+      </p>
       <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
     </div>
   </div>
@@ -70,6 +77,7 @@ export default {
   width: 100%;
   border-block: 3px solid black;
   background-color: var(--main-bg-color);
+  z-index: 5;
 }
 
 h1 {
@@ -80,7 +88,7 @@ h1 {
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
-a {
+#title-link {
   text-decoration: none;
   color: white;
   font-family: "Rubik", sans-serif;
@@ -102,7 +110,7 @@ i {
   color: #eee;
 }
 
-.fa-solid {
+.icon {
   color: var(--second-bg-color);
   color: white;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
