@@ -57,18 +57,12 @@ class ArticleApiControler {
 
   public function proceedUpdateArticle(Request $request): Response {
 
-    $articleId = $request->getData();
-    $article = $this->_articleRepo->getArticle($articleId['_id']);
     $payload = $request->getData();
-
-    if (empty($article)) {
-      $response = new Response();
-      $response->setHttpStatusCode(HttpStatusCode::NOT_FOUND);
-      $response->setErrors(['Article not found']);
-      return $response;
-    }
+    $article = new Article();
+    
 
     $errors = [
+      'id'=>$article->setId($payload['_id']),
       'title' => $article->setTitle(htmlentities($payload['_title'] ?? '')),
       'picture' => $article->setPicture(htmlentities($payload['_picture'] ?? '')),
       'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),

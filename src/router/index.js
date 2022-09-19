@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/public/HomeView.vue";
 import AdminLayout from "../views/admin/Layout.vue";
-import EditView from "../views/public/EditView.vue";
+
 
 
 const router = createRouter({
@@ -11,11 +11,6 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
-    },
-    {
-      path: "/article/edit/:id",
-      name: "edit",
-      component: EditView,
     },
     {
       path: "/admin",

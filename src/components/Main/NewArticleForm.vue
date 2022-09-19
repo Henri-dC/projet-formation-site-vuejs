@@ -151,18 +151,12 @@ export default {
       url.search = "?route=/article";
 
       if (this.editMode) {
-        article.setArticleId(this.articleStore.editArticle.id),
-          this.articleStore.updateArticle(article);
+          article.setArticleId(this.articleStore.editArticle.id);
+          let result = await this.articleStore.updateArticle(article);
+          this.formErrors = result['errors'];
+          console.log(this.formErrors)
       } else {
-        return fetch(url, {
-          method: "POST",
-          credentials: "include",
-          methode: "cors",
-          header: {
-            "Content-Type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify(article),
-        })
+        let result = await this.articleStore.updateArticle
           .then((response) => response.json())
           .then((result) => {
             if (result["errors"]) {
@@ -301,5 +295,9 @@ select {
 button {
   line-height: 1.7em;
   border-radius: 10em;
+}
+
+span{
+  color: red;
 }
 </style>

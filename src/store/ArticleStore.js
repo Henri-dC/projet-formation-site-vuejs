@@ -11,6 +11,18 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
   },
   actions: {
+    async createArticle(article){
+      return fetch(url, {
+        method: "POST",
+        credentials: "include",
+        methode: "cors",
+        header: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify(article),
+      })
+        .then((response) => response.json())
+    },
     async queryArticles() {
       let url = new URL("http://localhost:8889/api/index.php");
       url.search = "?route=/article";
@@ -74,10 +86,7 @@ export const useArticleStore = defineStore("ArticleStore", {
         },
         body: JSON.stringify(article),
       })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-        });
+      .then((response) => response.json())
     },
 
     queryArticleById(id) {
