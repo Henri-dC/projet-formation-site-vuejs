@@ -5,35 +5,56 @@ const store = useArticleStore();
 
 <template>
   <div id="container-select-category">
-    <h2>Catégories</h2>
-    <button
-      class="select-category-button"
-      @click="store.getArticlesByCategory('musique')"
-    >
-      Musique
-    </button>
-    <button
-      class="select-category-button"
-      @click="store.getArticlesByCategory('sport')"
-    >
-      Sport
-    </button>
-    <button class="select-category-button" @click="store.queryArticles()">
-      Tous
-    </button>
-    <button class="select-category-button" @click="store.queryArticles()">
-      Tous
-    </button>
-    <button class="select-category-button" @click="store.queryArticles()">
-      Tous
-    </button>
-    <button class="select-category-button" @click="store.queryArticles()">
-      Tous
-    </button>
+    <h2 @click="ToggleSelectCategory">Catégories <i class="fa-solid fa-chevron-down"></i></h2>
+    <div v-if="showSelectCategory" id="open-select-category">
+      <button
+        class="select-category-button"
+        @click="store.getArticlesByCategory('musique')"
+      >
+        Musique
+      </button>
+      <button
+        class="select-category-button"
+        @click="store.getArticlesByCategory('sport')"
+      >
+        Sport
+      </button>
+      <button class="select-category-button" @click="store.queryArticles()">
+        Tous
+      </button>
+      <button class="select-category-button" @click="store.queryArticles()">
+        Tous
+      </button>
+      <button class="select-category-button" @click="store.queryArticles()">
+        Tous
+      </button>
+      <button class="select-category-button" @click="store.queryArticles()">
+        Tous
+      </button>
+    </div>
   </div>
 </template>
 
+<script>
+export default {
+  data(){
+    return{
+      showSelectCategory:false
+    }
+  },
+  methods: {
+    ToggleSelectCategory(){
+      this.showSelectCategory=!this.showSelectCategory;
+    }
+  },
+}
+</script>
+
 <style scoped>
+h2{
+  cursor:pointer;
+}
+
 #container-select-category {
   margin-top: 10em;
   text-align: center;

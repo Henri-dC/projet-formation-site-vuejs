@@ -8,8 +8,7 @@ const userStore = useUserStore();
 
 <template>
   <div class="nav-container">
-    <ul id="menu">
-      <li>
+      <div id="menu">
         <i
           v-show="userStore.user"
           class="icon fa-solid fa-bars"
@@ -19,26 +18,19 @@ const userStore = useUserStore();
           <li @click="queryArticlesUser">Mes articles</li>
           <li @click="addArticleDisplay">Ecrire un article</li>
         </ul>
-      </li>
-      <li id="logo-title">
+      </div>
+      <div id="logo-title">
         <h1>
           <a id="title-link" href="/">Deskiñ</a>
         </h1>
-      </li>
-      <li v-if="!userStore.user" id="user-connect" @click="toggleSignForm">
+      </div>
+      <div v-if="!userStore.user" id="user-connect" @click="toggleSignForm">
         <i class="icon fa-solid fa-user"></i>
-      </li>
-      <li v-else id="user-disconnect" class="icon" @click="toggleSignForm">
-        User : {{ userStore.user._firstName }}
-      </li>
-    </ul>
+      </div>
+      <div v-else id="user-account-name" class="icon">
+         {{ userStore.user._firstName }}<i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
+      </div>
     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
-    <div id="disconnect-user" v-show="userStore.user">
-      <p id="user-name">
-        {{ userStore.user ? userStore.user._firstName : "" }}
-      </p>
-      <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
-    </div>
   </div>
 </template>
 
@@ -73,11 +65,19 @@ export default {
 <style scoped>
 .nav-container {
   position: fixed;
+  justify-content:center;
+  align-items:center;
   top: 0;
   width: 100%;
+  display:flex;
+  justify-content:space-between;
   border-block: 3px solid black;
   background-color: var(--main-bg-color);
   z-index: 5;
+}
+
+div{
+  width:100%;
 }
 
 h1 {
@@ -86,12 +86,12 @@ h1 {
   font-size: 1em;
   outline: 5px solid var(--second-bg-color);
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+  font-size: 3em;
 }
 
 #title-link {
   text-decoration: none;
   color: white;
-  font-family: "Rubik", sans-serif;
   text-shadow: #aaa;
 }
 
@@ -103,11 +103,11 @@ i {
   display: flex;
   list-style-type: none;
   justify-content: space-around;
-  align-items: center;
-  font-size: 3em;
+ 
   margin: 0;
   padding: 0;
   color: #eee;
+  font-family: "Rubik", sans-serif; 
 }
 
 .icon {
@@ -116,25 +116,10 @@ i {
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
-#user-name {
-  margin: 0;
-  margin-left: 1em;
-  margin-right: 1em;
+.icon:nth-child(-n+3){
+  font-size:3em;
 }
 
-#disconnect-user {
-  position: absolute;
-  right: 0em;
-  top: 103%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5em;
-  font-size: 1.8em;
-  background-color: var(--second-bg-color);
-  border-bottom: 2px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
-}
 
 #user-menu > li {
   list-style-type: none;
@@ -157,6 +142,19 @@ i {
   left: 0;
   z-index: 20;
   padding: 0;
+}
+
+#user-account-name{
+  font-size:1.4em;
+  text-align:center;
+}
+
+.fa-toggle-on{
+  margin-left:1em;
+}
+
+#user-connect{
+  text-align:center;
 }
 
 @media screen and (min-width: 600px) {
