@@ -9,7 +9,7 @@ class LoginRepository {
 
   public function getConnexion(Credentials $credentials) {
     $stmt = $this->_connexion->prepare('
-      SELECT id, email, password, firstName, lastName
+      SELECT id, email, password, firstName, lastName, is_admin
         FROM Account
        WHERE email = :email
     ');

@@ -1,7 +1,7 @@
 <template>
   <div class="admin">
-    <input type="text" name="" id="" />
-    <router-view />
+    <button>Gérer les articles</button>
+    <button>Gérer les utilisateurs</button>
   </div>
 </template>
 
@@ -14,7 +14,8 @@ export default {
 <style scoped>
 .admin {
   background-color: aqua;
-  height: 50vh;
+  height: 70vh;
   margin-top: 5em;
+  text-align:center;
 }
 </style>

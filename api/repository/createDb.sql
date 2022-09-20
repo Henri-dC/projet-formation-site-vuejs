@@ -32,7 +32,9 @@ CREATE TABLE `Account` (
   `email` varchar(40) NOT NULL,
   `password` char(64) NOT NULL,
   `firstName` varchar(40) NOT NULL,
-  `lastName` varchar(40) NOT NULL
+  `lastName` varchar(40) NOT NULL,
+  'is_admin' varchar(5) DEFAULT 'false',
+  `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

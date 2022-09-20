@@ -9,7 +9,7 @@ class AccountRepository {
 
   public function getAccount(string $id): ?Account {
     $stmt = $this->_connexion->prepare('
-      SELECT id, email, password, firstName, lastName
+      SELECT id, email, password, firstName, lastName, is_admin
         FROM Account
        WHERE id = :id
     ');
@@ -28,6 +28,7 @@ class AccountRepository {
     $account->setFirstName($row['firstName']);
     $account->setLastName($row['lastName']);
     $account->setEncryptedPassword($row['password']);
+    $account->setIsAdmin($row['is_admin']);
 
     return $account;
   }

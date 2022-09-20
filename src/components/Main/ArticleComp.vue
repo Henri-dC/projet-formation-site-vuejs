@@ -30,11 +30,19 @@ const store = useArticleStore();
     >
       Modifier
     </button>
+    <button
+      id="delete-article"
+      v-if="admin=='true'"
+      @click="deleteArticle(article.id)"
+    >
+      Supprimer
+    </button>
   </div>
 </template>
 
 <script>
 export default {
+  props:['admin'],
   methods: {
     calcUrl(url) {
       let src = new URL(url, import.meta.url);
@@ -45,6 +53,9 @@ export default {
       container.style.display = "block";
 
       this.store.queryArticleById(id);
+    },
+    deleteArticle(id){
+      this.store.deleteArticle(id)
     },
   },
   beforeMount() {

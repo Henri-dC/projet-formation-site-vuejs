@@ -164,7 +164,8 @@ export default {
               this.current_user = new User(
                 result["data"]["id"],
                 result["data"]["firstName"],
-                result["data"]["lastName"]
+                result["data"]["lastName"],
+                result["data"]["is_admin"]
               );
               localStorage.setItem("user", JSON.stringify(this.current_user));
               window.location = "http://localhost:5173";

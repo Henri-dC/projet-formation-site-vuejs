@@ -99,6 +99,21 @@ export const useArticleStore = defineStore("ArticleStore", {
       }
     },
 
+    async deleteArticle(id){
+      let url = new URL("http://localhost:8889/api/index.php");
+      url.search = "?route=/article&id="+id;
+
+      return fetch(url, {
+        method: "DELETE",
+        mode: "cors",
+        credentials: "include",
+        header: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      })
+      .then((response) => response.json())
+    },
+
     resetEditArticle() {
       this.editArticle = [];
     },

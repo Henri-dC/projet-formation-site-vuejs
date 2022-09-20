@@ -15,8 +15,8 @@ class Article {
 }
 
 class User {
-  constructor(id, firstName, lastName) {
-    (this._id = id), (this._firstName = firstName), (this._lastName = lastName);
+  constructor(id, firstName, lastName, isAdmin) {
+    (this._id = id), (this._firstName = firstName), (this._lastName = lastName), this._isAdmin = isAdmin;
   }
 }
 

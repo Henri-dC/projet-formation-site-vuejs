@@ -7,6 +7,9 @@ export const useUserStore = defineStore("UserStore", {
   getters: {
     getUserId(){
       if(this.user==undefined){return ""}else{ return this.user._id}
+    },
+    getUserAdmin(){
+      if(this.user==undefined){return ""}else{ return this.user._isAdmin}
     }
   },
   actions: {
