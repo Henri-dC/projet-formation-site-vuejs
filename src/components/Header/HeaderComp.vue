@@ -8,28 +8,29 @@ const userStore = useUserStore();
 
 <template>
   <div class="nav-container">
-      <div id="menu">
-        <i
-          v-show="userStore.user"
-          class="icon fa-solid fa-bars"
-          @click="toggleMenu"
-        ></i>
-        <ul v-if="this.userMenu" id="user-menu">
-          <li @click="queryArticlesUser">Mes articles</li>
-          <li @click="addArticleDisplay">Ecrire un article</li>
-        </ul>
-      </div>
-      <div id="logo-title">
-        <h1>
-          <a id="title-link" href="/">Deskiñ</a>
-        </h1>
-      </div>
-      <div v-if="!userStore.user" id="user-connect" @click="toggleSignForm">
-        <i class="icon fa-solid fa-user"></i>
-      </div>
-      <div v-else id="user-account-name" class="icon">
-         {{ userStore.user._firstName }}<i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
-      </div>
+    <div id="menu">
+      <i
+        v-show="userStore.user"
+        class="icon fa-solid fa-bars"
+        @click="toggleMenu"
+      ></i>
+      <ul v-if="this.userMenu" id="user-menu">
+        <li @click="queryArticlesUser">Mes articles</li>
+        <li @click="addArticleDisplay">Ecrire un article</li>
+      </ul>
+    </div>
+    <div id="logo-title">
+      <h1>
+        <a id="title-link" href="/">Deskiñ</a>
+      </h1>
+    </div>
+    <div v-if="!userStore.user" id="user-connect" @click="toggleSignForm">
+      <i class="icon fa-solid fa-user"></i>
+    </div>
+    <div v-else id="user-account-name" class="icon">
+      {{ userStore.user._firstName
+      }}<i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
+    </div>
     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
   </div>
 </template>
@@ -65,19 +66,20 @@ export default {
 <style scoped>
 .nav-container {
   position: fixed;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   top: 0;
   width: 100%;
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
   border-block: 3px solid black;
   background-color: var(--main-bg-color);
   z-index: 5;
 }
 
-div{
-  width:100%;
+div {
+  width: 100%;
+  text-align: center;
 }
 
 h1 {
@@ -103,11 +105,11 @@ i {
   display: flex;
   list-style-type: none;
   justify-content: space-around;
- 
+
   margin: 0;
   padding: 0;
   color: #eee;
-  font-family: "Rubik", sans-serif; 
+  font-family: "Rubik", sans-serif;
 }
 
 .icon {
@@ -116,10 +118,9 @@ i {
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
-.icon:nth-child(-n+3){
-  font-size:3em;
+.icon:nth-child(-n + 3) {
+  font-size: 3em;
 }
-
 
 #user-menu > li {
   list-style-type: none;
@@ -144,17 +145,17 @@ i {
   padding: 0;
 }
 
-#user-account-name{
-  font-size:1.4em;
-  text-align:center;
+#user-account-name {
+  font-size: 1.4em;
+  text-align: center;
 }
 
-.fa-toggle-on{
-  margin-left:1em;
+.fa-toggle-on {
+  margin-left: 1em;
 }
 
-#user-connect{
-  text-align:center;
+#user-connect {
+  text-align: center;
 }
 
 @media screen and (min-width: 600px) {

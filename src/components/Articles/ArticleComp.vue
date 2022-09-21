@@ -12,7 +12,9 @@ const store = useArticleStore();
     :key="article"
   >
     <article>
-      <h2>{{ article.title }}</h2>
+      <router-link :to="{ name: 'article', params: { id: article.id } }">
+        <h2>{{ article.title }}</h2>
+      </router-link>
       <img
         :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
       />
@@ -25,14 +27,14 @@ const store = useArticleStore();
     </article>
     <button
       id="edit-article"
-      v-if="UserStore.getUserId == article.author_Id||admin=='true'"
+      v-if="UserStore.getUserId == article.author_Id || admin == 'true'"
       @click="editDisplay(article.id)"
     >
       Modifier
     </button>
     <button
       id="delete-article"
-      v-if="admin=='true'"
+      v-if="admin == 'true'"
       @click="deleteArticle(article.id)"
     >
       Supprimer
@@ -42,7 +44,7 @@ const store = useArticleStore();
 
 <script>
 export default {
-  props:['admin'],
+  props: ["admin"],
   methods: {
     calcUrl(url) {
       let src = new URL(url, import.meta.url);
@@ -53,8 +55,8 @@ export default {
       container.style.display = "block";
       this.store.queryArticleById(id);
     },
-    deleteArticle(id){
-      this.store.deleteArticle(id)
+    deleteArticle(id) {
+      this.store.deleteArticle(id);
     },
   },
   beforeMount() {

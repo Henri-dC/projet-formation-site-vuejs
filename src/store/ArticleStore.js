@@ -11,7 +11,7 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
   },
   actions: {
-    async createArticle(article){
+    async createArticle(article) {
       let url = new URL("http://localhost:8889/api/index.php");
       url.search = "?route=/article";
       return fetch(url, {
@@ -22,8 +22,7 @@ export const useArticleStore = defineStore("ArticleStore", {
           "Content-Type": "application/json; charset=UTF-8",
         },
         body: JSON.stringify(article),
-      })
-        .then((response) => response.json())
+      }).then((response) => response.json());
     },
     async queryArticles() {
       let url = new URL("http://localhost:8889/api/index.php");
@@ -87,21 +86,20 @@ export const useArticleStore = defineStore("ArticleStore", {
           "Content-Type": "application/json; charset=UTF-8",
         },
         body: JSON.stringify(article),
-      })
-      .then((response) => response.json())
+      }).then((response) => response.json());
     },
 
     queryArticleById(id) {
-      for (let i = 0; i < this.articles.length - 1; i++) {
+      for (let i = 0; i < this.articles.length; i++) {
         if (this.articles[i].id == id) {
           this.editArticle = this.articles[i];
         }
       }
     },
 
-    async deleteArticle(id){
+    async deleteArticle(id) {
       let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article&id="+id;
+      url.search = "?route=/article&id=" + id;
 
       return fetch(url, {
         method: "DELETE",
@@ -110,8 +108,7 @@ export const useArticleStore = defineStore("ArticleStore", {
         header: {
           "Content-Type": "application/json; charset=UTF-8",
         },
-      })
-      .then((response) => response.json())
+      }).then((response) => response.json());
     },
 
     resetEditArticle() {
