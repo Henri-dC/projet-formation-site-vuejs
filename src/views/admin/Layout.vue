@@ -1,7 +1,11 @@
+<script setup>
+import ListAccount from "../../components/ListAccount.vue";
+</script>
+
 <template>
   <div class="admin">
-    <button>Gérer les articles</button>
-    <button>Gérer les utilisateurs</button>
+    <ListAccount/>
+    <router-link to="/admin/articles" tag="button">Gérer les articles</router-link>
   </div>
 </template>
 

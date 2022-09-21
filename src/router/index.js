@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/public/HomeView.vue";
+import ArticleView from "../views/public/ArticleView.vue"
 import AdminLayout from "../views/admin/Layout.vue";
-import AdminArticle from "../views/admin/AdminArticleView.vue"
+import AdminArticle from "../views/admin/AdminArticleView.vue";
+
 
 
 
@@ -12,6 +14,11 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+    },
+    {
+      path: "/article/:id",
+      name: "article",
+      component: ArticleView,
     },
     {
       path: "/admin",

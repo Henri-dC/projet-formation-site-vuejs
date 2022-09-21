@@ -1,7 +1,7 @@
 <script setup>
-import ArticleComp from "./ArticleComp.vue";
-import NewArticleForm from "./NewArticleForm.vue";
-import SelectCategoryButton from "./SelectCategoryButton.vue";
+import ArticleComp from "../Articles/ArticleComp.vue";
+import NewArticleForm from "../Articles/NewArticleForm.vue";
+import SelectCategoryButton from "../Articles/SelectCategoryButton.vue";
 </script>
 
 <template>

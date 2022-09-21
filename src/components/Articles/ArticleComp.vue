@@ -25,7 +25,7 @@ const store = useArticleStore();
     </article>
     <button
       id="edit-article"
-      v-if="UserStore.getUserId == article.author_Id"
+      v-if="UserStore.getUserId == article.author_Id||admin=='true'"
       @click="editDisplay(article.id)"
     >
       Modifier
@@ -51,7 +51,6 @@ export default {
     editDisplay(id) {
       let container = document.querySelector(".container-for-scroll");
       container.style.display = "block";
-
       this.store.queryArticleById(id);
     },
     deleteArticle(id){
