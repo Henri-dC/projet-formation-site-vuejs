@@ -35,7 +35,7 @@ class Router {
                 switch($request->getMethod()) {
                     case 'POST':
                         $controler = new ArticleApiControler();
-                        return $controler->proceedListArticlesById($request);
+                        return $controler->proceedListArticlesByAuthor($request);
                     case 'GET':
                         $controler = new ArticleApiControler();
                         return $controler->proceedListArticlesByCategory($request);    
@@ -45,7 +45,16 @@ class Router {
                 $controler = new LoginApiControler();
                     return $controler->proceedConnexion($request);
 
-        
+            case '/category':
+                switch($request->getMethod()) {
+                    case 'POST':
+                        $controler = new CategoryApiControler();
+                        return $controler->proceedCreateCategory($request);
+                    case 'GET':
+                        $controler = new CategoryApiControler();
+                        return $controler->proceedGetCategories();    
+                    }
+            
             default:
                 $response = new Response();
                 $response->setHttpStatusCode(HttpStatusCode::NOT_FOUND);

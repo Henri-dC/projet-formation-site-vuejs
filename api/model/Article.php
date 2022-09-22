@@ -5,7 +5,7 @@ class Article implements \JsonSerializable {
     private string $title;
     private string $picture;
     private string $content;
-    private string $category;
+    private string $category_id;
     private string $author;
     private string $author_Id;
 
@@ -49,9 +49,9 @@ class Article implements \JsonSerializable {
         return 'Veuillez écrire du contenu';
     }
     
-    public function setCategory(string $category): string {
+    public function setCategory_Id(string $category_id): string {
         if (!empty($category)) {
-            $this->category = $category;
+            $this->category_id = $category_id;
             return '';
         }
         return 'Veuillez renseigner une categorie';
@@ -88,7 +88,7 @@ class Article implements \JsonSerializable {
         return $this->content;
     }
     
-    public function getCategory(): string {
+    public function getCategory_Id(): string {
         return $this->category;
     }
 

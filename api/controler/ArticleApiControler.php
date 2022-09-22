@@ -27,7 +27,7 @@ class ArticleApiControler {
       'title'     => $article->setTitle(htmlentities($payload['_title'] ?? '')),
       'picture'  => $article->setPicture($payload['_picture'] ?? ''),
       'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
-      'category'  => $article->setCategory(htmlentities($payload['_category'] ?? '')),
+      'category'  => $article->setCategory_Id(htmlentities($payload['_category'] ?? '')),
       'author'  => $article->setAuthor(htmlentities($payload['_author'] ?? '')),
       'author_Id'  => $article->setAuthor_Id(htmlentities($payload['_author_Id'] ?? '')),
     ];
@@ -99,10 +99,10 @@ class ArticleApiControler {
     return $response;
   }
 
-  public function proceedListArticlesById(Request $request): Response {
+  public function proceedListArticlesByAuthor(Request $request): Response {
     $articleId = $request->getData();
    
-   $article = $this->_articleRepo->listArticlesById($articleId['id']);
+   $article = $this->_articleRepo->listArticlesByAuthor($articleId['id']);
 
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::OK);

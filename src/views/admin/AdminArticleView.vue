@@ -7,8 +7,20 @@
     <div id="container">
         <ArticleComp admin='true'/>
         <NewArticleForm/>
+        <button @click="show">Show Catégories</button>
     </div>
 </template>
+
+<script>
+export default {
+    methods:{
+        show(){
+            let request = new fetchData('GET', '?route=/category')
+            request.query()
+        }
+    }
+}
+</script>
 
 <style scoped>
     #container{
