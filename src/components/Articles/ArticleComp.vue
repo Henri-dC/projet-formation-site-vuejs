@@ -6,41 +6,46 @@ const store = useArticleStore();
 </script>
 
 <template>
-  <div
-    class="article-container"
-    v-for="article in store.articles"
-    :key="article"
-  >
-    <article>
-      <time>{{ article.creation_date }}</time>
-      <router-link :to="{ name: 'article', params: { id: article.id } }">
-        <h2>{{ article.title }}</h2>
-      </router-link>
+  <div id="main-article-container">
+    <div
+      class="article-container"
+      v-for="article in store.articles"
+      :key="article"
+    >
+      <article>
+        <time>{{ article.creation_date }}</time>
+        <router-link
+          class="router-link"
+          :to="{ name: 'article', params: { id: article.id } }"
+        >
+          <h2>{{ article.title }}</h2>
+        </router-link>
 
-      <img
-        :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
-      />
-      <div class="content">
-        <p>{{ article.content }}</p>
-      </div>
-      <div class="article-footer">
-        <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
-      </div>
-    </article>
-    <button
-      id="edit-article"
-      v-if="UserStore.getUserId == article.author_Id || admin == 'true'"
-      @click="editDisplay(article.id)"
-    >
-      Modifier
-    </button>
-    <button
-      id="delete-article"
-      v-if="admin == 'true'"
-      @click="deleteArticle(article.id)"
-    >
-      Supprimer
-    </button>
+        <img
+          :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
+        />
+        <div class="content">
+          <p>{{ article.content }}</p>
+        </div>
+        <div class="article-footer">
+          <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
+        </div>
+      </article>
+      <button
+        id="edit-article"
+        v-if="UserStore.getUserId == article.author_Id || admin == 'true'"
+        @click="editDisplay(article.id)"
+      >
+        Modifier
+      </button>
+      <button
+        id="delete-article"
+        v-if="admin == 'true'"
+        @click="deleteArticle(article.id)"
+      >
+        Supprimer
+      </button>
+    </div>
   </div>
 </template>
 
@@ -68,22 +73,28 @@ export default {
 </script>
 
 <style scoped>
-.article-container {
+#main-article-container {
+  display: flex;
+  flex-wrap: wrap;
   width: 80%;
+  margin: auto;
+}
+
+.article-container {
+  width: 60%;
   margin: auto;
   background-color: rgba(253, 253, 253, 0.863);
   margin-top: 2em;
   text-align: center;
   padding: 1em;
-  border: 1px solid black;
+  border: 4px solid black;
   border-radius: 1em;
 }
 
 time {
   position: relative;
   display: block;
-  top: 0;
-  left: 0;
+  text-decoration: underline;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
@@ -94,6 +105,11 @@ time {
 h2 {
   color: firebrick;
 }
+
+.router-link {
+  text-decoration: none;
+}
+
 img {
   width: 90%;
 }

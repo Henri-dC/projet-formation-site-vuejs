@@ -168,7 +168,7 @@ export default {
           container.style.display = "none";
         }
       } else {
-        let result = await this.articleStore.createArticle(article);
+        let result = this.articleStore.createArticle(article);
         if (result["errors"]) {
           /* Si il y a une erreur... */
           this.formErrors = result["errors"];
