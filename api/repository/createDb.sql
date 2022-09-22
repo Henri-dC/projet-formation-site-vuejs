@@ -37,11 +37,6 @@ CREATE TABLE `Account` (
   `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Index pour les tables déchargées
---
-
---
 -- Index pour la table `Account`
 --
 ALTER TABLE `Account`
@@ -57,18 +52,33 @@ COMMIT;
 
 CREATE TABLE `Articles`(
   `id` char(36) NOT NULL,
-  `title` varchar(30) NOT NULL,
-  `picture` varchar(30),
-  `content` varchar(255) NOT NULL,
-  `category` char(36),
-  `author` char(36),
-  'date' 
-  FOREIGN KEY (`author`) REFERENCES Account(`id`)
+  `title` varchar(50) NOT NULL,
+  `picture` varchar(30) NOT NULL,
+  `content` TEXT NOT NULL,
+  `category_id` char(36) NOT NULL,
+  `author` char(36) NOT NULL,
+  `author_id` char(36) NOT NULL,
+  `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`author_id`) REFERENCES Account(`id`),
+  FOREIGN KEY (`category_id`) REFERENCES Categories(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
---Index pour la table `Account`
+--Index pour la table `Account`--
 
 ALTER TABLE `Articles`
-  ADD PRIMARY KEY (`id`);
-COMMIT;
+  ADD PRIMARY KEY (`id`)
+
+
+--Structure de la table Catégories--
+
+CREATE TABLE `Categories`(
+  `id` char(36) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--Index pour la table `Categories`--
+
+ALTER TABLE `Categories`
+  ADD PRIMARY KEY (`id`)
