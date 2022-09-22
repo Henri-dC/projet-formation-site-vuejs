@@ -27,9 +27,9 @@ class ArticleApiControler {
       'title'     => $article->setTitle(htmlentities($payload['_title'] ?? '')),
       'picture'  => $article->setPicture($payload['_picture'] ?? ''),
       'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
-      'category'  => $article->setCategory_Id(htmlentities($payload['_category'] ?? '')),
+      'category'  => $article->setCategory_Id(htmlentities($payload['_category_Id'] ?? '')),
       'author'  => $article->setAuthor(htmlentities($payload['_author'] ?? '')),
-      'author_Id'  => $article->setAuthor_Id(htmlentities($payload['_author_Id'] ?? '')),
+      'author_id'  => $article->setAuthor_Id(htmlentities($payload['_author_Id'] ?? '')),
     ];
    
     // Remove empty errors from the errors array

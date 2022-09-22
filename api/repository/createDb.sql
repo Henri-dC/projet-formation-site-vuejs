@@ -53,7 +53,7 @@ COMMIT;
 CREATE TABLE `Articles`(
   `id` char(36) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `picture` varchar(30) NOT NULL,
+  `picture` varchar(50) NOT NULL,
   `content` TEXT NOT NULL,
   `category_id` char(36) NOT NULL,
   `author` char(36) NOT NULL,

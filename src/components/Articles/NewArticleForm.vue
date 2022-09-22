@@ -1,8 +1,10 @@
 <script setup>
 import { useUserStore } from "@/store/UserStore.js";
 import { useArticleStore } from "../../store/ArticleStore";
+import { useCategoryStore } from "../../store/CategoryStore";
 const articleStore = useArticleStore();
 const userStore = useUserStore();
+const storeCategories = useCategoryStore();
 const editArticle = articleStore.editArticle;
 </script>
 
@@ -48,12 +50,16 @@ const editArticle = articleStore.editArticle;
           <select
             name="category"
             id="category-article"
-            v-model="formData.category"
+            v-model="formData.category_Id"
           >
             <option value="-1" disabled>Sélectionnez une catégorie</option>
-            <option value="musique">Musique</option>
-            <option value="cuisine">Cuisine</option>
-            <option value="sport">Sport</option>
+            <option
+              v-for="category in storeCategories.getCategories"
+              :key="category.id"
+              :value="category.id"
+            >
+              {{ category.name }}
+            </option>
           </select>
 
           <div id="button-container">
@@ -97,7 +103,7 @@ export default {
           title: this.articleStore.editArticle.title,
           picture: this.articleStore.editArticle.picture,
           content: this.articleStore.editArticle.content,
-          category: this.articleStore.editArticle.category,
+          category: this.articleStore.editArticle.category_Id,
         };
         this.update++;
       }
@@ -122,7 +128,7 @@ export default {
       e.preventDefault();
       this.articleStore.resetEditArticle();
       this.formData = { category: -1 };
-      this.formErrors={};
+      this.formErrors = {};
       let container = document.querySelector(".container-for-scroll");
       container.style.display = "none";
       this.update--;
@@ -141,43 +147,40 @@ export default {
         this.formData.title,
         this.formData.picture,
         this.formData.content,
-        this.formData.category,
         (this.formData.author = this.userStore.user._firstName),
-        (this.formData.author_Id = this.userStore.user._id)
+        (this.formData.author_Id = this.userStore.user._id),
+        this.formData.category_Id
       );
 
-
       if (this.editMode) {
+        article.setArticleId(this.articleStore.editArticle.id);
+        let result = this.articleStore.updateArticle(article);
+        if (result["errors"]) {
+          /* Si il y a une erreur... */
+          this.formErrors = result["errors"];
+        } else {
+          /* Sinon... */
+          this.article = result["data"];
 
-          article.setArticleId(this.articleStore.editArticle.id);
-          let result = await this.articleStore.updateArticle(article);
-          if (result["errors"]) {
-            /* Si il y a une erreur... */
-            this.formErrors = result["errors"];
-          } else {
-            /* Sinon... */
-            this.article = result["data"];
+          //On ferme la modale
 
-             //On ferme la modale
-
-            let container = document.querySelector(".container-for-scroll");
-            container.style.display = "none";
-          }
-         
+          let container = document.querySelector(".container-for-scroll");
+          container.style.display = "none";
+        }
       } else {
-          let result = await this.articleStore.createArticle(article);
-          if (result["errors"]) {
-            /* Si il y a une erreur... */
-            this.formErrors = result["errors"];
-          } else {
-            /* Sinon... */
-            this.article = result["data"];
+        let result = await this.articleStore.createArticle(article);
+        if (result["errors"]) {
+          /* Si il y a une erreur... */
+          this.formErrors = result["errors"];
+        } else {
+          /* Sinon... */
+          this.article = result["data"];
 
-            //On ferme la modale
+          //On ferme la modale
 
-            let container = document.querySelector(".container-for-scroll");
-            container.style.display = "none";
-          }
+          let container = document.querySelector(".container-for-scroll");
+          container.style.display = "none";
+        }
       }
     },
     //FONCTION: charger la photo
@@ -213,7 +216,7 @@ export default {
   display: none;
   position: fixed;
   bottom: 0;
-  top: 4em;
+  top: 15em;
   width: 90%;
   max-height: 90%;
   margin-left: 5%;
@@ -224,7 +227,6 @@ export default {
 
 #modale-new-article {
   display: block;
-  top: 4em;
   width: 90%;
   margin-left: 5%;
   height: 100%;
@@ -303,7 +305,7 @@ button {
   border-radius: 10em;
 }
 
-span{
+span {
   color: red;
 }
 </style>

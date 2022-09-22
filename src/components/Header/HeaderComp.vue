@@ -122,10 +122,18 @@ i {
   font-size: 3em;
 }
 
+#user-menu {
+  position: absolute;
+  top: 80%;
+  left: 10%;
+  z-index: 20;
+  padding: 0;
+}
+
 #user-menu > li {
   list-style-type: none;
-  font-size: 0.6em;
-  background-color: var(--second-bg-color);
+  font-size: 2em;
+  background-color: white;
   cursor: pointer;
   color: black;
   border-bottom: 2px solid black;
@@ -134,15 +142,7 @@ i {
 }
 
 #user-menu > li:hover {
-  background-color: white;
-}
-
-#user-menu {
-  position: absolute;
-  top: 103%;
-  left: 0;
-  z-index: 20;
-  padding: 0;
+  background-color: var(--main-bg-color);
 }
 
 #user-account-name {

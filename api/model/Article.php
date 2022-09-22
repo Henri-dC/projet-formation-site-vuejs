@@ -7,7 +7,8 @@ class Article implements \JsonSerializable {
     private string $content;
     private string $category_id;
     private string $author;
-    private string $author_Id;
+    private string $author_id;
+    private string $creation_date;
 
     public function __construct() {
     }
@@ -49,9 +50,9 @@ class Article implements \JsonSerializable {
         return 'Veuillez écrire du contenu';
     }
     
-    public function setCategory_Id(string $category_id): string {
-        if (!empty($category)) {
-            $this->category_id = $category_id;
+    public function setCategory_Id(string $category_Id): string {
+        if (!empty($category_Id)) {
+            $this->category_id = $category_Id;
             return '';
         }
         return 'Veuillez renseigner une categorie';
@@ -66,10 +67,18 @@ class Article implements \JsonSerializable {
     }
     public function setAuthor_Id(string $author_Id): string {
         if (!empty($author_Id)) {
-            $this->author_Id = $author_Id;
+            $this->author_id = $author_Id;
             return '';
         }
         return 'Veuillez renseigner un identifiant auteur';
+    }
+
+    public function setCreationDate($creation_date): string {
+        if (isset($this->creation_date)) {
+          return 'Une date est déjà spécifié';
+        }
+        $this->creation_date = $creation_date;
+        return '';
     }
     
     public function getId(): string {
@@ -89,7 +98,7 @@ class Article implements \JsonSerializable {
     }
     
     public function getCategory_Id(): string {
-        return $this->category;
+        return $this->category_id;
     }
 
     public function getAuthor(): string {
@@ -97,6 +106,10 @@ class Article implements \JsonSerializable {
     }
 
     public function getAuthor_Id(): string {
-        return $this->author_Id;
+        return $this->author_id;
+    }
+
+    public function getCreationDate(): string {
+        return $this->creation_date;
     }
 }

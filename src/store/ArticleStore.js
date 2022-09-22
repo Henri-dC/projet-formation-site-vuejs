@@ -12,28 +12,28 @@ export const useArticleStore = defineStore("ArticleStore", {
   },
   actions: {
     createArticle(article) {
-     let query = new fetchData("POST", "?route=/article", article)
-     query.query().then((result)=>console.log(result))
+      let query = new fetchData("POST", "?route=/article", article);
+      let result = query.query().then(console.log(result));
+      return result;
     },
     queryArticles() {
-     let query = new fetchData("GET", "?route=/article")
-     query.query().then((result)=>this.articles=result['data'])
+      let query = new fetchData("GET", "?route=/article");
+      query.query().then((result) => (this.articles = result["data"]));
     },
     queryArticlesByUser(userId) {
       let user = {};
       user["id"] = userId;
-      let request = new fetchData('POST', '?route=/article/list', user)
-      request.query().then((result)=>this.articles=result['data'])
+      let request = new fetchData("POST", "?route=/article/list", user);
+      request.query().then((result) => (this.articles = result["data"]));
     },
     getArticlesByCategory(cat) {
       let route = "?route=/article/list&category=" + cat;
-      let request = new fetchData('GET', route)
-      request.query().then((result)=>this.articles=result['data'])
-     
+      let request = new fetchData("GET", route);
+      request.query().then((result) => (this.articles = result["data"]));
     },
     updateArticle(article) {
-      let request = new fetchData('PUT', "?route=/article", article)
-      request.query().then((result)=>console.log(result))
+      let request = new fetchData("PUT", "?route=/article", article);
+      request.query().then((result) => console.log(result));
     },
 
     queryArticleById(id) {
@@ -46,8 +46,8 @@ export const useArticleStore = defineStore("ArticleStore", {
 
     deleteArticle(id) {
       let route = "?route=/article&id=" + id;
-      let request = new fetchData('DELETE', route)
-      request.query().then((result)=>console.log(result))
+      let request = new fetchData("DELETE", route);
+      request.query().then((result) => console.log(result));
     },
 
     resetEditArticle() {

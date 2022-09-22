@@ -12,9 +12,11 @@ const store = useArticleStore();
     :key="article"
   >
     <article>
+      <time>{{ article.creation_date }}</time>
       <router-link :to="{ name: 'article', params: { id: article.id } }">
         <h2>{{ article.title }}</h2>
       </router-link>
+
       <img
         :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
       />
@@ -75,6 +77,14 @@ export default {
   padding: 1em;
   border: 1px solid black;
   border-radius: 1em;
+}
+
+time {
+  position: relative;
+  display: block;
+  top: 0;
+  left: 0;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .content {

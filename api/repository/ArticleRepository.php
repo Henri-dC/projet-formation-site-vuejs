@@ -9,7 +9,7 @@ class ArticleRepository {
 
   public function getArticle(string $id): ?Article {
     $stmt = $this->_connexion->prepare('
-      SELECT id, title, picture, content, category, author
+      SELECT id, title, picture, content, category_id, author, author_id
         FROM Articles
        WHERE id = :id
     ');
@@ -29,6 +29,7 @@ class ArticleRepository {
     $article->setContent($row['content']);
     $article->setCategory_Id($row['category_id']);
     $article->setAuthor($row['author']);
+    $article->setAuthor_Id($row['author_id']);
 
 
     return $article;
@@ -38,7 +39,7 @@ class ArticleRepository {
    
     $stmt = $this->_connexion->prepare('
         INSERT INTO Articles (id, title, picture, content, category_id, author, author_id) 
-        VALUES (UUID(), :title, :picture, :content, :category, :author, :author_id);
+        VALUES (UUID(), :title, :picture, :content, :category_id, :author, :author_id);
     ');
     $stmt->execute([
         'title' => $article->getTitle(),
@@ -97,7 +98,7 @@ class ArticleRepository {
 
   public function listArticles(): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, title, picture, content, author_id,category
+      SELECT id, title, picture, content, author_id,category_id, date
         FROM Articles;
     ');
     $stmt->execute();
@@ -108,9 +109,10 @@ class ArticleRepository {
       $article->setId($row['id']);
       $article->setTitle(html_entity_decode($row['title']));
       $article->setPicture(html_entity_decode($row['picture']));
-      $article->setCategory_iD(html_entity_decode($row['category_id']));
+      $article->setCategory_Id(html_entity_decode($row['category_id']));
       $article->setContent(html_entity_decode($row['content']));
       $article->setAuthor_Id(html_entity_decode($row['author_id']));
+      $article->setCreationDate($row['date']);
 
       array_push($articles, $article);
     }
@@ -145,9 +147,9 @@ class ArticleRepository {
 
   public function listArticlesByCategory(string $category): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, title, picture, content, author_id, category
+      SELECT id, title, picture, content, author_id, category_id
         FROM Articles
-          WHERE category =:category
+          WHERE category_id =:category
     ');
     $stmt->execute([
       'category' => $category

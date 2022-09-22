@@ -1,35 +1,27 @@
 <script setup>
 import { useArticleStore } from "../../store/ArticleStore";
+import { useCategoryStore } from "../../store/CategoryStore";
 const store = useArticleStore();
+const storeCategories = useCategoryStore();
+storeCategories.queryCategories();
 </script>
 
 <template>
   <div id="container-select-category">
-    <h2 @click="ToggleSelectCategory">Catégories <i class="fa-solid fa-chevron-down"></i></h2>
-    <div v-if="showSelectCategory" id="open-select-category">
+    <h2 @click="ToggleSelectCategory">
+      Catégories <i class="fa-solid fa-chevron-down"></i>
+    </h2>
+    <div
+      v-show="showSelectCategory"
+      v-for="category in storeCategories.getCategories"
+      :key="category.id"
+      id="open-select-category"
+    >
       <button
         class="select-category-button"
-        @click="store.getArticlesByCategory('musique')"
+        @click="store.getArticlesByCategory(category.id)"
       >
-        Musique
-      </button>
-      <button
-        class="select-category-button"
-        @click="store.getArticlesByCategory('sport')"
-      >
-        Sport
-      </button>
-      <button class="select-category-button" @click="store.queryArticles()">
-        Tous
-      </button>
-      <button class="select-category-button" @click="store.queryArticles()">
-        Tous
-      </button>
-      <button class="select-category-button" @click="store.queryArticles()">
-        Tous
-      </button>
-      <button class="select-category-button" @click="store.queryArticles()">
-        Tous
+        {{ category.name }}
       </button>
     </div>
   </div>
@@ -37,22 +29,22 @@ const store = useArticleStore();
 
 <script>
 export default {
-  data(){
-    return{
-      showSelectCategory:false
-    }
+  data() {
+    return {
+      showSelectCategory: false,
+    };
   },
   methods: {
-    ToggleSelectCategory(){
-      this.showSelectCategory=!this.showSelectCategory;
-    }
+    ToggleSelectCategory() {
+      this.showSelectCategory = !this.showSelectCategory;
+    },
   },
-}
+};
 </script>
 
 <style scoped>
-h2{
-  cursor:pointer;
+h2 {
+  cursor: pointer;
 }
 
 #container-select-category {
@@ -63,6 +55,7 @@ h2{
 }
 .select-category-button {
   position: relative;
+  display: inline;
   margin: 1vw;
   background-color: white;
   border: 0 solid #e5e7eb;
@@ -72,10 +65,13 @@ h2{
   font-weight: 700;
   line-height: 1.75rem;
   padding: 0.75rem 1.65rem;
-  width: 100%;
   max-width: 460px;
   cursor: pointer;
   user-select: none;
+}
+
+#open-select-category {
+  display: inline;
 }
 
 .select-category-button::before {
