@@ -103,27 +103,18 @@ export default {
       this.signUpForm = !this.signUpForm;
       this.formErrors = {};
     },
-    async sendForm(event) {
+    sendForm(event) {
       event.preventDefault();
-      let url = new URL("http://localhost:8889/api/index.php");
+      
+     
 
       this.formErrors = {};
 
       //FORMULAIRE D'INSCRIPTION
 
       if (this.signUpForm) {
-        url.search = "?route=/account";
-
-        return fetch(url, {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          header: {
-            "Content-Type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify(this.formData),
-        })
-          .then((response) => response.json())
+        let request = new fetchData('POST',"?route=/account", this.formData)
+        request.query()
           .then((result) => {
             if (result["errors"]) {
               this.formErrors = result["errors"];
@@ -145,22 +136,14 @@ export default {
         }
         }
         else{
-          url.search = "?route=/login";
 
-        return fetch(url, {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          header: {
-            "Content-Type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify(this.formData),
-        })
-          .then((response) => response.json())
+          let request = new fetchData('POST', "?route=/login", this.formData)
+          request.query()
           .then((result) => {
             if (result["errors"]) {
               this.formErrors = result["errors"];
             } else {
+              console.log(result)
               this.current_user = new User(
                 result["data"]["id"],
                 result["data"]["firstName"],

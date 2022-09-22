@@ -11,82 +11,29 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
   },
   actions: {
-    async createArticle(article) {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article";
-      return fetch(url, {
-        method: "POST",
-        credentials: "include",
-        methode: "cors",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify(article),
-      }).then((response) => response.json());
+    createArticle(article) {
+     let query = new fetchData("POST", "?route=/article", article)
+     query.query().then((result)=>console.log(result))
     },
-    async queryArticles() {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article";
-      return fetch(url, {
-        method: "GET",
-        credentials: "include",
-        methode: "cors",
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          this.articles = result["data"];
-        });
+    queryArticles() {
+     let query = new fetchData("GET", "?route=/article")
+     query.query().then((result)=>this.articles=result['data'])
     },
-    async queryArticlesByUser(userId) {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article/list";
+    queryArticlesByUser(userId) {
       let user = {};
       user["id"] = userId;
-
-      return fetch(url, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify(user),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          this.articles = result["data"];
-        });
+      let request = new fetchData('POST', '?route=/article/list', user)
+      request.query().then((result)=>this.articles=result['data'])
     },
-    async getArticlesByCategory(cat) {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article/list&category=" + cat;
-
-      return fetch(url, {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          this.articles = result["data"];
-        });
+    getArticlesByCategory(cat) {
+      let route = "?route=/article/list&category=" + cat;
+      let request = new fetchData('GET', route)
+      request.query().then((result)=>this.articles=result['data'])
+     
     },
-    async updateArticle(article) {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article";
-
-      return fetch(url, {
-        method: "PUT",
-        mode: "cors",
-        credentials: "include",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify(article),
-      }).then((response) => response.json());
+    updateArticle(article) {
+      let request = new fetchData('PUT', "?route=/article", article)
+      request.query().then((result)=>console.log(result))
     },
 
     queryArticleById(id) {
@@ -97,18 +44,10 @@ export const useArticleStore = defineStore("ArticleStore", {
       }
     },
 
-    async deleteArticle(id) {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article&id=" + id;
-
-      return fetch(url, {
-        method: "DELETE",
-        mode: "cors",
-        credentials: "include",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-      }).then((response) => response.json());
+    deleteArticle(id) {
+      let route = "?route=/article&id=" + id;
+      let request = new fetchData('DELETE', route)
+      request.query().then((result)=>console.log(result))
     },
 
     resetEditArticle() {
