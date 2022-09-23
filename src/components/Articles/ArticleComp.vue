@@ -33,14 +33,14 @@ const store = useArticleStore();
       </article>
       <button
         id="edit-article"
-        v-if="UserStore.getUserId == article.author_Id || admin == 'true'"
+        v-if="UserStore.getUserId === article.author_id || admin === 'true'"
         @click="editDisplay(article.id)"
       >
         Modifier
       </button>
       <button
         id="delete-article"
-        v-if="admin == 'true'"
+        v-if="admin === 'true'"
         @click="deleteArticle(article.id)"
       >
         Supprimer

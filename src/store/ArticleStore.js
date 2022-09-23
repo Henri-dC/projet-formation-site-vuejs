@@ -11,10 +11,9 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
   },
   actions: {
-    createArticle(article) {
+    async createArticle(article) {
       let query = new fetchData("POST", "?route=/article", article);
-      let result = query.query().then(console.log(result));
-      return result;
+      return query.query();
     },
     queryArticles() {
       let query = new fetchData("GET", "?route=/article");

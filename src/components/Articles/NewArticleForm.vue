@@ -2,10 +2,10 @@
 import { useUserStore } from "@/store/UserStore.js";
 import { useArticleStore } from "../../store/ArticleStore";
 import { useCategoryStore } from "../../store/CategoryStore";
+import FormInputFile from "./FormArticle/FormInputFile.vue"
 const articleStore = useArticleStore();
 const userStore = useUserStore();
 const storeCategories = useCategoryStore();
-const editArticle = articleStore.editArticle;
 </script>
 
 <template>
@@ -27,15 +27,9 @@ const editArticle = articleStore.editArticle;
             id="title-article"
             v-model="formData.title"
           />
-
-          <label id="label-picture-article" for="picture-article">
-            <i class="fa-regular fa-image"></i>
-            Ajouter une photo
-            <p>{{ fileName }}</p>
-            <span>{{ formErrors.picture }}</span>
-          </label>
-          <input type="file" name="picture-article" id="picture-article" />
-
+          
+         <FormInputFile :currentFile= 'formData.picture'/>
+         
           <label for="content-article">
             <span>{{ formErrors.content }}</span>
           </label>
@@ -89,33 +83,20 @@ export default {
       formData: { category: -1 },
       formErrors: {},
       article: {},
-      input: "",
       update: 0,
+      fileName:''
     };
-  },
-  onMounted() {
-    this.input = document.querySelector("#picture-article");
   },
   updated() {
     if (this.update < 1) {
       if (this.editMode) {
-        this.formData = {
-          title: this.articleStore.editArticle.title,
-          picture: this.articleStore.editArticle.picture,
-          content: this.articleStore.editArticle.content,
-          category: this.articleStore.editArticle.category_Id,
-        };
+        this.formData = this.articleStore.editArticle;
         this.update++;
       }
     }
   },
 
   computed: {
-    fileName() {
-      if (this.input.files > 0) {
-        return this.input.files[0].name;
-      }
-    },
     editMode() {
       return this.articleStore.editArticle == "" ? false : true;
     },
@@ -168,7 +149,8 @@ export default {
           container.style.display = "none";
         }
       } else {
-        let result = this.articleStore.createArticle(article);
+        let result =[];
+        await this.articleStore.createArticle(article).then((resultat)=>result = resultat);
         if (result["errors"]) {
           /* Si il y a une erreur... */
           this.formErrors = result["errors"];
@@ -216,10 +198,11 @@ export default {
   display: none;
   position: fixed;
   bottom: 0;
-  top: 15em;
+  top: 5vh;
   width: 90%;
   max-height: 90%;
   margin-left: 5%;
+  z-index:1000;
 }
 #modale-new-article::-webkit-scrollbar {
   display: none;
@@ -238,7 +221,7 @@ export default {
 
 fieldset {
   border-radius: 1em;
-  background-color: var(--second-bg-color);
+  background-color: white;
 }
 
 legend {
@@ -268,14 +251,6 @@ select {
   line-height: 2em;
   text-align: center;
   border-radius: 2em;
-}
-
-#label-picture-article {
-  cursor: pointer;
-}
-
-#picture-article {
-  display: none;
 }
 
 textarea {

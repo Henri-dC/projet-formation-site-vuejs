@@ -34,17 +34,17 @@ class fetchData {
   }
 
   async query() {
-    if (this._method == "GET" || this._method == "DELETE") {
+    if (this._method === "GET" || this._method === "DELETE") {
       return fetch(this._url, {
         method: this._method,
         credentials: "include",
-        methode: "cors",
+        mode: "cors",
       }).then((response) => response.json());
     } else {
       return fetch(this._url, {
         method: this._method,
         credentials: "include",
-        methode: "cors",
+        mode: "cors",
         body: JSON.stringify(this._data),
       }).then((response) => response.json());
     }
