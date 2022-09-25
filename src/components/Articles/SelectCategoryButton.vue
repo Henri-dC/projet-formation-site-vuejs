@@ -11,17 +11,21 @@ storeCategories.queryCategories();
     <h2 @click="ToggleSelectCategory">
       Catégories <i class="fa-solid fa-chevron-down"></i>
     </h2>
-    <div
-      v-show="showSelectCategory"
-      v-for="category in storeCategories.getCategories"
-      :key="category.id"
-      id="open-select-category"
-    >
-      <button
-        class="select-category-button"
-        @click="store.getArticlesByCategory(category.id)"
+    <div v-show="showSelectCategory">
+      <div
+        v-for="category in storeCategories.getCategories"
+        :key="category.id"
+        id="open-select-category"
       >
-        {{ category.name }}
+        <button
+          class="select-category-button"
+          @click="store.getArticlesByCategory(category.id)"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+      <button class="select-category-button" @click="store.queryArticles()">
+        Tous
       </button>
     </div>
   </div>

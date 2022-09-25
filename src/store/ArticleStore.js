@@ -32,7 +32,7 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
     updateArticle(article) {
       let request = new fetchData("PUT", "?route=/article", article);
-      request.query().then((result) => console.log(result));
+      return request.query();
     },
 
     queryArticleById(id) {

@@ -27,7 +27,7 @@ class ArticleApiControler {
       'title'     => $article->setTitle(htmlentities($payload['_title'] ?? '')),
       'picture'  => $article->setPicture($payload['_picture'] ?? ''),
       'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
-      'category'  => $article->setCategory_Id(htmlentities($payload['_category_Id'] ?? '')),
+      'category'  => $article->setCategory_Id(htmlentities($payload['_category_id'] ?? '')),
       'author'  => $article->setAuthor(htmlentities($payload['_author'] ?? '')),
       'author_id'  => $article->setAuthor_Id(htmlentities($payload['_author_Id'] ?? '')),
     ];

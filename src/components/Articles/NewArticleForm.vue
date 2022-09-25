@@ -2,7 +2,7 @@
 import { useUserStore } from "@/store/UserStore.js";
 import { useArticleStore } from "../../store/ArticleStore";
 import { useCategoryStore } from "../../store/CategoryStore";
-import FormInputFile from "./FormArticle/FormInputFile.vue"
+import FormInputFile from "./FormArticle/FormInputFile.vue";
 const articleStore = useArticleStore();
 const userStore = useUserStore();
 const storeCategories = useCategoryStore();
@@ -27,9 +27,9 @@ const storeCategories = useCategoryStore();
             id="title-article"
             v-model="formData.title"
           />
-          
-         <FormInputFile :currentFile= 'formData.picture'/>
-         
+
+          <FormInputFile :currentFile="formData.picture" />
+
           <label for="content-article">
             <span>{{ formErrors.content }}</span>
           </label>
@@ -44,7 +44,7 @@ const storeCategories = useCategoryStore();
           <select
             name="category"
             id="category-article"
-            v-model="formData.category_Id"
+            v-model="formData.category_id"
           >
             <option value="-1" disabled>Sélectionnez une catégorie</option>
             <option
@@ -80,11 +80,11 @@ const storeCategories = useCategoryStore();
 export default {
   data() {
     return {
-      formData: { category: -1 },
+      formData: { category_id: "-1" },
       formErrors: {},
       article: {},
       update: 0,
-      fileName:''
+      fileName: "",
     };
   },
   updated() {
@@ -95,7 +95,6 @@ export default {
       }
     }
   },
-
   computed: {
     editMode() {
       return this.articleStore.editArticle == "" ? false : true;
@@ -108,10 +107,10 @@ export default {
     closeModaleNewArticle(e) {
       e.preventDefault();
       this.articleStore.resetEditArticle();
-      this.formData = { category: -1 };
       this.formErrors = {};
       let container = document.querySelector(".container-for-scroll");
       container.style.display = "none";
+      this.formData = { category_id: "-1" };
       this.update--;
     },
 
@@ -130,12 +129,15 @@ export default {
         this.formData.content,
         (this.formData.author = this.userStore.user._firstName),
         (this.formData.author_Id = this.userStore.user._id),
-        this.formData.category_Id
+        this.formData.category_id
       );
 
       if (this.editMode) {
         article.setArticleId(this.articleStore.editArticle.id);
-        let result = this.articleStore.updateArticle(article);
+        let result = [];
+        await this.articleStore
+          .updateArticle(article)
+          .then((resultat) => (result = resultat));
         if (result["errors"]) {
           /* Si il y a une erreur... */
           this.formErrors = result["errors"];
@@ -144,13 +146,15 @@ export default {
           this.article = result["data"];
 
           //On ferme la modale
-
+          this.formData = { category_id: " -1" };
           let container = document.querySelector(".container-for-scroll");
           container.style.display = "none";
         }
       } else {
-        let result =[];
-        await this.articleStore.createArticle(article).then((resultat)=>result = resultat);
+        let result = [];
+        await this.articleStore
+          .createArticle(article)
+          .then((resultat) => (result = resultat));
         if (result["errors"]) {
           /* Si il y a une erreur... */
           this.formErrors = result["errors"];
@@ -202,7 +206,7 @@ export default {
   width: 90%;
   max-height: 90%;
   margin-left: 5%;
-  z-index:1000;
+  z-index: 1000;
 }
 #modale-new-article::-webkit-scrollbar {
   display: none;

@@ -50,9 +50,9 @@ class Article implements \JsonSerializable {
         return 'Veuillez écrire du contenu';
     }
     
-    public function setCategory_Id(string $category_Id): string {
-        if (!empty($category_Id)) {
-            $this->category_id = $category_Id;
+    public function setCategory_Id(string $category_id): string {
+        if (!empty($category_id)) {
+            $this->category_id = $category_id;
             return '';
         }
         return 'Veuillez renseigner une categorie';
@@ -65,9 +65,9 @@ class Article implements \JsonSerializable {
         }
         return 'Veuillez renseigner un auteur';
     }
-    public function setAuthor_Id(string $author_Id): string {
-        if (!empty($author_Id)) {
-            $this->author_id = $author_Id;
+    public function setAuthor_Id(string $author_id): string {
+        if (!empty($author_id)) {
+            $this->author_id = $author_id;
             return '';
         }
         return 'Veuillez renseigner un identifiant auteur';
