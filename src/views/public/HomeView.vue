@@ -1,9 +1,9 @@
 <script setup>
-import MainComp from "../../components/Main/MainComp.vue";
+import MainComp from "../../components/MainComp.vue";
 </script>
 
 <template>
   <main>
-    <MainComp />
+    <MainComp id="main" />
   </main>
 </template>

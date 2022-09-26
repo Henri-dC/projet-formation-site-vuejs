@@ -1,15 +1,18 @@
 <script setup>
-import { useUserStore } from "../../store/UserStore";
-import { useArticleStore } from "../../store/ArticleStore";
+import { useUserStore } from "../store/UserStore";
+import { useArticleStore } from "../store/ArticleStore";
+import { useServiceStore } from "../store/ServiceStore";
 const UserStore = useUserStore();
-const store = useArticleStore();
+const ArticleStore = useArticleStore();
+const ServiceStore = useServiceStore();
 </script>
+s
 
 <template>
   <div id="main-article-container">
     <div
       class="article-container"
-      v-for="article in store.articles"
+      v-for="article in ArticleStore.articles"
       :key="article"
     >
       <article>
@@ -19,17 +22,17 @@ const store = useArticleStore();
           :to="{ name: 'article', params: { id: article.id } }"
         >
           <h2>{{ article.title }}</h2>
-        </router-link>
 
-        <img
-          :src="`http://127.0.0.1:5173/src/assets/images/${article.picture}`"
-        />
-        <div class="content">
-          <p>{{ article.content }}</p>
-        </div>
-        <div class="article-footer">
-          <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
-        </div>
+          <img
+            :src="`http://localhost:5173/src/assets/images/${article.picture}`"
+          />
+          <div class="content">
+            <p>{{ article.content }}</p>
+          </div>
+          <div class="article-footer">
+            <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
+          </div>
+        </router-link>
       </article>
       <button
         id="edit-article"
@@ -58,16 +61,15 @@ export default {
       return src;
     },
     editDisplay(id) {
-      let container = document.querySelector(".container-for-scroll");
-      container.style.display = "block";
-      this.store.queryArticleById(id);
+      this.ArticleStore.queryArticleById(id, "edit");
+      this.ServiceStore.toggleDisplayNewArticleForm();
     },
     deleteArticle(id) {
-      this.store.deleteArticle(id);
+      this.ArticleStore.deleteArticle(id);
     },
   },
   beforeMount() {
-    this.store.queryArticles();
+    this.ArticleStore.queryArticles();
   },
 };
 </script>
@@ -78,16 +80,17 @@ export default {
   flex-wrap: wrap;
   width: 80%;
   margin: auto;
+  margin-bottom: 4em;
+  min-height: 63vh;
 }
 
 .article-container {
   width: 60%;
   margin: auto;
-  background-color: rgba(253, 253, 253, 0.863);
+  background-color: rgba(175, 150, 100, 1);
   margin-top: 2em;
   text-align: center;
   padding: 1em;
-  border: 4px solid black;
   border-radius: 1em;
 }
 
@@ -98,16 +101,13 @@ time {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-.content {
-  background-color: white;
-}
-
 h2 {
   color: firebrick;
 }
 
 .router-link {
   text-decoration: none;
+  color: black;
 }
 
 img {

@@ -4,6 +4,7 @@ export const useArticleStore = defineStore("ArticleStore", {
   state: () => ({
     articles: [],
     editArticle: [],
+    viewArticle: [],
   }),
   getters: {
     getArticle(state) {
@@ -35,10 +36,14 @@ export const useArticleStore = defineStore("ArticleStore", {
       return request.query();
     },
 
-    queryArticleById(id) {
+    queryArticleById(id, mode) {
       for (let i = 0; i < this.articles.length; i++) {
-        if (this.articles[i].id == id) {
-          this.editArticle = this.articles[i];
+        if (this.articles[i].id === id) {
+          if (mode === "edit") {
+            this.editArticle = this.articles[i];
+          } else {
+            this.viewArticle = this.articles[i];
+          }
         }
       }
     },
@@ -46,6 +51,7 @@ export const useArticleStore = defineStore("ArticleStore", {
     deleteArticle(id) {
       let route = "?route=/article&id=" + id;
       let request = new fetchData("DELETE", route);
+      request.query();
     },
 
     resetEditArticle() {

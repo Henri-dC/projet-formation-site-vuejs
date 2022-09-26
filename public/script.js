@@ -12,6 +12,10 @@ class Article {
   setArticleId(id) {
     this._id = id;
   }
+
+  setPicture(picture) {
+    this._picture = picture;
+  }
 }
 
 class User {

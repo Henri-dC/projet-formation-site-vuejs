@@ -1,5 +1,20 @@
 <?php
 
+const mois = array(
+  'January' => 'Janvier',
+  'February' => 'Février',
+  'March' => 'Mars',
+  'April' => 'Avril',
+  'May' => 'Mai',
+  'June' => 'Juin',
+  'July' => 'Juillet',
+  'August' => 'Août',
+  'September' => 'Septembre',
+  'October' => 'Octobre',
+  'November' => 'Novembre',
+  'December' => 'Décembre',
+  );
+
 class ArticleRepository {
   private PDO $_connexion;
 
@@ -105,21 +120,6 @@ class ArticleRepository {
     ');
     $stmt->execute();
     
-    $mois = array(
-      'January' => 'Janvier',
-      'February' => 'Février',
-      'March' => 'Mars',
-      'April' => 'Avril',
-      'May' => 'Mai',
-      'June' => 'Juin',
-      'July' => 'Juillet',
-      'August' => 'Août',
-      'September' => 'Septembre',
-      'October' => 'Octobre',
-      'November' => 'Novembre',
-      'December' => 'Décembre',
-      );
-
     $articles = [];
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $article = new Article();
@@ -129,7 +129,7 @@ class ArticleRepository {
       $article->setCategory_Id(html_entity_decode($row['category_id']));
       $article->setContent(html_entity_decode($row['content']));
       $article->setAuthor_Id(html_entity_decode($row['author_id']));
-      $article->setCreationDate(date("d",strtotime($row['date'])).' '.$mois[date("F",strtotime($row['date']))].' '.date("Y",strtotime($row['date'])));
+      $article->setCreationDate(date("d",strtotime($row['date'])).' '.mois[date("F",strtotime($row['date']))].' '.date("Y",strtotime($row['date'])));
 
       array_push($articles, $article);
     }
@@ -139,7 +139,7 @@ class ArticleRepository {
 
   public function listArticlesByAuthor(string $id): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, title, picture, content, author_id
+      SELECT id, title, picture, content, author_id, category_id, date
         FROM Articles
           WHERE author_id =:id
     ');
@@ -155,6 +155,8 @@ class ArticleRepository {
       $article->setPicture(html_entity_decode($row['picture']));
       $article->setContent(html_entity_decode($row['content']));
       $article->setAuthor_Id(html_entity_decode($row['author_id']));
+      $article->setCategory_Id(html_entity_decode($row['category_id']));
+      $article->setCreationDate(date("d",strtotime($row['date'])).' '.mois[date("F",strtotime($row['date']))].' '.date("Y",strtotime($row['date'])));
 
       array_push($articles, $article);
     }

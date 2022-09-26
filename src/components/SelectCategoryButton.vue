@@ -1,6 +1,6 @@
 <script setup>
-import { useArticleStore } from "../../store/ArticleStore";
-import { useCategoryStore } from "../../store/CategoryStore";
+import { useArticleStore } from "../store/ArticleStore";
+import { useCategoryStore } from "../store/CategoryStore";
 const store = useArticleStore();
 const storeCategories = useCategoryStore();
 storeCategories.queryCategories();

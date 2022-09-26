@@ -1,9 +1,11 @@
 <script setup>
 import SignForm from "./SignForm.vue";
 import { useUserStore } from "@/store/UserStore.js";
-import { useArticleStore } from "../../store/ArticleStore";
+import { useArticleStore } from "../store/ArticleStore";
+import { useServiceStore } from "../store/ServiceStore";
 const store = useArticleStore();
 const userStore = useUserStore();
+const ServiceStore = useServiceStore();
 </script>
 
 <template>
@@ -16,7 +18,9 @@ const userStore = useUserStore();
       ></i>
       <ul v-if="this.userMenu" id="user-menu">
         <li @click="queryArticlesUser">Mes articles</li>
-        <li @click="addArticleDisplay">Ecrire un article</li>
+        <li @click="ServiceStore.toggleDisplayNewArticleForm">
+          Ecrire un article
+        </li>
       </ul>
     </div>
     <div id="logo-title">

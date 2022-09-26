@@ -1,30 +1,20 @@
 <script setup>
-    import ArticleComp from "../../components/Articles/ArticleComp.vue"
-    import NewArticleForm from "../../components/Articles/NewArticleForm.vue";
+import ArticleComp from "../../components/ArticleComp.vue";
+import NewArticleForm from "../../components/NewArticleForm.vue";
+import { useServiceStore } from "../../store/ServiceStore";
+const ServiceStore = useServiceStore();
 </script>
 
 <template>
-    <div id="container">
-        <ArticleComp admin='true'/>
-        <NewArticleForm/>
-        <button @click="show">Show Catégories</button>
-    </div>
+  <div id="container">
+    <ArticleComp admin="true" />
+    <NewArticleForm v-show="ServiceStore.displayNewArticleForm" />
+  </div>
 </template>
 
-<script>
-export default {
-    methods:{
-        show(){
-            let request = new fetchData('GET', '?route=/category')
-            request.query()
-        }
-    }
-}
-</script>
-
 <style scoped>
-    #container{
-        padding-top:8em;
-        background-color:aqua;
-    }
+#container {
+  padding-top: 8em;
+  background-color: aqua;
+}
 </style>

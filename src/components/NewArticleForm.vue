@@ -1,11 +1,13 @@
 <script setup>
 import { useUserStore } from "@/store/UserStore.js";
-import { useArticleStore } from "../../store/ArticleStore";
-import { useCategoryStore } from "../../store/CategoryStore";
-import FormInputFile from "./FormArticle/FormInputFile.vue";
-const articleStore = useArticleStore();
-const userStore = useUserStore();
-const storeCategories = useCategoryStore();
+import { useArticleStore } from "@/store/ArticleStore";
+import { useCategoryStore } from "@/store/CategoryStore";
+import { useServiceStore } from "@/store/ServiceStore";
+const ArticleStore = useArticleStore();
+const UserStore = useUserStore();
+const CategoriesStore = useCategoryStore();
+const ServiceStore = useServiceStore();
+import FormInputFile from "./FormInputFile.vue";
 </script>
 
 <template>
@@ -48,7 +50,7 @@ const storeCategories = useCategoryStore();
           >
             <option value="-1" disabled>Sélectionnez une catégorie</option>
             <option
-              v-for="category in storeCategories.getCategories"
+              v-for="category in CategoriesStore.getCategories"
               :key="category.id"
               :value="category.id"
             >
@@ -90,14 +92,14 @@ export default {
   updated() {
     if (this.update < 1) {
       if (this.editMode) {
-        this.formData = this.articleStore.editArticle;
+        this.formData = this.ArticleStore.editArticle;
         this.update++;
       }
     }
   },
   computed: {
     editMode() {
-      return this.articleStore.editArticle.length >= 0 ? false : true;
+      return this.ArticleStore.editArticle.length >= 0 ? false : true;
     },
   },
 
@@ -106,53 +108,56 @@ export default {
 
     closeModaleNewArticle(e) {
       e.preventDefault();
-      this.articleStore.resetEditArticle();
+      this.ArticleStore.resetEditArticle();
       this.formErrors = {};
-      this.formData = { category_id: "-1"};
-      document.getElementById('input-file').value = "";
+      this.formData = { category_id: "-1" };
+      document.getElementById("input-file").value = "";
       this.update--;
-      let container = document.querySelector(".container-for-scroll");
-      container.style.display = "none";
+      this.ServiceStore.toggleDisplayNewArticleForm();
     },
 
     //FONCTION: Enregistrer l'article en base de données
 
     async createArticle(e) {
       e.preventDefault();
-      this.loadPicture(); /*On charge la photo*/
-
+      var input = document.querySelector('input[type="file"]');
       //création d'une instance Article
-
       let article = new Article(
         "",
         this.formData.title,
         this.formData.picture,
         this.formData.content,
-        (this.formData.author = this.userStore.user._firstName),
-        (this.formData.author_Id = this.userStore.user._id),
+        (this.formData.author = this.UserStore.user._firstName),
+        (this.formData.author_Id = this.UserStore.user._id),
         this.formData.category_id
       );
 
       if (this.editMode) {
-        article.setArticleId(this.articleStore.editArticle.id);
+        console.log(input.files.length);
+        if (input.files.length > 0) {
+          this.loadPicture(article); /*On charge la photo*/
+        } else {
+          article.setPicture(this.ArticleStore.editArticle.picture);
+        }
+        article.setArticleId(this.ArticleStore.editArticle.id);
         let result = [];
-        await this.articleStore
-          .updateArticle(article)
-          .then((resultat) => (result = resultat));
+        await this.ArticleStore.updateArticle(article).then(
+          (resultat) => (result = resultat)
+        );
         if (result["errors"]) {
           /* Si il y a une erreur... */
           this.formErrors = result["errors"];
         } else {
-          /* Sinon... */
-          this.article = result["data"];
-          //On ferme la modale
+          this.ArticleStore.queryArticles();
           this.closeModaleNewArticle(e);
         }
       } else {
+        await this.loadPicture(article); /*On charge la photo*/
+        console.log(article);
         let result = [];
-        await this.articleStore
-          .createArticle(article)
-          .then((resultat) => (result = resultat));
+        await this.ArticleStore.createArticle(article).then(
+          (resultat) => (result = resultat)
+        );
         if (result["errors"]) {
           /* Si il y a une erreur... */
           this.formErrors = result["errors"];
@@ -161,20 +166,21 @@ export default {
           this.article = result["data"];
 
           //On ferme la modale
-
+          this.ArticleStore.queryArticles();
           this.closeModaleNewArticle(e);
         }
       }
     },
     //FONCTION: charger la photo
 
-    loadPicture() {
+    loadPicture(article) {
       var input = document.querySelector('input[type="file"]');
-      this.formData.picture = input.files[0].name;
+      console.log(article);
+      article.setPicture(input.files[0].name);
       let dataPic = new FormData();
       dataPic.append("photo", input.files[0]);
 
-      fetch("http://localhost:8889/api/index.php", {
+      return fetch("http://localhost:8889/api/index.php", {
         method: "post",
         body: dataPic,
       });
@@ -196,7 +202,6 @@ export default {
 }
 
 .container-for-scroll {
-  display: none;
   position: fixed;
   bottom: 0;
   top: 5vh;

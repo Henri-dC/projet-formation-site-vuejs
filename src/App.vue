@@ -1,6 +1,6 @@
 <script setup>
-import TheHeader from "./components/Header/TheHeader.vue";
-import TheFooter from "./components/Footer/TheFooter.vue";
+import TheHeader from "./components/TheHeader.vue";
+import TheFooter from "./components/TheFooter.vue";
 import { useUserStore } from "@/store/UserStore.js";
 const store = useUserStore();
 </script>
@@ -9,6 +9,6 @@ const store = useUserStore();
   <div>
     <TheHeader />
     <router-view></router-view>
-    <TheFooter/>
+    <TheFooter />
   </div>
 </template>

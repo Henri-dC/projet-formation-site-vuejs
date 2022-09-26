@@ -91,7 +91,6 @@ class ArticleApiControler {
 
   public function proceedDeleteArticle(Request $request): Response {
     $articleId = $request->getQueryParam('id');
-    var_dump($articleId);
     $this->_articleRepo->deleteArticle($articleId);
 
     $response = new Response();
