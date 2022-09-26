@@ -1,14 +1,14 @@
 <script setup>
-import HeaderComp from "./components/Header/HeaderComp.vue";
-import FooterComp from "./components/Footer/FooterComp.vue";
+import TheHeader from "./components/Header/TheHeader.vue";
+import TheFooter from "./components/Footer/TheFooter.vue";
 import { useUserStore } from "@/store/UserStore.js";
 const store = useUserStore();
 </script>
 
 <template>
   <div>
-    <HeaderComp />
+    <TheHeader />
     <router-view></router-view>
-    <FooterComp />
+    <TheFooter/>
   </div>
 </template>

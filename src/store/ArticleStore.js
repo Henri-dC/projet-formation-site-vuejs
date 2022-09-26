@@ -11,7 +11,7 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
   },
   actions: {
-    async createArticle(article) {
+    createArticle(article) {
       let query = new fetchData("POST", "?route=/article", article);
       return query.query();
     },
@@ -46,7 +46,6 @@ export const useArticleStore = defineStore("ArticleStore", {
     deleteArticle(id) {
       let route = "?route=/article&id=" + id;
       let request = new fetchData("DELETE", route);
-      request.query().then((result) => console.log(result));
     },
 
     resetEditArticle() {

@@ -15,40 +15,37 @@ export default {
   },
   data() {
     return {
-      previewImage: ' "src/assets/images/icon/noun-add-image-3752744.png"',
+      previewImage: "",
     };
   },
   methods: {
     selectImage() {
       this.$refs.fileInput.click();
     },
-    pickFile() {
-      let input = this.$refs.fileInput;
-      let file = input.files;
-      if (file && file[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          this.previewImage = e.target.result;
-        };
-        reader.readAsDataURL(file[0]);
-      }
-    },
-  },
-  updated() {
+    pickFile() { //Doublon...Pour la reactivité...trouver autre solution si possible
     let input = this.$refs.fileInput;
     let file = input.files;
     if (this.currentFile !== undefined && !file[0]) {
+      console.log(1)
       this.previewImage = "src/assets/images/" + this.currentFile;
-    } else if (file && file[0]) {
+    } else if (file && file[0]) { console.log(2)
       let reader = new FileReader();
       reader.onload = (e) => {
         this.previewImage = e.target.result;
       };
       reader.readAsDataURL(file[0]);
-    } else {
+    } else if(this.currentFile==undefined){
+       console.log(3)
       this.previewImage = "src/assets/images/icon/noun-add-image-3752744.png";
     }
+    },
   },
+  updated() {
+    this.pickFile()
+  },
+  mounted(){
+     this.pickFile()
+  }
 };
 </script>
 <style scoped>

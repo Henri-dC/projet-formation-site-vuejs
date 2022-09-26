@@ -1,8 +1,20 @@
+<script setup>
+    import {useUserStore} from '../store/UserStore'
+    const userStore = useUserStore();
+
+</script>
+
 <template>
-  <div>
+  <div id="container-list-users">
     <button @click="listAccount">Voir tous les comptes</button>
-    <ul v-for="user in users" v-bind:key="user">
-      <li>{{ user["login"] }}</li>
+    <ul v-for="(user,key) in users" v-bind:key="user.id">
+      <li v-if="!users[key].edit" @dblclick="inputSwitch(key)"><strong>Nom:</strong> {{ user["firstName"] }} <strong>Prénom:</strong> {{ user["lastName"] }} <strong>Email:</strong> {{user["email"]}}</li>
+      <div v-else >
+       <input type="text" name="firstName" :value='user["firstName"]'/>
+       <input type="text" name="lastName" :value='user["lastName"]'/>
+       <input type="mail" name="lastName" :value='user["email"]'/>
+       <input type="submit" value="modifier" @click="updateUser"/>
+       </div>
     </ul>
   </div>
 </template>
@@ -12,18 +24,14 @@ export default {
   data() {
     return {
       users: {},
+      edit:false
     };
   },
   methods: {
     async listAccount(e) {
       e.preventDefault();
 
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/account";
-      return fetch(url, {
-        method: "GET",
-      })
-        .then((response) => response.json())
+    await this.userStore.getUsers()   
         .then((result) => {
           if (result["errors"]) {
             this.formErrors = result["errors"];
@@ -32,6 +40,24 @@ export default {
           }
         });
     },
+    inputSwitch(key){
+      this.users[key].edit=true;
+      console.log(this.users[key].edit)
+    },
+    updateUser(user){
+      this.userStore.updateUser(user)
+    }
   },
 };
 </script>
+
+<style>
+  #container-list-users{
+    border: 1px solid black;
+    clear:both;
+  }
+
+  input{
+    display:inline-block;
+  }
+</style>

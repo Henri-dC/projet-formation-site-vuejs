@@ -66,6 +66,7 @@ class ArticleApiControler {
       'title' => $article->setTitle(htmlentities($payload['_title'] ?? '')),
       'picture' => $article->setPicture(htmlentities($payload['_picture'] ?? '')),
       'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
+      'category' => $article->setCategory_Id(htmlentities($payload['_category_id'] ?? '')),
     ];
    
 

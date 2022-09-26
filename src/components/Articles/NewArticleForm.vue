@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     editMode() {
-      return this.articleStore.editArticle == "" ? false : true;
+      return this.articleStore.editArticle.length >= 0 ? false : true;
     },
   },
 
@@ -108,10 +108,11 @@ export default {
       e.preventDefault();
       this.articleStore.resetEditArticle();
       this.formErrors = {};
+      this.formData = { category_id: "-1"};
+      document.getElementById('input-file').value = "";
+      this.update--;
       let container = document.querySelector(".container-for-scroll");
       container.style.display = "none";
-      this.formData = { category_id: "-1" };
-      this.update--;
     },
 
     //FONCTION: Enregistrer l'article en base de données
@@ -144,11 +145,8 @@ export default {
         } else {
           /* Sinon... */
           this.article = result["data"];
-
           //On ferme la modale
-          this.formData = { category_id: " -1" };
-          let container = document.querySelector(".container-for-scroll");
-          container.style.display = "none";
+          this.closeModaleNewArticle(e);
         }
       } else {
         let result = [];
@@ -164,8 +162,7 @@ export default {
 
           //On ferme la modale
 
-          let container = document.querySelector(".container-for-scroll");
-          container.style.display = "none";
+          this.closeModaleNewArticle(e);
         }
       }
     },

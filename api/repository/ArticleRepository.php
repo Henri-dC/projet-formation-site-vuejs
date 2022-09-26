@@ -72,7 +72,8 @@ class ArticleRepository {
         UPDATE Articles
            SET title = :title,
                picture = :picture,
-               content = :content
+               content = :content,
+               category_id =:category_id
          WHERE id = :id
     ');
 
@@ -80,7 +81,8 @@ class ArticleRepository {
       'picture' => $article->getpicture(),
       'content' => $article->getcontent(),
       'title' => $article->gettitle(),
-      'id' => $article->getId()
+      'id' => $article->getId(),
+      'category_id' => $article->getCategory_Id()
     ]);
 
     return $article;

@@ -18,5 +18,13 @@ export const useUserStore = defineStore("UserStore", {
       localStorage.removeItem("user");
       window.location.reload;
     },
+    getUsers(){
+      let request = new fetchData('GET', "?route=/account");
+      return request.query();
+    },
+    updateUser(user){
+      let request = new fetchData('PUT', "?route=/account", user)
+      request.query();
+    }
   },
 });

@@ -104,8 +104,8 @@ class AccountRepository {
       $account = new Account();
       $account->setId($row['id']);
       $account->setEmail($row['email']);
-      $account->setFirstName($row['firstName']);
-      $account->setLastName($row['lastName']);
+      $account->setFirstName(html_entity_decode($row['firstName']));
+      $account->setLastName(html_entity_decode($row['lastName']));
 
       array_push($accounts, $account);
     }
