@@ -66,6 +66,7 @@ export default {
     },
     deleteArticle(id) {
       this.ArticleStore.deleteArticle(id);
+      setTimeout(this.ArticleStore.queryArticles,5000);
     },
   },
   beforeMount() {
@@ -85,7 +86,6 @@ export default {
 }
 
 .article-container {
-  width: 60%;
   margin: auto;
   background-color: rgba(175, 150, 100, 1);
   margin-top: 2em;
@@ -114,6 +114,9 @@ img {
   width: 90%;
 }
 
+.content{
+  word-break: break-all;
+}
 .count-like {
   background-color: rgba(253, 253, 253, 0.863);
   margin-left: 0.3em;
@@ -137,5 +140,6 @@ img {
   .article-container {
     width: 40%;
   }
+  
 }
 </style>

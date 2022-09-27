@@ -56,7 +56,7 @@ class ArticleApiControler {
   }
 
   public function proceedUpdateArticle(Request $request): Response {
-
+    
     $payload = $request->getData();
     $article = new Article();
     
@@ -92,10 +92,9 @@ class ArticleApiControler {
   public function proceedDeleteArticle(Request $request): Response {
     $articleId = $request->getQueryParam('id');
     $this->_articleRepo->deleteArticle($articleId);
-
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::NO_CONTENT);
-
+   
     return $response;
   }
 

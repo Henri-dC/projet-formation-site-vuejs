@@ -85,17 +85,13 @@ export default {
       formData: { category_id: "-1" },
       formErrors: {},
       article: {},
-      update: 0,
       fileName: "",
     };
   },
   updated() {
-    if (this.update < 1) {
       if (this.editMode) {
         this.formData = this.ArticleStore.editArticle;
-        this.update++;
       }
-    }
   },
   computed: {
     editMode() {

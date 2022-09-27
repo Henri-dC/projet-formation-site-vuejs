@@ -1,11 +1,10 @@
 <script setup>
-import { useUserStore } from "../store/UserStore";
+import { useUserStore } from "../../store/UserStore.js";
 const userStore = useUserStore();
 </script>
 
 <template>
   <div id="container-list-users">
-    <button @click="listAccount">Voir tous les comptes</button>
     <table>
       <thead>
         <tr>
@@ -19,22 +18,23 @@ const userStore = useUserStore();
           {{ user["firstName"] }}
         </td>
         <td v-else>
-          <input type="text" name="firstName" :value="user['firstName']" />
+          <input type="text" :value="user['firstName']" ref="firstName" v-on:keyup.enter="getValue"/>
         </td>
         <td v-if="!users[key].edit" @dblclick="inputSwitch(key)">
           {{ user["lastName"] }}
         </td>
         <td v-else>
-          <input type="mail" name="lastName" :value="user['lastName']" />
+          <input type="mail" :value="user['lastName']" ref="lastName" />
         </td>
         <td v-if="!users[key].edit" @dblclick="inputSwitch(key)">
           {{ user["email"] }}
         </td>
         <td v-else>
-          <input type="mail" name="lastName" :value="user['email']" />
+          <input type="mail" :value="user['email']" ref="email"/>
         </td>
       </tr>
     </table>
+    <button @click="getValue">test</button>
   </div>
 </template>
 
@@ -43,36 +43,39 @@ export default {
   data() {
     return {
       users: {},
-      edit: false,
+      userEdit:{},
     };
   },
-  methods: {
-    async listAccount(e) {
-      e.preventDefault();
-
-      await this.userStore.getUsers().then((result) => {
+  mounted(){
+    this.userStore.getUsers().then((result) => {
         if (result["errors"]) {
           this.formErrors = result["errors"];
         } else {
           this.users = result["data"];
         }
       });
-    },
+  },
+  methods: {
     inputSwitch(key) {
-      this.users[key].edit = true;
-      console.log(this.users[key].edit);
+      for (const[user, i] of Object.entries(this.users)){
+       if(key===parseInt(user)){i.edit=true}else{i.edit=false}
+      }      
     },
     updateUser(user) {
       this.userStore.updateUser(user);
     },
+    getValue(){
+      if(this.$refs.firstName!==undefined){
+        console.log(this.$refs.firstName[0].value)
+      }
+    }
   },
 };
 </script>
 
 <style>
 #container-list-users {
-  border: 1px solid black;
-  clear: both;
+ padding-top: 4em;
 }
 
 table {
@@ -80,6 +83,7 @@ table {
   margin-top: 1em;
   margin-bottom: 1em;
   border-collapse: collapse;
+  width: 80%;
 }
 
 td {

@@ -11,14 +11,14 @@ export default class fetchData{
         return fetch(this._url, {
           method: this._method,
           credentials: "include",
-          methode: "cors",
+          mode: "cors",
         })
-          .then((response) => response.json())
+          .then((response) => response.json()).then((result)=>console.log(result))
       }else{
         return fetch(this._url, {
           method: this._method,
           credentials: "include",
-          methode: "cors",
+          mode: "cors",
           body: JSON.stringify(this._data)
         })
           .then((response) => response.json())

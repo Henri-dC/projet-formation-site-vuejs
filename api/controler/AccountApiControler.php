@@ -8,13 +8,19 @@ class AccountApiControler {
   }
 
   public function proceedListAccounts(Request $request): Response {
+    if($_SESSION['isAdmin']==='true'){
     $accounts = $this->_accountRepo->listAccounts();
-
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::OK);
     $response->setData($accounts);
 
     return $response;
+    }else{
+    $response = new Response();
+    $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
+    
+    return $response;
+    }
   }
 
   public function proceedCreateAccount(Request $request): Response {
@@ -99,6 +105,14 @@ class AccountApiControler {
 
     $this->_accountRepo->deleteAccount($accountId);
 
+    $response = new Response();
+    $response->setHttpStatusCode(HttpStatusCode::NO_CONTENT);
+
+    return $response;
+  }
+
+  public function proceedDestroySession(): Response{
+    session_destroy();
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::NO_CONTENT);
 

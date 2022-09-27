@@ -43,8 +43,13 @@ class Router {
 
             case '/login':
                 $controler = new LoginApiControler();
-                    return $controler->proceedConnexion($request);
+                return $controler->proceedConnexion($request);
 
+            case '/logout':
+                $controler = new AccountApiControler();
+                return $controler->proceedDestroySession();
+                
+                
             case '/category':
                 switch($request->getMethod()) {
                     case 'POST':

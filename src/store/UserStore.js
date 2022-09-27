@@ -17,6 +17,8 @@ export const useUserStore = defineStore("UserStore", {
       this.user = null;
       localStorage.removeItem("user");
       window.location.reload;
+      let request = new fetchData('DELETE', "?route=/logout");
+      request.query();
     },
     getUsers(){
       let request = new fetchData('GET', "?route=/account");
