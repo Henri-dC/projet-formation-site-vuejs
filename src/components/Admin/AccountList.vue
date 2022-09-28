@@ -11,14 +11,26 @@ const userStore = useUserStore();
           <th>Prénom</th>
           <th>Nom</th>
           <th>Email</th>
+          <th>Admin</th>
         </tr>
       </thead>
-      <tr v-for="(user, key) in users" v-bind:key="user.id">
+      <tr
+        v-for="(user, key) in users"
+        v-bind:key="user.id"
+        v-on:keyup.enter="getValue"
+      >
+        <input
+          v-if="users[key].edit"
+          id="input-id"
+          type="text"
+          :value="user['id']"
+          ref="id"
+        />
         <td v-if="!users[key].edit" @dblclick="inputSwitch(key)">
           {{ user["firstName"] }}
         </td>
         <td v-else>
-          <input type="text" :value="user['firstName']" ref="firstName" v-on:keyup.enter="getValue"/>
+          <input type="text" :value="user['firstName']" ref="firstName" />
         </td>
         <td v-if="!users[key].edit" @dblclick="inputSwitch(key)">
           {{ user["lastName"] }}
@@ -30,11 +42,16 @@ const userStore = useUserStore();
           {{ user["email"] }}
         </td>
         <td v-else>
-          <input type="mail" :value="user['email']" ref="email"/>
+          <input type="mail" :value="user['email']" ref="email" />
+        </td>
+        <td v-if="!users[key].edit" @dblclick="inputSwitch(key)">
+          {{ user["isAdmin"] }}
+        </td>
+        <td v-else>
+          <input type="text" :value="user['isAdmin']" ref="isAdmin" />
         </td>
       </tr>
     </table>
-    <button @click="getValue">test</button>
   </div>
 </template>
 
@@ -43,39 +60,57 @@ export default {
   data() {
     return {
       users: {},
-      userEdit:{},
+      userEdit: {},
     };
   },
-  mounted(){
+  mounted() {
     this.userStore.getUsers().then((result) => {
-        if (result["errors"]) {
-          this.formErrors = result["errors"];
-        } else {
-          this.users = result["data"];
-        }
-      });
+      if (result["errors"]) {
+        this.formErrors = result["errors"];
+      } else {
+        this.users = result["data"];
+      }
+    });
   },
   methods: {
     inputSwitch(key) {
-      for (const[user, i] of Object.entries(this.users)){
-       if(key===parseInt(user)){i.edit=true}else{i.edit=false}
-      }      
+      for (const [user, i] of Object.entries(this.users)) {
+        if (key === parseInt(user)) {
+          i.edit = true;
+        } else {
+          i.edit = false;
+        }
+      }
     },
     updateUser(user) {
       this.userStore.updateUser(user);
     },
-    getValue(){
-      if(this.$refs.firstName!==undefined){
-        console.log(this.$refs.firstName[0].value)
+    getValue() {
+      if (this.$refs.firstName !== undefined) {
+        console.log(this.$refs.firstName[0].value);
+        console.log(this.$refs.lastName[0].value);
+        console.log(this.$refs.email[0].value);
+        console.log(this.$refs.isAdmin[0].value);
       }
-    }
+      if (this.$refs.firstName !== undefined) {
+        let user = new User(
+          this.$refs.id[0].value,
+          this.$refs.firstName[0].value,
+          this.$refs.lastName[0].value,
+          this.$refs.isAdmin[0].value,
+          this.$refs.email[0].value
+        );
+        this.userStore.updateUser(user);
+        alert("Mise à jour réussie");
+      }
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 #container-list-users {
- padding-top: 4em;
+  padding-top: 4em;
 }
 
 table {
@@ -100,5 +135,9 @@ input {
 
 input {
   display: inline-block;
+}
+
+#input-id {
+  display: none;
 }
 </style>

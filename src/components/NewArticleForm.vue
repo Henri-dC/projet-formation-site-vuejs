@@ -89,9 +89,9 @@ export default {
     };
   },
   updated() {
-      if (this.editMode) {
-        this.formData = this.ArticleStore.editArticle;
-      }
+    if (this.editMode) {
+      this.formData = this.ArticleStore.editArticle;
+    }
   },
   computed: {
     editMode() {
@@ -171,8 +171,8 @@ export default {
 
     loadPicture(article) {
       var input = document.querySelector('input[type="file"]');
-      console.log(article);
-      article.setPicture(input.files[0].name);
+      let name = input.files[0].name.replaceAll(" ", "-");
+      article.setPicture(name);
       let dataPic = new FormData();
       dataPic.append("photo", input.files[0]);
 

@@ -67,7 +67,8 @@ class AccountRepository {
            SET email = :email,
                password = :password,
                firstName = :firstName,
-               lastName = :lastName
+               lastName = :lastName,
+               is_admin = :is_admin
          WHERE id = :id
     ');
 
@@ -76,7 +77,8 @@ class AccountRepository {
       'lastName' => $account->getLastName(),
       'email' => $account->getEmail(),
       'password' => $account->getPassword(),
-      'id' => $account->getId()
+      'id' => $account->getId(),
+      'is_admin' => $account->getIsAdmin()
     ]);
 
     return $account;
@@ -94,7 +96,7 @@ class AccountRepository {
 
   public function listAccounts(): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, email, firstName, lastName
+      SELECT id, email, firstName, lastName, is_admin
         FROM Account
     ');
     $stmt->execute();
@@ -106,10 +108,11 @@ class AccountRepository {
       $account->setEmail($row['email']);
       $account->setFirstName(html_entity_decode($row['firstName']));
       $account->setLastName(html_entity_decode($row['lastName']));
+      $account->setIsAdmin($row['is_admin']);
 
       array_push($accounts, $account);
     }
-
+   
     return $accounts;
   }
 }

@@ -12,10 +12,18 @@ s
   <div id="main-article-container">
     <div
       class="article-container"
-      v-for="article in ArticleStore.articles"
+      v-for="(article, i) in ArticleStore.articles"
       :key="article"
+      :id="'article-container-' + i"
     >
       <article>
+        <i
+          id="edit-article"
+          title="modifier"
+          v-if="UserStore.getUserId === article.author_id || admin === 'true'"
+          @click="editDisplay(article.id)"
+          class="fa-solid fa-pen-to-square fa-lg"
+        ></i>
         <time>{{ article.creation_date }}</time>
         <router-link
           class="router-link"
@@ -26,21 +34,20 @@ s
           <img
             :src="`http://localhost:5173/src/assets/images/${article.picture}`"
           />
-          <div class="content">
-            <p>{{ article.content }}</p>
-          </div>
-          <div class="article-footer">
-            <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
-          </div>
         </router-link>
+        <div class="content">
+          <p ref="p">
+            {{
+              article.content.length > 40
+                ? article.content.split(" ").splice(0, 10).join(" ") + "..."
+                : article.content
+            }}
+          </p>
+        </div>
+        <div class="article-footer">
+          <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
+        </div>
       </article>
-      <button
-        id="edit-article"
-        v-if="UserStore.getUserId === article.author_id || admin === 'true'"
-        @click="editDisplay(article.id)"
-      >
-        Modifier
-      </button>
       <button
         id="delete-article"
         v-if="admin === 'true'"
@@ -66,7 +73,7 @@ export default {
     },
     deleteArticle(id) {
       this.ArticleStore.deleteArticle(id);
-      setTimeout(this.ArticleStore.queryArticles,5000);
+      setTimeout(this.ArticleStore.queryArticles, 5000);
     },
   },
   beforeMount() {
@@ -87,8 +94,8 @@ export default {
 
 .article-container {
   margin: auto;
-  background-color: rgba(175, 150, 100, 1);
   margin-top: 2em;
+  background-color: var(--second-bg-color);
   text-align: center;
   padding: 1em;
   border-radius: 1em;
@@ -110,11 +117,7 @@ h2 {
   color: black;
 }
 
-img {
-  width: 90%;
-}
-
-.content{
+.content {
   word-break: break-all;
 }
 .count-like {
@@ -123,7 +126,15 @@ img {
 }
 
 #edit-article {
+  position: relative;
+  top: 0%;
+  right: -45%;
   text-decoration: none;
+  cursor: pointer;
+}
+
+img {
+  width: 90%;
 }
 
 .fa-duotone {
@@ -134,12 +145,14 @@ img {
 /* RESPONSIVE */
 
 @media screen and (min-width: 900px) {
-  img {
-    width: 50%;
+  #main-article-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 4px;
   }
+
   .article-container {
-    width: 40%;
+    margin: 0;
   }
-  
 }
 </style>

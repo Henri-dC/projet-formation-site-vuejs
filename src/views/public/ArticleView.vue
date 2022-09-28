@@ -8,7 +8,6 @@ const ServiceStore = useServiceStore();
 
 <template>
   <NewArticleForm v-if="ServiceStore.displayNewArticleForm" />
-  
   <article id="article-container">
     <router-link to="/">Retour aux articles</router-link>
     <h2>{{ this.articleStore.viewArticle.title }}</h2>
@@ -45,8 +44,8 @@ img {
   min-width: 30%;
 }
 
-.content{
-  width:50%;
-  margin:auto;
+.content {
+  width: 50%;
+  margin: auto;
 }
 </style>

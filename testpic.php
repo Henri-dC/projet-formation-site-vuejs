@@ -1,0 +1,50 @@
+<?php
+
+require './testPhoto.phtml';
+
+if(isset($_POST['submit'])){
+    if (isset ($_FILES['myImage'])){
+  $imagename = $_FILES['myImage']['name'];
+  $source = $_FILES['myImage']['tmp_name'];
+  $imagepath = $imagename;
+  //Ceci est le nouveau fichier que vous enregistrez
+  $save = "images/" . $imagepath; 
+  move_uploaded_file($source, './images/'.$imagepath);
+ 
+  $info = getimagesize('./images/'.$imagepath);
+  $mime = $info['mime'];
+  var_dump($mime);
+  switch ($mime) {
+      case 'image/jpeg':
+          $image_create_func = 'imagecreatefromjpeg';
+          $image_save_func = 'imagejpeg';
+          break;
+      case 'image/png':
+          $image_create_func = 'imagecreatefrompng';
+          $image_save_func = 'imagepng';
+          break;
+      case 'image/gif':
+          $image_create_func = 'imagecreatefromgif';
+          $image_save_func = 'imagegif';
+          break;
+      case 'image/webp':
+          $image_create_func = 'imagecreatefromwebp';
+          $image_save_func = 'imagewebp';
+          break;
+      default: 
+          throw new Exception('Unknown image type.');
+  }
+    
+  list($width, $height) = getimagesize('./images/'.$imagepath);
+  $modwidth = 600;  //target width
+  $diff = $width / $modwidth;
+  $modheight = $height / $diff;
+  $tn = imagecreatetruecolor($modwidth, $modheight) ;
+  $image = $image_create_func('./images/'.$imagepath) ;
+  imagecopyresampled($tn, $image, 0, 0, 0, 0, $modwidth, $modheight, $width, $height) ;
+  $image_save_func($tn, $save) ;
+    
+  echo '<img src="'.$save.'">';
+    }
+  }
+    ?>

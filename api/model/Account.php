@@ -6,7 +6,7 @@ class Account implements \JsonSerializable {
     private string $password;
     private string $firstName;
     private string $lastName;
-    private bool $isAdmin;
+    private string $isAdmin;
 
     public function __construct() {
     }

@@ -105,45 +105,39 @@ export default {
     },
     sendForm(event) {
       event.preventDefault();
-      
-     
 
       this.formErrors = {};
 
       //FORMULAIRE D'INSCRIPTION
 
       if (this.signUpForm) {
-        let request = new fetchData('POST',"?route=/account", this.formData)
-        request.query()
-          .then((result) => {
-            if (result["errors"]) {
-              this.formErrors = result["errors"];
-            } else {
-              this.formErrors = {};
-              this.formData = {};
-              this.isCreated = true;
-            }
-          });
+        let request = new fetchData("POST", "?route=/account", this.formData);
+        request.query().then((result) => {
+          if (result["errors"]) {
+            this.formErrors = result["errors"];
+          } else {
+            this.formErrors = {};
+            this.formData = {};
+            this.isCreated = true;
+          }
+        });
       } else {
         //FORMULAIRE DE CONNEXION
 
-        if(!this.formData.password||!this.formData.email){
-          if(!this.formData.password){
-          this.formErrors.password = 'Veuillez renseigner votre mot de passe'
-        }
-        if(!this.formData.email){
-          this.formErrors.email = 'Veuillez renseigner votre email'
-        }
-        }
-        else{
-
-          let request = new fetchData('POST', "?route=/login", this.formData)
-          request.query()
-          .then((result) => {
+        if (!this.formData.password || !this.formData.email) {
+          if (!this.formData.password) {
+            this.formErrors.password = "Veuillez renseigner votre mot de passe";
+          }
+          if (!this.formData.email) {
+            this.formErrors.email = "Veuillez renseigner votre email";
+          }
+        } else {
+          let request = new fetchData("POST", "?route=/login", this.formData);
+          request.query().then((result) => {
             if (result["errors"]) {
               this.formErrors = result["errors"];
             } else {
-              console.log(result)
+              console.log(result);
               this.current_user = new User(
                 result["data"]["id"],
                 result["data"]["firstName"],
@@ -155,7 +149,6 @@ export default {
             }
           });
         }
-        
       }
     },
   },
@@ -167,7 +160,7 @@ export default {
 
 #form-container {
   position: fixed;
-  top: 79%;
+  top: 55vh;
   left: 50%;
   transform: translate(-50%, -90%);
   width: 80%;
@@ -175,7 +168,7 @@ export default {
   padding: 2em;
   background-color: aliceblue;
   z-index: 1000;
-  border: 1px solid black;
+  border: 3px solid black;
 }
 
 p {

@@ -59,7 +59,8 @@ class AccountApiControler {
   }
 
   public function proceedUpdateAccount(Request $request): Response {
-    $accountId = $request->getQueryParam('id');
+   
+    $accountId = $request->getData()['_id'];
     $account = $this->_accountRepo->getAccount($accountId);
     $payload = $request->getData();
 
@@ -71,9 +72,10 @@ class AccountApiControler {
     }
 
     $errors = [
-      'email'     => $account->setEmail(htmlentities($payload['email'] ?? '')),
-      'firstName' => $account->setFirstName(htmlentities($payload['firstName'] ?? '')),
-      'lastName'  => $account->setLastName(htmlentities($payload['lastName'] ?? '')),
+      'email'     => $account->setEmail(htmlentities($payload['_email'] ?? '')),
+      'firstName' => $account->setFirstName(htmlentities($payload['_firstName'] ?? '')),
+      'lastName'  => $account->setLastName(htmlentities($payload['_lastName'] ?? '')),
+      'isAdmin'   => $account->setIsAdmin(htmlentities($payload['_isAdmin']??''))
     ];
     if (!empty($payload['password'])) {
       $errors = array_merge($errors, [
