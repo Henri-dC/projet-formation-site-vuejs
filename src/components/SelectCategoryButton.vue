@@ -8,10 +8,10 @@ storeCategories.queryCategories();
 
 <template>
   <div id="container-select-category">
-    <h2 @click="ToggleSelectCategory">
+    <h2 v-show="windowWidth <= 900" @click="ToggleSelectCategory">
       Catégories <i class="fa-solid fa-chevron-down"></i>
     </h2>
-    <div v-show="showSelectCategory">
+    <div v-show="showSelectCategory || windowWidth > 900">
       <div
         v-for="category in storeCategories.getCategories"
         :key="category.id"
@@ -36,11 +36,20 @@ export default {
   data() {
     return {
       showSelectCategory: false,
+      windowWidth: window.innerWidth,
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener("resize", this.onResize);
+    });
   },
   methods: {
     ToggleSelectCategory() {
       this.showSelectCategory = !this.showSelectCategory;
+    },
+    onResize() {
+      this.windowWidth = window.innerWidth;
     },
   },
 };
@@ -52,10 +61,11 @@ h2 {
 }
 
 #container-select-category {
-  margin-top: 10em;
+  margin-top: 8em;
   text-align: center;
   width: 80vw;
   margin-left: 10vw;
+  margin-bottom: 3em;
 }
 .select-category-button {
   position: relative;
@@ -123,12 +133,6 @@ h2 {
   }
   100% {
     background-position: 0 0;
-  }
-}
-
-@media screen and (min-width:600px){
-  h2{
-    color:blue;
   }
 }
 </style>

@@ -16,5 +16,6 @@ const ServiceStore = useServiceStore();
 #container {
   padding-top: 8em;
   background-color: aqua;
+  padding-bottom: 5em;
 }
 </style>

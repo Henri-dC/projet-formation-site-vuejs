@@ -17,7 +17,8 @@ s
       :id="'article-container-' + i"
     >
       <article>
-        <i class="fa-solid fa-trash"
+        <i
+          class="fa-solid fa-trash"
           id="delete-article"
           v-if="admin === 'true'"
           @click="deleteArticle(article.id)"
@@ -70,8 +71,10 @@ export default {
       this.ServiceStore.toggleDisplayNewArticleForm();
     },
     deleteArticle(id) {
-      this.ArticleStore.deleteArticle(id);
-      setTimeout(this.ArticleStore.queryArticles, 5000);
+      if (confirm("Voulez-vous supprimer cet article ?")) {
+        this.ArticleStore.deleteArticle(id);
+        setTimeout(this.ArticleStore.queryArticles, 5000);
+      }
     },
   },
   beforeMount() {
@@ -91,13 +94,14 @@ export default {
 }
 
 .article-container {
-  position:relative;
+  position: relative;
   margin: auto;
   margin-top: 2em;
-  background-color: var(--second-bg-color);
+  /* background-color: var(--second-bg-color);*/
   text-align: center;
   padding: 1em;
   border-radius: 1em;
+  box-shadow: 2px 2px 2px 1px var(--main-bg-color);
 }
 
 time {
@@ -107,7 +111,7 @@ time {
 }
 
 h2 {
-  color: firebrick;
+  color: black;
 }
 
 .router-link {
@@ -116,7 +120,7 @@ h2 {
 }
 
 .content {
-  word-break:normal;
+  word-break: normal;
   white-space: pre-wrap;
 }
 
@@ -128,7 +132,7 @@ h2 {
   cursor: pointer;
 }
 
-#delete-article{
+#delete-article {
   position: relative;
   top: 0%;
   right: 45%;
@@ -146,53 +150,86 @@ img {
   padding: 0;
 }
 
-.footer-article{
-  position :absolute;
+.footer-article {
+  position: absolute;
   bottom: 0;
-  left:50%;
+  left: 50%;
   transform: translateX(-50%);
-  padding-bottom:0.5em;
+  padding-bottom: 0.5em;
 }
-
 
 /* RESPONSIVE */
 
 @media screen and (min-width: 900px) {
   #main-article-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     gap: 4px;
   }
 
   .article-container {
     position: relative;
     margin: 0;
-  }
- 
-  .article-container:nth-child(7n+1) {
-    grid-column: 1;
-  }
-  .article-container:nth-child(7n+2) {
-    grid-column: 2;
-  }
-  .article-container:nth-child(7n+3) {
-    grid-column: 3;
-  }
-  .article-container:nth-child(7n+4) {
-    grid-column: 4;
-  }
-  .article-container:nth-child(7n+5) {
-    grid-column: 1;
-  }
-  .article-container:nth-child(7n+6){
-    grid-column: 2/span 2;
-    background-color: white;
-    border:1px solid black;
-  }
-   .article-container:nth-child(7n+7){
-    grid-column: 4;
+    grid-column: span 2;
   }
 
+  .article-container:nth-child(7n + 1) {
+    grid-column: 1 / span 2;
+  }
+  .article-container:nth-child(7n + 2) {
+    grid-column: 3 / span 2;
+  }
+  .article-container:nth-child(7n + 3) {
+    grid-column: 5 / span 2;
+  }
+  .article-container:nth-child(7n + 4) {
+    grid-column: 7 / span 2;
+  }
+  .article-container:nth-child(7n + 5) {
+    grid-column: 1 / span 2;
+  }
+  .article-container:nth-child(7n + 6) {
+    grid-column: 3 / span 4;
+  }
+  .article-container:nth-child(7n + 7) {
+    grid-column: 7 / span 2;
+  }
 
+  /* Case of orphans article */
+  /* last two of 7 */
+
+  .article-container:nth-last-child(2):nth-child(7n - 2) {
+    grid-column-end: 5;
+  }
+  .article-container:last-child:nth-child(7n + 6) {
+    grid-column-start: 5;
+    grid-column-end: 9;
+  }
+
+  /* Last two ok 5 */
+  .article-container:nth-last-child(2):nth-child(5n - 5) {
+    grid-column-end: 5;
+  }
+  .article-container:last-child:nth-child(5n + 1) {
+    grid-column-start: 5;
+    grid-column-end: 9;
+  }
+  /* Last three of 6  */
+  .article-container:last-child(6n - 1) {
+    grid-column-end: 5;
+  }
+  .article-container:nth-last-child(2):nth-child(6n + 4) {
+    grid-column-start: 3;
+    grid-column-end: 7;
+  }
+  .article-container:last-child:nth-child(6n + 5) {
+    grid-column-start: 7;
+    grid-column-end: 9;
+  }
+
+  .article-container:last-child:nth-child(7n - 6) {
+    grid-column-start: 1;
+    grid-column-end: 9;
+  }
 }
 </style>

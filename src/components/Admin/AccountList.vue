@@ -131,9 +131,6 @@ td {
 input {
   border: none;
   text-align: center;
-}
-
-input {
   display: inline-block;
 }
 
