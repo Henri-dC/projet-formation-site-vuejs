@@ -32,8 +32,8 @@ const ServiceStore = useServiceStore();
       <i class="icon fa-solid fa-user"></i>
     </div>
     <div v-else id="user-account-name" class="icon">
-      {{ userStore.user._firstName
-      }}<i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
+      <span id="diplay-user-firstname">{{ userStore.user._firstName}}</span>
+      <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
     </div>
     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
   </div>
@@ -109,7 +109,6 @@ i {
   display: flex;
   list-style-type: none;
   justify-content: space-around;
-
   margin: 0;
   padding: 0;
   color: #eee;
@@ -120,21 +119,21 @@ i {
   color: var(--second-bg-color);
   color: white;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
-}
-
-.icon:nth-child(-n + 3) {
   font-size: 3em;
 }
 
 #user-menu {
   position: absolute;
   top: 80%;
-  left: 10%;
+  left: 0;
   z-index: 20;
   padding: 0;
+  width:100%;
+  font-family: "Rubik", sans-serif;
 }
 
 #user-menu > li {
+ 
   list-style-type: none;
   font-size: 2em;
   background-color: white;
@@ -162,6 +161,10 @@ i {
   text-align: center;
 }
 
+#diplay-user-firstname{
+  display:none;
+}
+
 @media screen and (min-width: 600px) {
   h1 {
     margin-left: 4em;
@@ -169,6 +172,9 @@ i {
   }
   #new-article {
     display: block;
+  }
+  #diplay-user-firstname{
+    display:inline-block;
   }
 }
 </style>

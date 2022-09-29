@@ -45,7 +45,11 @@ img {
 }
 
 .content {
-  width: 50%;
+  width: 30%;
   margin: auto;
+  padding:1em;
+  text-align: left;
+  white-space: pre-wrap;
+  border: 1px solid black;
 }
 </style>

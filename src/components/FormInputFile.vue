@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div
+    <img
       class="imagePreviewWrapper"
-      :style="{ 'background-image': `url(${previewImage})` }"
+      :src="previewImage"
       @click="selectImage"
-    ></div>
+    />
     <input id="input-file" ref="fileInput" type="file" @input="pickFile" />
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
     selectImage() {
       this.$refs.fileInput.click();
     },
-    pickFile() { //Doublon...Pour la reactivité...trouver autre solution si possible
+    pickFile() { 
     let input = this.$refs.fileInput;
     let file = input.files;
     if (this.currentFile !== undefined && !file[0]) {
@@ -50,8 +50,8 @@ export default {
 </script>
 <style scoped>
 .imagePreviewWrapper {
-  width: 250px;
-  height: 250px;
+  width:250px;
+ 
   display: block;
   cursor: pointer;
   margin: 0 auto 30px;

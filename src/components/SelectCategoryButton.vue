@@ -84,8 +84,6 @@ h2 {
     45deg,
     #ff0000,
     #ff7300,
-    #fffb00,
-    #48ff00,
     #00ffd5,
     #ff00c8,
     #ff0000
@@ -125,6 +123,12 @@ h2 {
   }
   100% {
     background-position: 0 0;
+  }
+}
+
+@media screen and (min-width:600px){
+  h2{
+    color:blue;
   }
 }
 </style>

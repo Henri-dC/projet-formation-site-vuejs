@@ -17,6 +17,11 @@ s
       :id="'article-container-' + i"
     >
       <article>
+        <i class="fa-solid fa-trash"
+          id="delete-article"
+          v-if="admin === 'true'"
+          @click="deleteArticle(article.id)"
+        ></i>
         <i
           id="edit-article"
           title="modifier"
@@ -44,17 +49,10 @@ s
             }}
           </p>
         </div>
-        <div class="article-footer">
+        <div class="footer-article">
           <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
         </div>
       </article>
-      <button
-        id="delete-article"
-        v-if="admin === 'true'"
-        @click="deleteArticle(article.id)"
-      >
-        Supprimer
-      </button>
     </div>
   </div>
 </template>
@@ -93,6 +91,7 @@ export default {
 }
 
 .article-container {
+  position:relative;
   margin: auto;
   margin-top: 2em;
   background-color: var(--second-bg-color);
@@ -104,7 +103,6 @@ export default {
 time {
   position: relative;
   display: block;
-  text-decoration: underline;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
@@ -118,17 +116,22 @@ h2 {
 }
 
 .content {
-  word-break: break-all;
-}
-.count-like {
-  background-color: rgba(253, 253, 253, 0.863);
-  margin-left: 0.3em;
+  word-break:normal;
+  white-space: pre-wrap;
 }
 
 #edit-article {
   position: relative;
   top: 0%;
   right: -45%;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#delete-article{
+  position: relative;
+  top: 0%;
+  right: 45%;
   text-decoration: none;
   cursor: pointer;
 }
@@ -142,17 +145,54 @@ img {
   font-size: 1em;
   padding: 0;
 }
+
+.footer-article{
+  position :absolute;
+  bottom: 0;
+  left:50%;
+  transform: translateX(-50%);
+  padding-bottom:0.5em;
+}
+
+
 /* RESPONSIVE */
 
 @media screen and (min-width: 900px) {
   #main-article-container {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 4px;
   }
 
   .article-container {
+    position: relative;
     margin: 0;
   }
+ 
+  .article-container:nth-child(7n+1) {
+    grid-column: 1;
+  }
+  .article-container:nth-child(7n+2) {
+    grid-column: 2;
+  }
+  .article-container:nth-child(7n+3) {
+    grid-column: 3;
+  }
+  .article-container:nth-child(7n+4) {
+    grid-column: 4;
+  }
+  .article-container:nth-child(7n+5) {
+    grid-column: 1;
+  }
+  .article-container:nth-child(7n+6){
+    grid-column: 2/span 2;
+    background-color: white;
+    border:1px solid black;
+  }
+   .article-container:nth-child(7n+7){
+    grid-column: 4;
+  }
+
+
 }
 </style>

@@ -160,7 +160,7 @@ export default {
 
 #form-container {
   position: fixed;
-  top: 55vh;
+  top: 75vh;
   left: 50%;
   transform: translate(-50%, -90%);
   width: 80%;

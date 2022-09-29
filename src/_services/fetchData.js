@@ -7,7 +7,7 @@ export default class fetchData{
     }
   
     async query(){
-      if(this._method=='GET'||this._method=='DELETE'){
+      if(this._method==='GET'||this._method==='DELETE'){
         return fetch(this._url, {
           method: this._method,
           credentials: "include",
