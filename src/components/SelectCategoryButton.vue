@@ -61,24 +61,22 @@ h2 {
 }
 
 #container-select-category {
-  margin-top: 8em;
   text-align: center;
   width: 90vw;
   margin-left: 5vw;
-  margin-bottom: 3em;
 }
 .select-category-button {
   position: relative;
   display: inline;
   margin: 1vw;
+  padding: 0.75rem 1.65rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1rem;
   background-color: white;
   border: 0 solid #e5e7eb;
   box-sizing: border-box;
   border-radius: 10em;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1rem;
-  padding: 0.75rem 1.65rem;
   max-width: 460px;
   cursor: pointer;
   user-select: none;
@@ -134,5 +132,12 @@ h2 {
   100% {
     background-position: 0 0;
   }
+}
+
+@media screen and (min-width:600px){
+#container-select-category {
+  margin-top:8em;
+  margin-bottom:1em;
+}
 }
 </style>

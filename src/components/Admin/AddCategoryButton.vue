@@ -31,7 +31,7 @@
    }
 </script>
 
-<style>
+<style scoped>
     #add-category-container{
         padding-top:4em;
     }

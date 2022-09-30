@@ -34,14 +34,15 @@ export default {
 <style scoped>
 #article-container {
   margin-top: 10em;
+  padding-bottom: 3em;
   display: block;
   text-align: center;
   min-height: 72vh;
 }
 
 img {
-  max-width: 30%;
-  min-width: 30%;
+  max-width: 90%;
+   padding-bottom:3em;
 }
 
 .content {
@@ -50,6 +51,6 @@ img {
   padding:1em;
   text-align: left;
   white-space: pre-wrap;
-  border: 1px solid black;
+  border-top :1px solid black;
 }
 </style>

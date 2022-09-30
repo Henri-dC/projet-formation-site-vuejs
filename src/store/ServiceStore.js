@@ -6,7 +6,7 @@ export const useServiceStore = defineStore("ServiceStore", {
   }),
   actions: {
     toggleDisplayNewArticleForm() {
-      this.displayNewArticleForm = !this.displayNewArticleForm;
+    this.displayNewArticleForm = !this.displayNewArticleForm;
     },
   },
 });

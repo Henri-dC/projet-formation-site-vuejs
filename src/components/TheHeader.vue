@@ -16,12 +16,6 @@ const ServiceStore = useServiceStore();
         class="icon fa-solid fa-bars"
         @click="toggleMenu"
       ></i>
-      <ul v-if="this.userMenu" id="user-menu">
-        <li @click="queryArticlesUser">Mes articles</li>
-        <li @click="ServiceStore.toggleDisplayNewArticleForm">
-          Ecrire un article
-        </li>
-      </ul>
     </div>
     <div id="logo-title">
       <h1>
@@ -35,8 +29,16 @@ const ServiceStore = useServiceStore();
       <span id="diplay-user-firstname">{{ userStore.user._firstName}}</span>
       <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
     </div>
-    <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
   </div>
+   <div> 
+        <ul v-if="this.userMenu" id="user-menu">
+          <li @click="queryArticlesUser">Mes articles</li>
+          <li @click="ServiceStore.toggleDisplayNewArticleForm">
+          Ecrire un article
+          </li>
+        </ul>
+    </div>
+     <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
 </template>
 
 <script>
@@ -69,21 +71,15 @@ export default {
 
 <style scoped>
 .nav-container {
-  position: fixed;
   justify-content: center;
   align-items: center;
-  top: 0;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-content: space-between;
   border-block: 3px solid black;
   background-color: var(--main-bg-color);
   z-index: 5;
-}
-
-div {
-  width: 100%;
-  text-align: center;
 }
 
 h1 {
@@ -93,6 +89,12 @@ h1 {
   outline: 5px solid var(--second-bg-color);
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
   font-size: 3em;
+  text-align: center;
+  display:inline-block;
+}
+
+#logo-title{
+  text-align: center;
 }
 
 #title-link {
@@ -123,25 +125,23 @@ i {
 }
 
 #user-menu {
-  position: absolute;
-  top: 80%;
-  left: 0;
-  z-index: 20;
   padding: 0;
   width:100%;
-  font-family: "Rubik", sans-serif;
+  margin:0;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ 
 }
 
 #user-menu > li {
- 
   list-style-type: none;
-  font-size: 2em;
-  background-color: white;
+  text-align:center;
+  font-size: 1.5em;
+  background-color: var(--second-bg-color);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(147,204,213,0.30996148459383754) 100%);
   cursor: pointer;
   color: black;
-  border-bottom: 2px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
+  border: 1px solid black;
+  border-top: none;
 }
 
 #user-menu > li:hover {
@@ -166,15 +166,18 @@ i {
 }
 
 @media screen and (min-width: 600px) {
-  h1 {
-    margin-left: 4em;
-    margin-right: 4em;
-  }
+
+  .nav-container {
+  position: fixed;
+  top: 0;}
+ 
   #new-article {
     display: block;
   }
   #diplay-user-firstname{
     display:inline-block;
   }
+  #user-menu {
+  position: absolute;}
 }
 </style>
