@@ -63,8 +63,8 @@ h2 {
 #container-select-category {
   margin-top: 8em;
   text-align: center;
-  width: 80vw;
-  margin-left: 10vw;
+  width: 90vw;
+  margin-left: 5vw;
   margin-bottom: 3em;
 }
 .select-category-button {
@@ -77,7 +77,7 @@ h2 {
   border-radius: 10em;
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1.75rem;
+  line-height: 1rem;
   padding: 0.75rem 1.65rem;
   max-width: 460px;
   cursor: pointer;

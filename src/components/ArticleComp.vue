@@ -195,41 +195,61 @@ img {
     grid-column: 7 / span 2;
   }
 
-  /* Case of orphans article */
-  /* last two of 7 */
 
-  .article-container:nth-last-child(2):nth-child(7n - 2) {
-    grid-column-end: 5;
+  /* Sélectionne le dernier sur 1 (modulo 7) */
+
+   .article-container:last-child:nth-child(7n+1){
+    grid-column-start: 1;
+    grid-column-end: 9;
   }
-  .article-container:last-child:nth-child(7n + 6) {
+
+  /* Sélectionne les deux derniers sur 2 (modulo 7) */
+
+   .article-container:last-child:nth-child(7n+2){
     grid-column-start: 5;
     grid-column-end: 9;
   }
 
-  /* Last two ok 5 */
-  .article-container:nth-last-child(2):nth-child(5n - 5) {
+  .article-container:nth-last-child(2):nth-child(7n+1){
+    grid-column-start: 1;
     grid-column-end: 5;
   }
-  .article-container:last-child:nth-child(5n + 1) {
-    grid-column-start: 5;
-    grid-column-end: 9;
-  }
-  /* Last three of 6  */
-  .article-container:last-child(6n - 1) {
-    grid-column-end: 5;
-  }
-  .article-container:nth-last-child(2):nth-child(6n + 4) {
-    grid-column-start: 3;
-    grid-column-end: 7;
-  }
-  .article-container:last-child:nth-child(6n + 5) {
+
+  /* Sélectionne les trois derniers sur 3 (modulo 7) */
+
+   .article-container:last-child:nth-child(7n+3){
     grid-column-start: 7;
     grid-column-end: 9;
   }
 
-  .article-container:last-child:nth-child(7n - 6) {
+  .article-container:nth-last-child(2):nth-child(7n+2){
+    grid-column-start: 3;
+    grid-column-end: 7;
+  }
+
+  .article-container:nth-last-child(3):nth-child(7n+1){
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  
+  /* Sélectionne le dernier sur 5 ( modulo 7) */
+
+   .article-container:last-child:nth-child(7n+5){
     grid-column-start: 1;
     grid-column-end: 9;
   }
+
+  /* Sélectionne les deux derniers sur 6 (modulo 7) */
+
+   .article-container:last-child:nth-child(7n+6){
+    grid-column-start: 5;
+    grid-column-end: 9;
+  }
+
+  .article-container:nth-last-child(2):nth-child(7n+5){
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+
 }
 </style>
