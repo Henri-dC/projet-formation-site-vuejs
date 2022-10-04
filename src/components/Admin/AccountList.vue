@@ -109,32 +109,5 @@ export default {
 </script>
 
 <style scoped>
-#container-list-users {
-  padding-top: 4em;
-}
-
-table {
-  margin: auto;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  border-collapse: collapse;
-  width: 80%;
-}
-
-td {
-  border: 1px solid;
-  padding: 1.2em 0em;
-  background-color: white;
-  width: 10%;
-}
-
-input {
-  border: none;
-  text-align: center;
-  display: inline-block;
-}
-
-#input-id {
-  display: none;
-}
+@import '../../assets/style/Admin/AccountList.scss';
 </style>
