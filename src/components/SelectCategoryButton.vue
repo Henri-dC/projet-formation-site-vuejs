@@ -135,9 +135,16 @@ h2 {
 }
 
 @media screen and (min-width:600px){
+h2{
+  margin-top:5em;
+}
+#container-select-category {
+  margin-bottom:1em;
+}
+}
+@media screen and (min-width:900px){
 #container-select-category {
   margin-top:8em;
-  margin-bottom:1em;
 }
 }
 </style>

@@ -93,11 +93,15 @@ export default {
       this.formData = this.ArticleStore.editArticle;
     }
   },
+  mounted(){
+    this.CategoriesStore.queryCategories()
+  },
   computed: {
     editMode() {
       return this.ArticleStore.editArticle.length >= 0 ? false : true;
     },
   },
+
 
   methods: {
     //FONCTION: Fermer la modale

@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 #article-container {
-  margin-top: 10em;
+  margin-top: 1em;
   padding-bottom: 3em;
   display: block;
   text-align: center;
@@ -52,5 +52,11 @@ img {
   text-align: left;
   white-space: pre-wrap;
   border-top :1px solid black;
+}
+
+@media screen and (min-width:600px){
+#article-container {
+  margin-top: 7em;
+}
 }
 </style>

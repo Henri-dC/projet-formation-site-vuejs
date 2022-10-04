@@ -4,7 +4,8 @@
 session_set_cookie_params(["SameSite" => "None"]); //none, lax, strict
 session_set_cookie_params(["Secure" => "true"]); //false, true
 session_set_cookie_params(["HttpOnly" => "true"]); //false, true
-
+ini_set("SMTP","localhost");
+ini_set("smtp_port","25");
 //Session
 
 session_start();

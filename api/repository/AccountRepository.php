@@ -33,6 +33,24 @@ class AccountRepository {
     return $account;
   }
 
+  public function checkIfMailExist(string $email): bool{
+    $stmt = $this->_connexion->prepare('
+    Select email
+    FROM Account
+    WHERE email = :email
+    ');
+    $stmt->execute([
+      'email' => $email
+  ]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   public function createAccount(Account $account): Account {
     $stmt = $this->_connexion->prepare('
         INSERT INTO Account (id, firstName, lastName, email, password) 

@@ -27,7 +27,7 @@ export default {
     let file = input.files;
     if (this.currentFile !== undefined && !file[0]) {
       console.log(1)
-      this.previewImage = "src/assets/images/" + this.currentFile;
+      this.previewImage = "../src/assets/images/" + this.currentFile;
     } else if (file && file[0]) { console.log(2)
       let reader = new FileReader();
       reader.onload = (e) => {
@@ -36,7 +36,7 @@ export default {
       reader.readAsDataURL(file[0]);
     } else if(this.currentFile==undefined){
        console.log(3)
-      this.previewImage = "src/assets/images/icon/noun-add-image-3752744.png";
+      this.previewImage = "../src/assets/images/icon/noun-add-image-3752744.png";
     }
     },
   },

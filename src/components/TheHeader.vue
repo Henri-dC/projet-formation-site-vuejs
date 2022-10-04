@@ -10,12 +10,16 @@ const ServiceStore = useServiceStore();
 
 <template>
   <div class="nav-container">
-    <div id="menu">
+    <div id="icon-burger-menu">
       <i
         v-show="userStore.user"
         class="icon fa-solid fa-bars"
         @click="toggleMenu"
       ></i>
+    </div>
+    <div id="menu-desktop" >
+      <span class="menu-span" @click="ServiceStore.toggleDisplayNewArticleForm" v-show="userStore.user">Ecrire un article</span>
+      <span class="menu-span" @click="queryArticlesUser" v-show="userStore.user">Mes articles</span>
     </div>
     <div id="logo-title">
       <h1>
@@ -30,14 +34,14 @@ const ServiceStore = useServiceStore();
       <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
     </div>
   </div>
-   <div> 
-        <ul v-if="this.userMenu" id="user-menu">
-          <li @click="queryArticlesUser">Mes articles</li>
-          <li @click="ServiceStore.toggleDisplayNewArticleForm">
-          Ecrire un article
-          </li>
-        </ul>
-    </div>
+  <div id="container-user-menu"> 
+      <ul v-if="this.userMenu" id="user-menu">
+        <li @click="queryArticlesUser">Mes articles</li>
+        <li @click="ServiceStore.toggleDisplayNewArticleForm">
+        Ecrire un article
+        </li>
+      </ul>
+  </div>
      <SignForm v-if="this.signForm" @toggle-sign-form="toggleSignForm" />
 </template>
 
@@ -82,6 +86,22 @@ export default {
   z-index: 5;
 }
 
+#icon-burger-menu, 
+#menu-desktop{
+  text-align:center;
+}
+
+.menu-span{
+  display:inline-block;
+  font-size: 1.4em;
+  color:white;
+  text-decoration: underline;
+  cursor:pointer;
+  margin-left:1em;
+  transform: rotate(-10deg);
+  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
 h1 {
   margin: 0;
   padding: 0.2em;
@@ -107,18 +127,7 @@ i {
   cursor: pointer;
 }
 
-#menu {
-  display: flex;
-  list-style-type: none;
-  justify-content: space-around;
-  margin: 0;
-  padding: 0;
-  color: #eee;
-  font-family: "Rubik", sans-serif;
-}
-
 .icon {
-  color: var(--second-bg-color);
   color: white;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
   font-size: 3em;
@@ -129,7 +138,6 @@ i {
   width:100%;
   margin:0;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- 
 }
 
 #user-menu > li {
@@ -142,10 +150,6 @@ i {
   color: black;
   border: 1px solid black;
   border-top: none;
-}
-
-#user-menu > li:hover {
-  background-color: var(--main-bg-color);
 }
 
 #user-account-name {
@@ -165,19 +169,34 @@ i {
   display:none;
 }
 
-@media screen and (min-width: 600px) {
+#menu-desktop{
+  display:none;
+}
 
+@media screen and (min-width: 600px) {
   .nav-container {
   position: fixed;
   top: 0;}
  
-  #new-article {
-    display: block;
-  }
   #diplay-user-firstname{
     display:inline-block;
   }
-  #user-menu {
-  position: absolute;}
+
+  #container-user-menu{
+    margin-top:5em;
+    margin-bottom:1em;
+  }
 }
+
+@media screen and (min-width: 900px) {
+  #container-user-menu, #icon-burger-menu{
+    display:none;
+  }
+ 
+  #menu-desktop{
+    display:inline-block;
+  }
+}
+
+
 </style>
