@@ -78,29 +78,30 @@ h1{
   
   /* MENU LIST */
   
-#user-menu {
+#list-user-menu {
   padding: 0;
   width:100%;
   margin:0;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
   
-  #list-user-menu > li {
-    list-style-type: none;
-    text-align:center;
-    font-size: 1.5em;
-    background-color: var(--second-bg-color);
-    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(147,204,213,0.30996148459383754) 100%);
-    cursor: pointer;
-    color: black;
-    border: 1px solid black;
-    border-top: none;
-  }
+#list-user-menu > li {
+  list-style-type: none;
+  text-align:center;
+  font-size: 1.5em;
+  background-color: var(--second-bg-color);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(147,204,213,0.30996148459383754) 100%);
+  cursor: pointer;
+  color: black;
+  border: 1px solid black;
+  border-top: none;
+}
  
   @media screen and (min-width: 600px) {
-    .nav-container {
+    .header-container {
     position: fixed;
-    top: 0;}
+    top: 0;
+    }
    
     #user-firstname{
       display:inline-block;
@@ -108,7 +109,6 @@ h1{
   
     #container-user-menu{
       margin-top:5em;
-      margin-bottom:1em;
     }
   }
   

@@ -11,7 +11,6 @@
     position: relative;
     margin: auto;
     margin-top: 2em;
-    /* background-color: var(--second-bg-color);*/
     text-align: center;
     padding: 1em;
     border-radius: 1em;
@@ -144,6 +143,28 @@
     .article-container:nth-last-child(3):nth-child(7n+1){
       grid-column-start: 1;
       grid-column-end: 3;
+    }
+
+     /* Sélectionne les quatre derniers sur 4 (modulo 7) */
+  
+     .article-container:last-child:nth-child(7n+4){
+      grid-column-start: 5;
+      grid-column-end: 9;
+    }
+  
+    .article-container:nth-last-child(2):nth-child(7n+3){
+      grid-column-start: 1;
+      grid-column-end: 5;
+    }
+  
+    .article-container:nth-last-child(3):nth-child(7n+2){
+      grid-column-start: 5;
+      grid-column-end: 9;
+    }
+
+    .article-container:nth-last-child(4):nth-child(7n+1){
+      grid-column-start: 1;
+      grid-column-end: 5;
     }
     
     /* Sélectionne le dernier sur 5 ( modulo 7) */

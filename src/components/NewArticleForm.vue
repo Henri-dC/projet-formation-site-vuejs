@@ -189,6 +189,6 @@ export default {
 };
 </script>
 
-<style scoped>
-@import '../assets/style/NewArticleForm.scss';
+<style lang="sass" scoped>
+@import '../assets/style/NewArticleForm.scss'
 </style>

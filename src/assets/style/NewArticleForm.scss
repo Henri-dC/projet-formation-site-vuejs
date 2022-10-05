@@ -24,9 +24,9 @@
   
   #modale-new-article {
     display: block;
-    width: 90%;
-    margin-left: 5%;
+   
     height: 100%;
+   
     text-align: center;
     border-radius: 1em;
     z-index: 20;
@@ -36,13 +36,14 @@
   fieldset {
     border-radius: 1em;
     background-color: white;
+    border: none;
   }
   
   legend {
-    font-size: 2em;
+    font-size: 1.6em;
     font-weight: 700;
     padding: 0.6em;
-    border-radius: 0em 1em;
+    border-radius: 0px 8px;
     color: white;
     background-color: var(--main-bg-color);
     border-block: 4px solid black;
@@ -64,11 +65,11 @@
     width: 85%;
     line-height: 2em;
     text-align: center;
-    border-radius: 2em;
+    border-radius: 2px;
+    background-color: transparent;
   }
-  
+
   textarea {
-    margin-top: 2em;
     width: 85%;
     resize: none;
   }
@@ -76,24 +77,39 @@
   select {
     height: 2.6em;
   }
-  
-  #author-article {
-    width: 60%;
-  }
-  
+   
   #button-container {
     display: flex;
-    justify-content: space-around;
-    width: 60%;
+    justify-content: space-between;
+    width: 80%;
     margin: auto;
     margin-top: 2em;
   }
   
   button {
-    line-height: 1.7em;
-    border-radius: 10em;
+    font-size: 1.5em;
+    border-radius: 9px;
+    background-color: var(--main-bg-color);
+    color:white;
+    border: 1px;
+    cursor: pointer;
   }
   
   span {
     color: red;
+  }
+
+  @media screen and (min-width:600px){
+    #button-container{
+      width:60%;
+    }
+  }
+
+  @media screen and (min-width:900px){
+    #button-container{
+      width:30%;
+    }
+    select, input{
+      width: 50%;
+    }
   }

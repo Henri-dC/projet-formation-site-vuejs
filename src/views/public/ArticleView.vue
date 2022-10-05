@@ -7,7 +7,6 @@ const ServiceStore = useServiceStore();
 </script>
 
 <template>
-  <NewArticleForm v-if="ServiceStore.displayNewArticleForm" />
   <article id="article-container">
     <router-link to="/">Retour aux articles</router-link>
     <h2>{{ this.articleStore.viewArticle.title }}</h2>
@@ -21,6 +20,7 @@ const ServiceStore = useServiceStore();
       <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
     </div>
   </article>
+  <NewArticleForm v-if="ServiceStore.displayNewArticleForm" />
 </template>
 
 <script>
@@ -33,16 +33,19 @@ export default {
 
 <style scoped>
 #article-container {
-  margin-top: 1em;
-  padding-bottom: 3em;
   display: block;
+  width: 90%;
+  margin: 2em auto;
+ 
+  padding-bottom: 3em;
   text-align: center;
   min-height: 72vh;
+  box-shadow: 2px 2px 2px 1px var(--main-bg-color);
 }
 
 img {
   max-width: 90%;
-   padding-bottom:3em;
+  padding-bottom:3em;
 }
 
 .content {
@@ -57,6 +60,7 @@ img {
 @media screen and (min-width:600px){
 #article-container {
   margin-top: 7em;
+   width:50%
 }
 }
 </style>
