@@ -36,7 +36,7 @@ export default {
   display: block;
   width: 90%;
   margin: 2em auto;
- 
+
   padding-bottom: 3em;
   text-align: center;
   min-height: 72vh;
@@ -45,22 +45,22 @@ export default {
 
 img {
   max-width: 90%;
-  padding-bottom:3em;
+  padding-bottom: 3em;
 }
 
 .content {
   width: 30%;
   margin: auto;
-  padding:1em;
+  padding: 1em;
   text-align: left;
   white-space: pre-wrap;
-  border-top :1px solid black;
+  border-top: 1px solid black;
 }
 
-@media screen and (min-width:600px){
-#article-container {
-  margin-top: 7em;
-   width:50%
-}
+@media screen and (min-width: 600px) {
+  #article-container {
+    margin-top: 7em;
+    width: 50%;
+  }
 }
 </style>

@@ -11,7 +11,7 @@ class ImageApiControler{
         return $name;
     }
 
-   public function convertImage($img){
+    public function convertImage($img){
 
           $imagename  = $this->nameControl($img['name']);
           $source = $img['tmp_name'];
@@ -53,5 +53,16 @@ class ImageApiControler{
           imagecopyresampled($tn, $image, 0, 0, 0, 0, $modwidth, $modheight, $width, $height) ;
           $image_save_func($tn, $save) ;
               
+    }
+
+    public function deleteImg(Request $request):Response{
+        $picture = $request->getQueryParam('name');
+        $photoDir = '../src/assets/images/';
+        $photoPath = $photoDir . $picture;
+        unlink($photoPath);
+
+        $response = new Response;
+        $response->setHttpStatusCode(HttpStatusCode::OK);
+        return $response;
     }
 }

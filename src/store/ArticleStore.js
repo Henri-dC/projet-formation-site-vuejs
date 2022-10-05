@@ -36,7 +36,7 @@ export const useArticleStore = defineStore("ArticleStore", {
       return request.query();
     },
 
-    queryArticleById(id, mode) {
+    async queryArticleById(id, mode) {
       for (let i = 0; i < this.articles.length; i++) {
         if (this.articles[i].id === id) {
           if (mode === "edit") {
@@ -48,7 +48,11 @@ export const useArticleStore = defineStore("ArticleStore", {
       }
     },
 
-    deleteArticle(id) {
+    async deleteArticle(id) {
+      await this.queryArticleById(id, "edit");
+      let routeA = "?route=/picture&name=" + this.editArticle.picture;
+      let requestA = new fetchData("DELETE", routeA);
+      requestA.query();
       let route = "?route=/article&id=" + id;
       let request = new fetchData("DELETE", route);
       request.query();

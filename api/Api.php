@@ -34,7 +34,7 @@ class Api {
        
         $result = $this->decodeJsonFromInput();
         if (empty($result['error'])) {
-            $request = new Request($_SERVER['REQUEST_METHOD'], $_GET, $result['jsonData'] ?? []);
+            $request = new Request($_SERVER['REQUEST_METHOD'], $_GET, $result['jsonData'] ?? [], $_FILES);
           
             $response = $this->_router->processRequest($request);
         } else {

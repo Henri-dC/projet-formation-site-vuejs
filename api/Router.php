@@ -5,6 +5,8 @@ class Router {
         $page = isset($_GET['route']) ? $_GET['route'] : '';
       
         switch($page) {
+
+            
             case '/account':
                 $controler = new AccountApiControler();
                 switch($request->getMethod()) {
@@ -41,14 +43,6 @@ class Router {
                         return $controler->proceedListArticlesByCategory($request);    
                     }
 
-            case '/login':
-                $controler = new LoginApiControler();
-                return $controler->proceedConnexion($request);
-
-            case '/logout':
-                $controler = new AccountApiControler();
-                return $controler->proceedDestroySession();
-                
                 
             case '/category':
                 switch($request->getMethod()) {
@@ -59,6 +53,22 @@ class Router {
                         $controler = new CategoryApiControler();
                         return $controler->proceedGetCategories();    
                     }
+
+            case '/picture':
+                switch($request->getMethod()){
+                    case 'DELETE':
+                        $controler = new ImageApiControler();
+                        return $controler->deleteImg($request);
+                }
+
+            case '/login':
+                $controler = new LoginApiControler();
+                return $controler->proceedConnexion($request);
+    
+            case '/logout':
+                $controler = new AccountApiControler();
+                return $controler->proceedDestroySession();
+    
             
             default:
                 $response = new Response();
