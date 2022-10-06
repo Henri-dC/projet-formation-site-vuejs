@@ -27,6 +27,10 @@ export const useUserStore = defineStore("UserStore", {
     updateUser(user){
       let request = new fetchData('PUT', "?route=/account", user)
       request.query();
+    },
+    deleteUser(id){
+      let request = new fetchData('DELETE', "?route=/account&id="+id);
+      request.query();
     }
   },
 });

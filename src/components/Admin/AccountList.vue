@@ -50,6 +50,9 @@ const userStore = useUserStore();
         <td v-else>
           <input type="text" :value="user['isAdmin']" ref="isAdmin" />
         </td>
+        <td>
+          <button @click="deleteUser(user['id'])">Supprimer</button>
+        </td>
       </tr>
     </table>
   </div>
@@ -84,6 +87,9 @@ export default {
     },
     updateUser(user) {
       this.userStore.updateUser(user);
+    },
+    deleteUser(id){
+      this.userStore.deleteUser(id);
     },
     getValue() {
       if (this.$refs.firstName !== undefined) {

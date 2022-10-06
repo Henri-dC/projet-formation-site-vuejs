@@ -155,6 +155,6 @@ export default {
 };
 </script>
 
-<style scoped>
-@import '../assets/style/SignForm.scss';
+<style lang="sass" scoped>
+@import '../assets/style/SignForm.scss'
 </style>

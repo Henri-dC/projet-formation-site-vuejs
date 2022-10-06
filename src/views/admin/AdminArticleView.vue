@@ -8,7 +8,7 @@ const ServiceStore = useServiceStore();
 <template>
   <div id="container">
     <ArticleComp admin="true" />
-    <NewArticleForm v-show="ServiceStore.displayNewArticleForm" />
+   
   </div>
 </template>
 

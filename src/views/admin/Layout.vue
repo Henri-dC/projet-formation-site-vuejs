@@ -1,6 +1,10 @@
 <script setup>
 import AccountList from "../../components/Admin/AccountList.vue";
 import AddCategoryButton from "../../components/Admin/AddCategoryButton.vue";
+import ArticleComp from "../../components/ArticleComp.vue";
+import NewArticleForm from "../../components/NewArticleForm.vue";
+import { useServiceStore } from "../../store/ServiceStore";
+const ServiceStore = useServiceStore();
 </script>
 
 <template>
@@ -8,13 +12,15 @@ import AddCategoryButton from "../../components/Admin/AddCategoryButton.vue";
     <ul>
       <li @click="displayAddCategory">Ajouter une catégorie</li>
       <li @click="displayShowUsers">Comptes Utilisateurs</li>
-      <li><router-link to="/admin/articles" tag="button">Gérer les articles</router-link></li>
+      <li @click="displayEditArticles">Gérer les articles</li>
     </ul>
   </div>
   <div class="admin">
     <AddCategoryButton v-if="addCategory"/>
     <AccountList v-if="showUsers"/>
+    <ArticleComp v-if="editArticles" admin="true" />
   </div>
+   <NewArticleForm v-show="ServiceStore.displayNewArticleForm" />
 </template>
 
 <script>
@@ -31,10 +37,17 @@ export default {
     displayAddCategory(){
       this.addCategory = true;
       this.showUsers= false;
+      this.editArticles=false;
     },
     displayShowUsers(){
       this.addCategory = false;
       this.showUsers= true;
+      this.editArticles=false;
+    },
+    displayEditArticles(){
+      this.addCategory = false;
+      this.showUsers= false;
+      this.editArticles=true;
     }
   }
 };
@@ -44,7 +57,7 @@ export default {
 <style scoped>
 .admin {
   background-color: aqua;
-  height: 70vh;
+  min-height: 70vh;
   width:85%;
   margin-left:15%;
   margin-top: 5em;
@@ -68,4 +81,11 @@ li{
 ul{
   padding: 0;
 }
+
+#router-link{
+  text-decoration: none;
+  color:black;
+}
+
+
 </style>
