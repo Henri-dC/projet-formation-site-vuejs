@@ -17,11 +17,7 @@ ini_set('display_errors', 1);
 
 //Settings for header
 
-<<<<<<< HEAD
 header('Access-Control-Allow-Origin: https://tontonritonbzh.github.io/projetFormation');
-=======
-header('Access-Control-Allow-Origin: https://tontonritonbzh.github.io/projetFormation');
->>>>>>> c834cce310891dbcfc75ad1a8c9862b5e57df279
 header('Access-Control-Allow-Methods: PUT, DELETE, GET, POST');
 header('Access-Control-Allow-Credentials: true');
 
