@@ -1,0 +1,64 @@
+#form-container {
+    position: fixed;
+    top: 75vh;
+    left: 50%;
+    transform: translate(-50%, -90%);
+    width: 80%;
+    border-radius: 2em;
+    padding: 2em;
+    background-color: aliceblue;
+    z-index: 1000;
+    border: 3px solid black;
+  }
+  
+  p {
+    text-align: center;
+  }
+  h1,
+  h2 {
+    text-align: center;
+  }
+  #switch-mode {
+    cursor: pointer;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+  label {
+    font-size: 1.2em;
+  }
+  
+  input {
+    margin-bottom: 1em;
+    width: 100%;
+  }
+  
+  span {
+    color: red;
+  }
+  #error-account {
+    text-align: center;
+  }
+  
+  .error {
+    font-size: 0.8em;
+  }
+  
+  .fa-regular {
+    position: absolute;
+    top: 1.5em;
+    right: 1.5em;
+    cursor: pointer;
+  }
+  
+  .fa-regular:hover {
+    color: var(--main-bg-color);
+  }
+  
+  @media screen and (min-width: 900px) {
+    #form-container {
+      width: 30%;
+    }
+  }

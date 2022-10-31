@@ -7,6 +7,9 @@ export const useUserStore = defineStore("UserStore", {
   getters: {
     getUserId(){
       if(this.user==undefined){return ""}else{ return this.user._id}
+    },
+    getUserAdmin(){
+      if(this.user==undefined){return ""}else{ return this.user._isAdmin}
     }
   },
   actions: {
@@ -14,6 +17,20 @@ export const useUserStore = defineStore("UserStore", {
       this.user = null;
       localStorage.removeItem("user");
       window.location.reload;
+      let request = new fetchData('DELETE', "?route=/logout");
+      request.query();
     },
+    getUsers(){
+      let request = new fetchData('GET', "?route=/account");
+      return request.query();
+    },
+    updateUser(user){
+      let request = new fetchData('PUT', "?route=/account", user)
+      request.query();
+    },
+    deleteUser(id){
+      let request = new fetchData('DELETE', "?route=/account&id="+id);
+      request.query();
+    }
   },
 });

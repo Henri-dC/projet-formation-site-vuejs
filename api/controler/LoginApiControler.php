@@ -36,14 +36,15 @@
                 return $response;
                 }
                 
-                //contrôle email et password
+                //control email and password
                
                 if($connexion['password']===$credentials->getPassword()){
              
                 setcookie('id', $connexion['id'],['samesite'=>'None', 'Secure'=>true]);
                 setcookie('firstName', $connexion['firstName'],['samesite'=>'None', 'Secure'=>true]);
-                setcookie('lastName', $connexion['lastName'],['samesite'=>'None', 'Secure'=>true]);
     
+                $_SESSION['isAdmin']=$connexion['is_admin'];
+                $_SESSION['id']=$connexion['id'];
                  // Remove empty errors from the errors array
                 $errors = array_filter($errors, function($error, $key) {
                 return !empty($error);
@@ -58,7 +59,7 @@
                 }
                 return $response;
             }else{
-                 $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
+                $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
                 $response->setErrors($errors);
                 return $response;
             }

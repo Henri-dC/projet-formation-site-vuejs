@@ -1,13 +1,9 @@
 <script setup>
-import Main from "../../components/Main/Main.vue";
-import ListAccount from "../../components/ListAccount.vue";
+import MainComp from "../../components/MainComp.vue";
 </script>
 
 <template>
   <main>
-    <Main />
-    <ListAccount />
+    <MainComp id="main" />
   </main>
 </template>
-
-<style scoped></style>

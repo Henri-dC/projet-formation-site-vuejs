@@ -9,7 +9,7 @@ class AccountRepository {
 
   public function getAccount(string $id): ?Account {
     $stmt = $this->_connexion->prepare('
-      SELECT id, email, password, firstName, lastName
+      SELECT id, email, password, firstName, lastName, is_admin
         FROM Account
        WHERE id = :id
     ');
@@ -28,8 +28,27 @@ class AccountRepository {
     $account->setFirstName($row['firstName']);
     $account->setLastName($row['lastName']);
     $account->setEncryptedPassword($row['password']);
+    $account->setIsAdmin($row['is_admin']);
 
     return $account;
+  }
+
+  public function checkIfMailExist(string $email): bool{
+    $stmt = $this->_connexion->prepare('
+    Select email
+    FROM Account
+    WHERE email = :email
+    ');
+    $stmt->execute([
+      'email' => $email
+  ]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+      return false;
+    }else{
+      return true;
+    }
   }
 
   public function createAccount(Account $account): Account {
@@ -66,7 +85,8 @@ class AccountRepository {
            SET email = :email,
                password = :password,
                firstName = :firstName,
-               lastName = :lastName
+               lastName = :lastName,
+               is_admin = :is_admin
          WHERE id = :id
     ');
 
@@ -75,7 +95,8 @@ class AccountRepository {
       'lastName' => $account->getLastName(),
       'email' => $account->getEmail(),
       'password' => $account->getPassword(),
-      'id' => $account->getId()
+      'id' => $account->getId(),
+      'is_admin' => $account->getIsAdmin()
     ]);
 
     return $account;
@@ -93,7 +114,7 @@ class AccountRepository {
 
   public function listAccounts(): array {
     $stmt = $this->_connexion->prepare('
-      SELECT id, email, firstName, lastName
+      SELECT id, email, firstName, lastName, is_admin
         FROM Account
     ');
     $stmt->execute();
@@ -103,12 +124,13 @@ class AccountRepository {
       $account = new Account();
       $account->setId($row['id']);
       $account->setEmail($row['email']);
-      $account->setFirstName($row['firstName']);
-      $account->setLastName($row['lastName']);
+      $account->setFirstName(html_entity_decode($row['firstName']));
+      $account->setLastName(html_entity_decode($row['lastName']));
+      $account->setIsAdmin($row['is_admin']);
 
       array_push($accounts, $account);
     }
-
+   
     return $accounts;
   }
 }

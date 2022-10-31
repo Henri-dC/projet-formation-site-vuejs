@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 export const useArticleStore = defineStore("ArticleStore", {
   state: () => ({
     articles: [],
+    editArticle: [],
+    viewArticle: [],
   }),
   getters: {
     getArticle(state) {
@@ -10,55 +12,54 @@ export const useArticleStore = defineStore("ArticleStore", {
     },
   },
   actions: {
-    async queryArticles() {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article";
-      return fetch(url, {
-        method: "GET",
-        credentials: "include",
-        methode: "cors",
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          this.articles = result["data"];
-        });
+    createArticle(article) {
+      let query = new fetchData("POST", "?route=/article", article);
+      return query.query();
     },
-    async queryArticlesByUser(userId) {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article/list";
+    queryArticles() {
+      let query = new fetchData("GET", "?route=/article");
+      query.query().then((result) => (this.articles = result["data"]));
+    },
+    queryArticlesByUser(userId) {
       let user = {};
       user["id"] = userId;
-
-      return fetch(url, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify(user),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          this.articles = result["data"];
-        });
+      let request = new fetchData("POST", "?route=/article/list", user);
+      request.query().then((result) => (this.articles = result["data"]));
     },
-    async getArticlesByCategory(cat) {
-      let url = new URL("http://localhost:8889/api/index.php");
-      url.search = "?route=/article/list&category="+cat;
-     
-      return fetch(url, {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-        header: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          this.articles = result["data"];
-        });
+    getArticlesByCategory(cat) {
+      let route = "?route=/article/list&category=" + cat;
+      let request = new fetchData("GET", route);
+      request.query().then((result) => (this.articles = result["data"]));
+    },
+    updateArticle(article) {
+      let request = new fetchData("PUT", "?route=/article", article);
+      return request.query();
+    },
+
+    async queryArticleById(id, mode) {
+      for (let i = 0; i < this.articles.length; i++) {
+        if (this.articles[i].id === id) {
+          if (mode === "edit") {
+            this.editArticle = this.articles[i];
+          } else {
+            this.viewArticle = this.articles[i];
+          }
+        }
+      }
+    },
+
+    async deleteArticle(id) {
+      await this.queryArticleById(id, "edit");
+      let routeA = "?route=/picture&name=" + this.editArticle.picture;
+      let requestA = new fetchData("DELETE", routeA);
+      requestA.query();
+      let route = "?route=/article&id=" + id;
+      let request = new fetchData("DELETE", route);
+      request.query();
+    },
+
+    resetEditArticle() {
+      this.editArticle = [];
     },
   },
 });

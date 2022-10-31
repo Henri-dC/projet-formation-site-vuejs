@@ -6,6 +6,7 @@ class Account implements \JsonSerializable {
     private string $password;
     private string $firstName;
     private string $lastName;
+    private string $isAdmin;
 
     public function __construct() {
     }
@@ -57,6 +58,15 @@ class Account implements \JsonSerializable {
         }
         return 'Veuillez renseigner votre nom de famille';
     }
+
+    public function setIsAdmin(string $isAdmin): string {
+        if (!empty($isAdmin)) {
+            $this->isAdmin = $isAdmin;
+            return '';
+        }
+        $this->isAdmin = 'false';
+        return '';
+    }
     
     public function getId(): string {
         return $this->id;
@@ -76,5 +86,9 @@ class Account implements \JsonSerializable {
     
     public function getLastName(): string {
         return $this->lastName;
+    }
+
+    public function getIsAdmin(): string {
+        return $this->isAdmin;
     }
 }

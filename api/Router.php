@@ -5,6 +5,8 @@ class Router {
         $page = isset($_GET['route']) ? $_GET['route'] : '';
       
         switch($page) {
+
+            
             case '/account':
                 $controler = new AccountApiControler();
                 switch($request->getMethod()) {
@@ -35,17 +37,39 @@ class Router {
                 switch($request->getMethod()) {
                     case 'POST':
                         $controler = new ArticleApiControler();
-                        return $controler->proceedListArticlesById($request);
+                        return $controler->proceedListArticlesByAuthor($request);
                     case 'GET':
                         $controler = new ArticleApiControler();
                         return $controler->proceedListArticlesByCategory($request);    
                     }
 
+                
+            case '/category':
+                switch($request->getMethod()) {
+                    case 'POST':
+                        $controler = new CategoryApiControler();
+                        return $controler->proceedCreateCategory($request);
+                    case 'GET':
+                        $controler = new CategoryApiControler();
+                        return $controler->proceedGetCategories();    
+                    }
+
+            case '/picture':
+                switch($request->getMethod()){
+                    case 'DELETE':
+                        $controler = new ImageApiControler();
+                        return $controler->deleteImg($request);
+                }
+
             case '/login':
                 $controler = new LoginApiControler();
-                    return $controler->proceedConnexion($request);
-
-        
+                return $controler->proceedConnexion($request);
+    
+            case '/logout':
+                $controler = new AccountApiControler();
+                return $controler->proceedDestroySession();
+    
+            
             default:
                 $response = new Response();
                 $response->setHttpStatusCode(HttpStatusCode::NOT_FOUND);

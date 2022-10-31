@@ -5,9 +5,10 @@ class Article implements \JsonSerializable {
     private string $title;
     private string $picture;
     private string $content;
-    private string $category;
+    private string $category_id;
     private string $author;
-    private string $author_Id;
+    private string $author_id;
+    private string $creation_date;
 
     public function __construct() {
     }
@@ -49,9 +50,9 @@ class Article implements \JsonSerializable {
         return 'Veuillez écrire du contenu';
     }
     
-    public function setCategory(string $category): string {
-        if (!empty($category)) {
-            $this->category = $category;
+    public function setCategory_Id(string $category_id): string {
+        if (!empty($category_id)) {
+            $this->category_id = $category_id;
             return '';
         }
         return 'Veuillez renseigner une categorie';
@@ -64,12 +65,20 @@ class Article implements \JsonSerializable {
         }
         return 'Veuillez renseigner un auteur';
     }
-    public function setAuthor_Id(string $author_Id): string {
-        if (!empty($author_Id)) {
-            $this->author_Id = $author_Id;
+    public function setAuthor_Id(string $author_id): string {
+        if (!empty($author_id)) {
+            $this->author_id = $author_id;
             return '';
         }
         return 'Veuillez renseigner un identifiant auteur';
+    }
+
+    public function setCreationDate($creation_date): string {
+        if (isset($this->creation_date)) {
+          return 'Une date est déjà spécifié';
+        }
+        $this->creation_date = $creation_date;
+        return '';
     }
     
     public function getId(): string {
@@ -88,8 +97,8 @@ class Article implements \JsonSerializable {
         return $this->content;
     }
     
-    public function getCategory(): string {
-        return $this->category;
+    public function getCategory_Id(): string {
+        return $this->category_id;
     }
 
     public function getAuthor(): string {
@@ -97,6 +106,10 @@ class Article implements \JsonSerializable {
     }
 
     public function getAuthor_Id(): string {
-        return $this->author_Id;
+        return $this->author_id;
+    }
+
+    public function getCreationDate(): string {
+        return $this->creation_date;
     }
 }

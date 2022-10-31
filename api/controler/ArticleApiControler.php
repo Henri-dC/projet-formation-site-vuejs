@@ -27,9 +27,9 @@ class ArticleApiControler {
       'title'     => $article->setTitle(htmlentities($payload['_title'] ?? '')),
       'picture'  => $article->setPicture($payload['_picture'] ?? ''),
       'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
-      'category'  => $article->setCategory(htmlentities($payload['_category'] ?? '')),
+      'category'  => $article->setCategory_Id(htmlentities($payload['_category_id'] ?? '')),
       'author'  => $article->setAuthor(htmlentities($payload['_author'] ?? '')),
-      'author_Id'  => $article->setAuthor_Id(htmlentities($payload['_author_Id'] ?? '')),
+      'author_id'  => $article->setAuthor_Id(htmlentities($payload['_author_Id'] ?? '')),
     ];
    
     // Remove empty errors from the errors array
@@ -56,21 +56,17 @@ class ArticleApiControler {
   }
 
   public function proceedUpdateArticle(Request $request): Response {
-    $articleId = $request->getQueryParam('id');
-    $article = $this->_articleRepo->getArticle($articleId);
+    
     $payload = $request->getData();
-
-    if (empty($article)) {
-      $response = new Response();
-      $response->setHttpStatusCode(HttpStatusCode::NOT_FOUND);
-      $response->setErrors(['Article not found']);
-      return $response;
-    }
+    $article = new Article();
+    
 
     $errors = [
-      'title'     => $article->setTitle(htmlentities($payload['title'] ?? '')),
-      'picture' => $article->setPicture(htmlentities($payload['picture'] ?? '')),
-      'content'  => $article->setContent(htmlentities($payload['content'] ?? '')),
+      'id'=>$article->setId($payload['_id']),
+      'title' => $article->setTitle(htmlentities($payload['_title'] ?? '')),
+      'picture' => $article->setPicture(htmlentities($payload['_picture'] ?? '')),
+      'content' => $article->setContent(htmlentities($payload['_content'] ?? '')),
+      'category' => $article->setCategory_Id(htmlentities($payload['_category_id'] ?? '')),
     ];
    
 
@@ -95,19 +91,17 @@ class ArticleApiControler {
 
   public function proceedDeleteArticle(Request $request): Response {
     $articleId = $request->getQueryParam('id');
-
-    $this->_articleRepo->deleteArticle($articleId['id']);
-
+    $this->_articleRepo->deleteArticle($articleId);
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::NO_CONTENT);
-
+   
     return $response;
   }
 
-  public function proceedListArticlesById(Request $request): Response {
+  public function proceedListArticlesByAuthor(Request $request): Response {
     $articleId = $request->getData();
    
-   $article = $this->_articleRepo->listArticlesById($articleId['id']);
+   $article = $this->_articleRepo->listArticlesByAuthor($articleId['id']);
 
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::OK);
