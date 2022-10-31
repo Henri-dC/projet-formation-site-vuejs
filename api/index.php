@@ -17,7 +17,6 @@ ini_set('display_errors', 1);
 
 //Settings for header
 
-
 header('Access-Control-Allow-Origin: https://tontonritonbzh.github.io/projetFormation');
 header('Access-Control-Allow-Methods: PUT, DELETE, GET, POST');
 header('Access-Control-Allow-Credentials: true');
