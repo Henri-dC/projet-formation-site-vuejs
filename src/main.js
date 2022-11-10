@@ -1,8 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { getCurrentInstance } from "vue";
-import { createPinia } from "pinia";
 import "./assets/main.scss";
 import "./assets/normalize.css";
 import "./assets/style/theWelcomeStyle.scss";
@@ -27,6 +25,8 @@ function createMyApplication() {
   body.removeChild(theWelcome);
 }
 
+import { getCurrentInstance } from "vue";
+import { createPinia } from "pinia";
 export default {
   setup() {
     // accessible inside setup function

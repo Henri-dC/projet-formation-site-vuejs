@@ -1,16 +1,19 @@
-@charset "UTF-8";
-@import url("/Users/henri/Desktop/Dossier Visual Studio/Projet final formation/Deskin/src/assets/normalize.css");
+@import "./normalize.css";
+
 /* ************************************************************************
 FONTS
 ************************************************************************ */
+
 @font-face {
   font-family: "Rubik";
-  src: url(‘../Fonts/Rubik-Italic-VariableFont_wght.ttf’) format(‘woff2’), url(‘../Fonts/Rubik-VariableFont_wght.ttf’) format(‘truetype’);
+  src: url(‘../Fonts/Rubik-Italic-VariableFont_wght.ttf’) format(‘woff2’),
+    url(‘../Fonts/Rubik-VariableFont_wght.ttf’) format(‘truetype’);
 }
 
 /* ************************************************************************
 GENERAL
 ************************************************************************ */
+
 #app {
   margin: 0 auto;
   font-weight: normal;
@@ -20,4 +23,3 @@ GENERAL
   --main-bg-color: rgb(235, 10, 10);
   --second-bg-color: #93ccd5;
 }
-/*# sourceMappingURL=main.css.map */

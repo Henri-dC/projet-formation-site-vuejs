@@ -63,4 +63,13 @@ ul {
   text-decoration: none;
   color: black;
 }
+
+ul {
+  padding: 0;
+}
+
+#router-link {
+  text-decoration: none;
+  color: black;
+}
 </style>

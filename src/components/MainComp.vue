@@ -13,8 +13,6 @@ import ArticleComp from "./ArticleComp.vue";
 import NewArticleForm from "./NewArticleForm.vue";
 import SelectCategoryButton from "./SelectCategoryButton.vue";
 import { useServiceStore } from "../store/ServiceStore";
-
-import { ref, reactive } from "vue";
 const ServiceStore = useServiceStore();
 </script>
 
