@@ -1,57 +1,52 @@
 <template>
   <div>
-    <img
-      class="imagePreviewWrapper"
-      :src="previewImage"
-      @click="selectImage"
-    />
+    <img class="imagePreviewWrapper" :src="previewImage" @click="selectImage" />
     <input id="input-file" ref="fileInput" type="file" @input="pickFile" />
   </div>
 </template>
-<script>
-export default {
-  props: {
-    currentFile: String,
-  },
-  data() {
-    return {
-      previewImage: "",
+
+<script setup>
+import { watch, ref, onMounted, onUpdated } from "vue";
+
+let props = defineProps(["currentFile"]);
+
+const fileInput = ref(null);
+let previewImage = ref("");
+let file = ref("");
+
+onMounted(() => {
+  file = ref(fileInput.value.files);
+  pickFile();
+});
+onUpdated(() => {
+  pickFile();
+});
+
+function selectImage() {
+  fileInput.value.click();
+}
+function reactif() {
+  pickFile();
+}
+function pickFile() {
+  if (props.currentFile && fileInput.value.files.length === 0) {
+    previewImage.value = "src/assets/images/" + props.currentFile;
+  } else if (fileInput.value.files.length > 0) {
+    let reader = new FileReader();
+    reader.onload = (e) => {
+      previewImage.value = e.target.result;
     };
-  },
-  methods: {
-    selectImage() {
-      this.$refs.fileInput.click();
-    },
-    pickFile() { 
-    let input = this.$refs.fileInput;
-    let file = input.files;
-    if (this.currentFile !== undefined && !file[0]) {
-      console.log(1)
-      this.previewImage = "../src/assets/images/" + this.currentFile;
-    } else if (file && file[0]) { console.log(2)
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        this.previewImage = e.target.result;
-      };
-      reader.readAsDataURL(file[0]);
-    } else if(this.currentFile==undefined){
-       console.log(3)
-      this.previewImage = "../src/assets/images/icon/noun-add-image-3752744.png";
-    }
-    },
-  },
-  updated() {
-    this.pickFile()
-  },
-  mounted(){
-     this.pickFile()
+    reader.readAsDataURL(fileInput.value.files[0]);
+  } else {
+    previewImage.value =
+      "https://www.tontonriton.com/assets/images/icon/noun-add-image-3752744.png";
   }
-};
+}
 </script>
+
 <style scoped>
 .imagePreviewWrapper {
-  width:250px;
- 
+  width: 250px;
   display: block;
   cursor: pointer;
   margin: 0 auto 30px;

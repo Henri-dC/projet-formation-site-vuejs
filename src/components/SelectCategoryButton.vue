@@ -1,11 +1,3 @@
-<script setup>
-import { useArticleStore } from "../store/ArticleStore";
-import { useCategoryStore } from "../store/CategoryStore";
-const store = useArticleStore();
-const storeCategories = useCategoryStore();
-storeCategories.queryCategories();
-</script>
-
 <template>
   <div id="container-select-category">
     <h2 v-show="windowWidth <= 900" @click="ToggleSelectCategory">
@@ -13,7 +5,7 @@ storeCategories.queryCategories();
     </h2>
     <div v-show="showSelectCategory || windowWidth > 900">
       <div
-        v-for="category in storeCategories.getCategories"
+        v-for="category in storeCategories.categories"
         :key="category.id"
         id="open-select-category"
       >
@@ -31,30 +23,30 @@ storeCategories.queryCategories();
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      showSelectCategory: false,
-      windowWidth: window.innerWidth,
-    };
-  },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener("resize", this.onResize);
-    });
-  },
-  methods: {
-    ToggleSelectCategory() {
-      this.showSelectCategory = !this.showSelectCategory;
-    },
-    onResize() {
-      this.windowWidth = window.innerWidth;
-    },
-  },
-};
+<script setup>
+import { useArticleStore } from "../store/ArticleStore";
+import { useCategoryStore } from "../store/CategoryStore";
+import { ref, onMounted } from "vue";
+
+const store = useArticleStore();
+const storeCategories = useCategoryStore();
+
+let windowWidth = ref(window.innerWidth);
+let showSelectCategory = ref(false);
+onMounted(() => {
+  storeCategories.queryCategories();
+  //OnResize is watching window.innerwidth for responsive button
+  window.addEventListener("resize", onResize);
+});
+
+function ToggleSelectCategory() {
+  showSelectCategory.value = !showSelectCategory.value;
+}
+function onResize() {
+  windowWidth.value = window.innerWidth;
+}
 </script>
 
 <style scoped>
-@import '../assets/style/SelectCategoryButton.scss';
+@import "../assets/style/SelectCategoryButton.scss";
 </style>

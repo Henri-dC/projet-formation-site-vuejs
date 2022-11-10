@@ -1,15 +1,3 @@
-<script setup>
-import { useUserStore } from "@/store/UserStore.js";
-import { useArticleStore } from "@/store/ArticleStore";
-import { useCategoryStore } from "@/store/CategoryStore";
-import { useServiceStore } from "@/store/ServiceStore";
-const ArticleStore = useArticleStore();
-const UserStore = useUserStore();
-const CategoriesStore = useCategoryStore();
-const ServiceStore = useServiceStore();
-import FormInputFile from "./FormInputFile.vue";
-</script>
-
 <template>
   <div class="container-for-scroll">
     <div id="modale-new-article">
@@ -27,16 +15,22 @@ import FormInputFile from "./FormInputFile.vue";
             placeholder="Titre"
             name="title"
             id="title-article"
-            v-model="formData.title"
+            v-model="ArticleStore.formData.title"
           />
 
-          <FormInputFile :currentFile="formData.picture" />
+          <FormInputFile
+            :currentFile="
+              ArticleStore.formData.picture
+                ? ArticleStore.formData.picture
+                : false
+            "
+          />
 
           <label for="content-article">
             <span>{{ formErrors.content }}</span>
           </label>
           <textarea
-            v-model="formData.content"
+            v-model="ArticleStore.formData.content"
             name="content"
             rows="7"
             placeholder="Votre contenu ici..."
@@ -46,11 +40,11 @@ import FormInputFile from "./FormInputFile.vue";
           <select
             name="category"
             id="category-article"
-            v-model="formData.category_id"
+            v-model="ArticleStore.formData.category_id"
           >
             <option value="-1" disabled>Sélectionnez une catégorie</option>
             <option
-              v-for="category in CategoriesStore.getCategories"
+              v-for="category in CategoriesStore.categories"
               :key="category.id"
               :value="category.id"
             >
@@ -78,114 +72,117 @@ import FormInputFile from "./FormInputFile.vue";
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      formData: { category_id: "-1" },
-      formErrors: {},
-      article: {},
-      fileName: "",
-    };
-  },
-  updated() {
-    if (this.editMode) {
-      this.formData = this.ArticleStore.editArticle;
+<script setup>
+import { onMounted, ref, computed } from "vue";
+import { useUserStore } from "@/store/UserStore.js";
+import { useArticleStore } from "@/store/ArticleStore";
+import { useCategoryStore } from "@/store/CategoryStore";
+import { useServiceStore } from "@/store/ServiceStore";
+import { fetchData } from "../composables/useFetch.js";
+import { Article } from "../composables/classArticle.js";
+import FormInputFile from "./FormInputFile.vue";
+const ArticleStore = useArticleStore();
+const UserStore = useUserStore();
+const CategoriesStore = useCategoryStore();
+const ServiceStore = useServiceStore();
+let formData = ref({ category_id: "-1" });
+let formErrors = ref({});
+const fileName = ref("");
+const editMode = computed(() => {
+  return ArticleStore.edit ? true : false;
+});
+onMounted(() => {
+  CategoriesStore.queryCategories();
+});
+
+/* Fonction upload Picture 
+  -on modifie le nom si il contient des espaces et on met à jour dans l'article
+*/
+
+async function loadPicture(article) {
+  var input = document.querySelector('input[type="file"]');
+  let name = input.files[0].name.replaceAll(" ", "-");
+  article.setPicture(name);
+  let dataPic = new FormData();
+  let query = new fetchData("POST", "", dataPic);
+  return query.query();
+}
+
+/* fonction create article*/
+
+async function createArticle(e) {
+  e.preventDefault();
+  var input = document.querySelector('input[type="file"]');
+  //création d'une instance Article
+  let article = new Article(
+    "",
+    ArticleStore.formData.title,
+    ArticleStore.formData.picture,
+    ArticleStore.formData.content,
+    UserStore.user._firstName,
+    UserStore.user._id,
+    ArticleStore.formData.category_id
+  );
+  /* Si on est en mode edit : - check si photo a changée
+                              - on attribue l'id
+                              - on fetch
+                              - on ferme la modale si pas d'erreurs
+  */
+  if (editMode.value === true) {
+    if (input.files.length > 0) {
+      loadPicture(article);
+    } else {
+      article.setPicture(ArticleStore.formData.picture);
     }
-  },
-  mounted() {
-    this.CategoriesStore.queryCategories();
-  },
-  computed: {
-    editMode() {
-      return this.ArticleStore.editArticle.length >= 0 ? false : true;
-    },
-  },
+    article.setArticleId(ArticleStore.formData.id);
+    let result = [];
+    await ArticleStore.updateArticle(article).then(
+      (resultat) => (result = resultat)
+    );
+    if (result["errors"]) {
+      /* Si il y a une erreur... */
+      formErrors.value = result["errors"];
+    } else {
+      ArticleStore.queryArticles();
+      closeModaleNewArticle(e);
+    }
+    /* Si on est en mode !edit : - on fetch photo et article
+                                  - si pas d'erreur on ferme la modale
+  */
+  } else {
+    await loadPicture(article); /*On charge la photo*/
+    let result = [];
+    await ArticleStore.createArticle(article).then(
+      (resultat) => (result = resultat)
+    );
+    if (result["errors"]) {
+      /* Si il y a une erreur... */
+      formErrors.value = result["errors"];
+    } else {
+      /* Sinon... */
+      article = result["data"];
 
-  methods: {
-    //FONCTION: Fermer la modale
+      //On ferme la modale
+      ArticleStore.queryArticles();
+      closeModaleNewArticle(e);
+    }
+  }
+}
 
-    closeModaleNewArticle(e) {
-      e.preventDefault();
-      this.ArticleStore.resetEditArticle();
-      this.formErrors = {};
-      this.formData = { category_id: "-1" };
-      document.getElementById("input-file").value = "";
-      this.update--;
-      this.ServiceStore.toggleDisplayNewArticleForm();
-    },
+/* Fonction pour fermer la modale et mettre à jour :
+  -formError,
+  -formData(store)
+  -input-file, si on annule sans valider le formulaire
+*/
 
-    //FONCTION: Enregistrer l'article en base de données
-
-    async createArticle(e) {
-      e.preventDefault();
-      var input = document.querySelector('input[type="file"]');
-      //création d'une instance Article
-      let article = new Article(
-        "",
-        this.formData.title,
-        this.formData.picture,
-        this.formData.content,
-        (this.formData.author = this.UserStore.user._firstName),
-        (this.formData.author_Id = this.UserStore.user._id),
-        this.formData.category_id
-      );
-
-      if (this.editMode) {
-        console.log(input.files.length);
-        if (input.files.length > 0) {
-          this.loadPicture(article); /*On charge la photo*/
-        } else {
-          article.setPicture(this.ArticleStore.editArticle.picture);
-        }
-        article.setArticleId(this.ArticleStore.editArticle.id);
-        let result = [];
-        await this.ArticleStore.updateArticle(article).then(
-          (resultat) => (result = resultat)
-        );
-        if (result["errors"]) {
-          /* Si il y a une erreur... */
-          this.formErrors = result["errors"];
-        } else {
-          this.ArticleStore.queryArticles();
-          this.closeModaleNewArticle(e);
-        }
-      } else {
-        await this.loadPicture(article); /*On charge la photo*/
-        console.log(article);
-        let result = [];
-        await this.ArticleStore.createArticle(article).then(
-          (resultat) => (result = resultat)
-        );
-        if (result["errors"]) {
-          /* Si il y a une erreur... */
-          this.formErrors = result["errors"];
-        } else {
-          /* Sinon... */
-          this.article = result["data"];
-
-          //On ferme la modale
-          this.ArticleStore.queryArticles();
-          this.closeModaleNewArticle(e);
-        }
-      }
-    },
-    //FONCTION: charger la photo
-
-    loadPicture(article) {
-      var input = document.querySelector('input[type="file"]');
-      let name = input.files[0].name.replaceAll(" ", "-");
-      article.setPicture(name);
-      let dataPic = new FormData();
-      dataPic.append("photo", input.files[0]);
-
-      return fetch("http://localhost:8889/api/index.php", {
-        method: "post",
-        body: dataPic,
-      });
-    },
-  },
-};
+function closeModaleNewArticle(e) {
+  e.preventDefault();
+  formErrors = {};
+  ArticleStore.formData = { category_id: "-1" };
+  ArticleStore.edit = false;
+  document.getElementById("input-file").value = "";
+  ServiceStore.toggleDisplayNewArticleForm();
+}
 </script>
 
 <style lang="sass" scoped>

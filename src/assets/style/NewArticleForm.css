@@ -1,0 +1,143 @@
+#overlaye {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: 80%;
+  z-index: -1;
+}
+
+.container-for-scroll {
+  position: fixed;
+  bottom: 0;
+  top: 5vh;
+  width: 90%;
+  max-height: 90%;
+  margin-left: 5%;
+  z-index: 1000;
+}
+
+#modale-new-article::-webkit-scrollbar {
+  display: none;
+}
+
+#modale-new-article {
+  display: block;
+  height: 100%;
+  text-align: center;
+  border-radius: 1em;
+  z-index: 20;
+  overflow-y: scroll;
+}
+
+fieldset {
+  border-radius: 1em;
+  background-color: white;
+  border: none;
+}
+
+legend {
+  font-size: 1.6em;
+  font-weight: 700;
+  padding: 0.6em;
+  border-radius: 0px 8px;
+  color: white;
+  background-color: var(--main-bg-color);
+  border-block: 4px solid black;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: black;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: black;
+}
+
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: black;
+}
+
+input::placeholder,
+textarea::placeholder {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: black;
+}
+
+input,
+select {
+  display: block;
+  margin: auto;
+  margin-bottom: 2em;
+  width: 85%;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 2px;
+  background-color: transparent;
+}
+
+textarea {
+  width: 85%;
+  resize: none;
+}
+
+select {
+  height: 2.6em;
+}
+
+#button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 80%;
+  margin: auto;
+  margin-top: 2em;
+}
+
+button {
+  font-size: 1.5em;
+  border-radius: 9px;
+  background-color: var(--main-bg-color);
+  color: white;
+  border: 1px;
+  cursor: pointer;
+}
+
+span {
+  color: red;
+}
+
+@media screen and (min-width: 600px) {
+  #button-container {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #button-container {
+    width: 30%;
+  }
+  select, input {
+    width: 50%;
+  }
+}
+/*# sourceMappingURL=NewArticleForm.css.map */

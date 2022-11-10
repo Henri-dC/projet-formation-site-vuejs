@@ -1,8 +1,3 @@
-<script setup>
-import { useUserStore } from "@/store/UserStore.js";
-const userStore = useUserStore();
-</script>
-
 <template>
   <div id="form-container">
     <h2 v-if="signUpForm">Inscription</h2>
@@ -23,47 +18,47 @@ const userStore = useUserStore();
       <span class="success" v-if="isCreated">Votre compte a bien été créé</span>
       <form action="#">
         <label v-if="signUpForm" for="inputFirstName"
-          >Prénom <span class="error">{{ formErrors.firstName }}</span></label
-        >
-        <input
-          v-if="signUpForm"
-          name="formFirstName"
-          id="inputFirstName"
-          type="text"
-          v-model="formData.firstName"
-        />
+          >Prénom
+          <span class="error">{{ state.formErrors.firstName }}</span>
+          <input
+            v-if="signUpForm"
+            name="formFirstName"
+            id="inputFirstName"
+            type="text"
+            v-model="formData.firstName"
+        /></label>
 
         <label for="inputLastName" v-if="signUpForm"
-          >Nom <span class="error">{{ formErrors.lastName }}</span></label
-        >
-        <input
-          v-if="signUpForm"
-          name="formLastName"
-          id="inputLastName"
-          type="text"
-          v-model="formData.lastName"
-        />
+          >Nom <span class="error">{{ state.formErrors.lastName }}</span>
+          <input
+            v-if="signUpForm"
+            name="formLastName"
+            id="inputLastName"
+            type="text"
+            v-model="formData.lastName"
+        /></label>
 
         <label for="inputMail"
-          >Email<span class="error">{{ formErrors.email }}</span></label
-        >
-        <input
-          name="formMail"
-          id="inputMail"
-          type="email"
-          v-model="formData.email"
-        />
+          >Email<span class="error">{{ state.formErrors.email }}</span>
+          <input
+            name="formMail"
+            id="inputMail"
+            type="email"
+            v-model="formData.email"
+        /></label>
 
         <label for="inputPassword"
           >Mot de passe
-          <span class="error">{{ formErrors.password }}</span></label
-        >
-        <input
-          name="formPassword"
-          id="inputPassword"
-          type="password"
-          v-model="formData.password"
-        />
+          <span class="error">{{ state.formErrors.password }}</span>
+
+          <input
+            name="formPassword"
+            id="inputPassword"
+            type="password"
+            v-model="formData.password"
+        /></label>
+
+        <!--Boutons submit-->
 
         <input
           v-if="signUpForm"
@@ -80,79 +75,98 @@ const userStore = useUserStore();
           value="Se connecter"
           @click="sendForm"
         />
-        <span id="error-account">{{ formErrors.account }}</span>
+        <span id="error-account">{{ state.formErrors.account }}</span>
       </form>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  emits: ["toggleSignForm", "user"],
-  data() {
-    return {
-      signUpForm: false,
-      isCreated: false,
-      formErrors: {},
-      formData: {},
-      current_user: {},
-    };
-  },
-  methods: {
-    switchMode() {
-      this.signUpForm = !this.signUpForm;
-      this.formErrors = {};
-    },
-    sendForm(event) {
-      event.preventDefault();
+<script setup>
+import { useUserStore } from "@/store/UserStore.js";
+import { ref, reactive } from "vue";
+import { fetchData } from "../composables/useFetch.js";
+import { User } from "../composables/userClass.js";
+let signUpForm = ref(false); //Allow switching between signUp and signIn form
+let isCreated = ref(false); //Allow confirmation text after successfull registration
+let state = reactive({ formErrors: {} }); //Allows errors messages
+let formData = ref({}); //Registration of input contents
+let current_user = ref({}); //Informations about user after connexion
+let userStore = useUserStore();
+let emit = defineEmits(["toggleSignForm", "user"]);
 
-      this.formErrors = {};
+function switchMode() {
+  signUpForm.value = !signUpForm.value;
+  state.formErrors = {};
+}
 
-      //FORMULAIRE D'INSCRIPTION
+function checkForm(mode) {
+  let errors = [];
+  if (!formData.value.email) {
+    state.formErrors.email = "Veuillez renseigner votre email";
+    errors.push("email");
+  }
+  if (!formData.value.password) {
+    state.formErrors.password = "Veuillez renseigner votre mot de passe";
+    errors.push("password");
+  }
+  if (mode === "signUp") {
+    if (!formData.value.firstName) {
+      state.formErrors.firstName = "Veuillez renseigner votre prénom";
+      errors.push("firstName");
+    }
+    if (!formData.value.lastName) {
+      state.formErrors.lastName = "Veuillez renseigner votre nom";
+      errors.push("lastName");
+    }
+  }
+  return errors.length === 0 ? true : false;
+}
 
-      if (this.signUpForm) {
-        let request = new fetchData("POST", "?route=/account", this.formData);
-        request.query().then((result) => {
-          if (result["errors"]) {
-            this.formErrors = result["errors"];
-          } else {
-            this.formErrors = {};
-            this.formData = {};
-            this.isCreated = true;
-          }
-        });
-      } else {
-        //FORMULAIRE DE CONNEXION
+function sendForm(event) {
+  event.preventDefault();
 
-        if (!this.formData.password || !this.formData.email) {
-          if (!this.formData.password) {
-            this.formErrors.password = "Veuillez renseigner votre mot de passe";
-          }
-          if (!this.formData.email) {
-            this.formErrors.email = "Veuillez renseigner votre email";
-          }
+  state.formErrors = {};
+
+  //FORMULAIRE D'INSCRIPTION
+
+  if (signUpForm.value) {
+    if (checkForm("signUp")) {
+      let request = new fetchData("POST", "?route=/account", formData.value);
+      request.query().then((result) => {
+        if (result["errors"]) {
+          state.formErrors = result["errors"];
         } else {
-          let request = new fetchData("POST", "?route=/login", this.formData);
-          request.query().then((result) => {
-            if (result["errors"]) {
-              this.formErrors = result["errors"];
-            } else {
-              console.log(result);
-              this.current_user = new User(
-                result["data"]["id"],
-                result["data"]["firstName"],
-                result["data"]["lastName"],
-                result["data"]["is_admin"]
-              );
-              localStorage.setItem("user", JSON.stringify(this.current_user));
-              window.location = "http://localhost:5173";
-            }
-          });
+          formData.value = {};
+          isCreated.value = true;
+          setTimeout(() => {
+            isCreated.value = false;
+          }, 2000);
         }
-      }
-    },
-  },
-};
+      });
+    }
+  } else {
+    //FORMULAIRE DE CONNEXION
+
+    if (checkForm()) {
+      let request = new fetchData("POST", "?route=/login", formData.value);
+      request.query().then((result) => {
+        if (result["errors"]) {
+          state.formErrors = result["errors"];
+        } else {
+          current_user.value = new User(
+            result["data"]["id"],
+            result["data"]["firstName"],
+            result["data"]["lastName"],
+            result["data"]["is_admin"]
+          );
+          //Information about user are stored in localstorage an redirection
+          localStorage.setItem("user", JSON.stringify(current_user.value));
+          window.location = "https://www.tontonriton.com";
+        }
+      });
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

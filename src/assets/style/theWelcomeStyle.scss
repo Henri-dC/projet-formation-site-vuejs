@@ -1,0 +1,14 @@
+#welcomeModale {
+  box-sizing: border-box;
+  position: absolute;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1em;
+  font-size: 4vw;
+  background-color: red;
+  color: red;
+  animation: example 4s infinite;
+  border-radius: 10px;
+}

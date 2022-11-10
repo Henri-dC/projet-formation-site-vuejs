@@ -1,35 +1,3 @@
-class Article {
-  constructor(id, title, picture, content, author, author_Id, category_id) {
-    (this._id = id),
-      (this._title = title),
-      (this._picture = picture),
-      (this._content = content),
-      (this._author = author),
-      (this._author_Id = author_Id),
-      (this._category_id = category_id);
-  }
-
-  setArticleId(id) {
-    this._id = id;
-  }
-
-  setPicture(picture) {
-    this._picture = picture;
-  }
-}
-
-class User {
-  constructor(id, firstName, lastName, isAdmin, email) {
-    (this._id = id),
-      (this._firstName = firstName),
-      (this._lastName = lastName),
-      (this._isAdmin = isAdmin),
-      (this._email = email);
-  }
-}
-
-var current_user = {};
-
 class fetchData {
   constructor(method, route, data) {
     (this._url = new URL("http://localhost:8889/api/index.php")),
@@ -39,12 +7,14 @@ class fetchData {
   }
 
   async query() {
+    /*Methods GET and DELETE without data */
     if (this._method === "GET" || this._method === "DELETE") {
       return fetch(this._url, {
         method: this._method,
         credentials: "include",
         mode: "cors",
       }).then((response) => response.json());
+      /*Methods PUT and POST with data */
     } else {
       return fetch(this._url, {
         method: this._method,
@@ -55,3 +25,5 @@ class fetchData {
     }
   }
 }
+
+export { fetchData };

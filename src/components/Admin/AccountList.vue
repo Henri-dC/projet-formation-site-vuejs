@@ -1,8 +1,3 @@
-<script setup>
-import { useUserStore } from "../../store/UserStore.js";
-const userStore = useUserStore();
-</script>
-
 <template>
   <div id="container-list-users">
     <table>
@@ -58,6 +53,11 @@ const userStore = useUserStore();
   </div>
 </template>
 
+<script setup>
+import { useUserStore } from "../../store/UserStore.js";
+const userStore = useUserStore();
+</script>
+
 <script>
 export default {
   data() {
@@ -88,7 +88,7 @@ export default {
     updateUser(user) {
       this.userStore.updateUser(user);
     },
-    deleteUser(id){
+    deleteUser(id) {
       this.userStore.deleteUser(id);
     },
     getValue() {
@@ -115,5 +115,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../../assets/style/Admin/AccountList.scss';
+@import "../../assets/style/Admin/AccountList.scss";
 </style>

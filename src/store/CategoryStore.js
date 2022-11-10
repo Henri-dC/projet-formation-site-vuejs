@@ -1,19 +1,14 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
+import { fetchData } from "@/composables/useFetch";
 
-export const useCategoryStore = defineStore("CategoryStore", {
-  state: () => ({
-    categories:[],
-  }),
-  getters: {
-    getCategories(state) {
-      return state.categories;
-    },
-  },
-  actions: {
-    queryCategories(){
-        let request = new fetchData('GET', '?route=/category')
-        request.query()
-        .then((result)=>this.categories=result['data']);
-    }
+export const useCategoryStore = defineStore("CategoryStore", () => {
+  let categories = ref([]);
+
+  function queryCategories() {
+    let request = new fetchData("GET", "?route=/category");
+    request.query().then((result) => (this.categories = result["data"]));
   }
-})
+
+  return { categories, queryCategories };
+});
