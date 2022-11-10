@@ -39,7 +39,7 @@ function pickFile() {
     reader.readAsDataURL(fileInput.value.files[0]);
   } else {
     previewImage.value =
-      "https://www.tontonriton.com/assets/images/icon/noun-add-image-3752744.png";
+      "http://localhost:5173/src/assets/images/icon/noun-add-image-3752744.png";
   }
 }
 </script>
