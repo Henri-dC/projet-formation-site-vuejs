@@ -18,9 +18,9 @@ class ImageApiControler{
           $imagepath = $imagename;
           //Ceci est le nouveau fichier que vous enregistrez
           $save = '../src/assets/images/' . $imagepath; 
-          move_uploaded_file($source, 'https://www.tontonriton.com/assets/images/'.$imagepath);
+          move_uploaded_file($source, '../src/assets/images/'.$imagepath);
          
-          $info = getimagesize('https://www.tontonriton.com/assets/images/'.$imagepath);
+          $info = getimagesize('../src/assets/images/'.$imagepath);
           $mime = $info['mime'];
           var_dump($mime);
           switch ($mime) {

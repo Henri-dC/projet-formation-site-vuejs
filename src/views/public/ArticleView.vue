@@ -1,20 +1,12 @@
-<script setup>
-import { useArticleStore } from "../../store/ArticleStore.js";
-import { useServiceStore } from "../../store/ServiceStore";
-import NewArticleForm from "../../components/NewArticleForm.vue";
-const articleStore = useArticleStore();
-const ServiceStore = useServiceStore();
-</script>
-
 <template>
   <article id="article-container">
     <router-link to="/">Retour aux articles</router-link>
-    <h2>{{ this.articleStore.viewArticle.title }}</h2>
+    <h2>{{ articleStore.viewArticle.title }}</h2>
     <img
-      :src="`http://127.0.0.1:5173/src/assets/images/${this.articleStore.viewArticle.picture}`"
+      :src="`http://127.0.0.1:5173/src/assets/images/${articleStore.viewArticle.picture}`"
     />
     <div class="content">
-      <p>{{ this.articleStore.viewArticle.content }}</p>
+      <p>{{ articleStore.viewArticle.content }}</p>
     </div>
     <div class="article-footer">
       <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
@@ -22,6 +14,15 @@ const ServiceStore = useServiceStore();
   </article>
   <NewArticleForm v-if="ServiceStore.displayNewArticleForm" />
 </template>
+
+<script setup>
+import { useArticleStore } from "../../store/ArticleStore.js";
+import { useServiceStore } from "../../store/ServiceStore";
+import NewArticleForm from "../../components/NewArticleForm.vue";
+import { onMounted } from "vue";
+const articleStore = useArticleStore();
+const ServiceStore = useServiceStore();
+</script>
 
 <script>
 export default {

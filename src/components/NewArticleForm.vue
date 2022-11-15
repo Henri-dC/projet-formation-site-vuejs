@@ -104,8 +104,13 @@ async function loadPicture(article) {
   let name = input.files[0].name.replaceAll(" ", "-");
   article.setPicture(name);
   let dataPic = new FormData();
-  let query = new fetchData("POST", "", dataPic);
-  return query.query();
+  dataPic.append("photo", input.files[0]);
+  return fetch("http://localhost:8889/api/index.php", {
+    method: "post",
+    credentials: "include",
+    mode: "cors",
+    body: dataPic,
+  });
 }
 
 /* fonction create article*/

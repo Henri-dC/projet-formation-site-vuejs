@@ -7,6 +7,20 @@ class Api {
         $this->_router = new Router();
     }
 
+    function init(): void {
+       
+        $result = $this->decodeJsonFromInput();
+        if (empty($result['error'])) {
+            $request = new Request($_SERVER['REQUEST_METHOD'], $_GET, $result['jsonData'] ?? []);
+            $response = $this->_router->processRequest($request);
+        } else {
+            $response = new Response();
+            $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
+            $response->setErrors([$result['error']]);
+        }
+        $response->sendJsonResponse();
+    }
+
     private function decodeJsonFromInput(): array {
         $result = array();
         $rawData = file_get_contents('php://input');
@@ -29,20 +43,4 @@ class Api {
         
         return $result;
     }
-
-    function init(): void {
-       
-        $result = $this->decodeJsonFromInput();
-        if (empty($result['error'])) {
-            $request = new Request($_SERVER['REQUEST_METHOD'], $_GET, $result['jsonData'] ?? [], $_FILES);
-          
-            $response = $this->_router->processRequest($request);
-        } else {
-            $response = new Response();
-            $response->setHttpStatusCode(HttpStatusCode::BAD_REQUEST);
-            $response->setErrors([$result['error']]);
-        }
-        $response->sendJsonResponse();
-    }
-    
 }

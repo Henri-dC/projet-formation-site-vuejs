@@ -4,6 +4,7 @@ import router from "./router";
 import "./assets/main.scss";
 import "./assets/normalize.css";
 import "./assets/style/theWelcomeStyle.scss";
+import { createPinia } from "pinia";
 import { welcomeModale } from "./composables/theWelcomeFunctions";
 
 let cookiesTab = document.cookie;
@@ -20,17 +21,8 @@ function createMyApplication() {
   const app = createApp(App).use(createPinia());
   app.use(router);
   app.mount("#app");
+  console.log("main");
   let theWelcome = document.querySelector("#welcomeModale");
   let body = document.querySelector("body");
   body.removeChild(theWelcome);
 }
-
-import { getCurrentInstance } from "vue";
-import { createPinia } from "pinia";
-export default {
-  setup() {
-    // accessible inside setup function
-    const instance = getCurrentInstance();
-    console.log(instance);
-  },
-};

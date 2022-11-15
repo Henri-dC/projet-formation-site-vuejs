@@ -23,7 +23,7 @@
     </div>
     <div id="container-title">
       <h1>
-        <a id="link-title" href="/">Deskiñ</a>
+        <a id="link-title" href="/">Tonton Riton</a>
       </h1>
     </div>
     <div v-if="!userStore.user" @click="toggleSignForm">

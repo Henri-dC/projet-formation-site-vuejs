@@ -55,6 +55,7 @@
 
 <script setup>
 import { useUserStore } from "../../store/UserStore.js";
+import { User } from "../../composables/userClass.js";
 const userStore = useUserStore();
 </script>
 

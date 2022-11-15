@@ -45,21 +45,20 @@ class Router {
 
                 
             case '/category':
+                $controler = new CategoryApiControler();
                 switch($request->getMethod()) {
                     case 'POST':
-                        $controler = new CategoryApiControler();
                         return $controler->proceedCreateCategory($request);
                     case 'GET':
-                        $controler = new CategoryApiControler();
                         return $controler->proceedGetCategories();    
                     }
 
             case '/picture':
+                $controler = new ImageApiControler();
                 switch($request->getMethod()){
-                    case 'DELETE':
-                        $controler = new ImageApiControler();
+                    case 'DELETE':   
                         return $controler->deleteImg($request);
-                }
+                    }
 
             case '/login':
                 $controler = new LoginApiControler();
@@ -78,12 +77,6 @@ class Router {
                 ]);
                 return $response;
         }
-    }
-
-    public function processLoad(): Response {
-        $response = new Response; 
-        $response->setErrors(['ok du con']);
-        return $response;
     }
 }
 
