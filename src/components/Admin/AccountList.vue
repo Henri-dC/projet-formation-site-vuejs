@@ -56,6 +56,8 @@
 <script setup>
 import { useUserStore } from "../../store/UserStore.js";
 import { User } from "../../composables/userClass.js";
+import { useServiceStore } from "../../store/ServiceStore.js";
+const ServiceStore = useServiceStore();
 const userStore = useUserStore();
 </script>
 
@@ -108,7 +110,8 @@ export default {
           this.$refs.email[0].value
         );
         this.userStore.updateUser(user);
-        alert("Mise à jour réussie");
+        this.ServiceStore.modaleText = "Modifications enregistrées";
+        this.ServiceStore.displayModaleText = true;
       }
     },
   },

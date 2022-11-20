@@ -2,7 +2,7 @@
   <div id="main-article-container">
     <div
       class="article-container"
-      v-for="(article, i) in ArticleStore.articles"
+      v-for="(article, i) in ArticleStore.selectedArticles"
       :key="article"
       :id="'article-container-' + i"
     >
@@ -28,7 +28,7 @@
           class="router-link"
           :to="{ name: 'article', params: { id: article.id } }"
         >
-          <h2>{{ article.title }}</h2>
+          <h2 id="title-article">{{ article.title }}</h2>
 
           <img
             :src="`http://localhost:5173/src/assets/images/${article.picture}`"
@@ -44,7 +44,11 @@
           </p>
         </div>
         <div class="footer-article">
-          <i @click="like" class="fa-sharp fa-solid fa-thumbs-up"></i>
+          <i
+            @click="addLike(article.id)"
+            class="fa-sharp fa-solid fa-thumbs-up fa-xl"
+          ></i
+          ><data>{{ LikesStore.getLikeByArt(article.id) }}</data>
         </div>
       </article>
     </div>
@@ -54,12 +58,20 @@
 <script setup>
 import { useUserStore } from "../store/UserStore";
 import { useArticleStore } from "../store/ArticleStore";
+import { useLikesStore } from "../store/LikesStore";
 import { useServiceStore } from "../store/ServiceStore";
 import { onMounted } from "vue";
 const UserStore = useUserStore();
 const ArticleStore = useArticleStore();
 const ServiceStore = useServiceStore();
+const LikesStore = useLikesStore();
 const props = defineProps(["admin"]);
+
+onMounted(() => {
+  ArticleStore.queryArticles();
+  LikesStore.getLikes();
+});
+
 function calcUrl(url) {
   let src = new URL(url, import.meta.url);
   return src;
@@ -71,12 +83,15 @@ function editDisplay(id) {
 function deleteArticle(id) {
   if (confirm("Voulez-vous supprimer cet article ?")) {
     ArticleStore.deleteArticle(id);
-    setTimeout(ArticleStore.queryArticles, 5000);
+    setTimeout(ArticleStore.queryArticles, 300);
+    ServiceStore.modaleText = "L'article a été supprimé";
+    ServiceStore.displayModaleText = true;
   }
 }
-onMounted(() => {
-  ArticleStore.queryArticles();
-});
+
+function addLike(articleId) {
+  LikesStore.addLike(articleId, UserStore.user._id);
+}
 </script>
 
 <style scoped>

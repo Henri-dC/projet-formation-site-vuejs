@@ -1,67 +1,75 @@
 <template>
-  <div id="sidebar">
-    <ul
-      v-for="(_, tab) in tabs"
-      :key="tab"
-      :class="['tab', { active: currentTab === tab }]"
-      @click="currentTab = tab"
-    >
-      <li>{{ tab }}</li>
-    </ul>
-  </div>
-  <div class="admin">
-    <component admin="true" :is="tabs[currentTab]" class="tab"></component>
-  </div>
-  <NewArticleForm v-show="ServiceStore.displayNewArticleForm" />
+  <main>
+    <NewArticleForm v-show="ServiceStore.displayNewArticleForm" />
+    <Transition>
+      <PopUPModale
+        v-if="ServiceStore.displayModaleText"
+        :msg="ServiceStore.modaleText"
+      />
+    </Transition>
+    <div id="container">
+      <div>
+        <SideBar id="sidebar" @select-component="(tab) => (currentTab = tab)" />
+        <div id="component-viewer">
+          <component
+            admin="true"
+            :is="tabs[currentTab]"
+            class="tab"
+          ></component>
+        </div>
+      </div>
+      <div id="space"></div>
+    </div>
+  </main>
 </template>
 
 <script setup>
+import PopUPModale from "../../components/PopUPModale.vue";
 import AccountList from "../../components/Admin/AccountList.vue";
+import SideBar from "../../components/Admin/Sidebar.vue";
 import AddCategoryButton from "../../components/Admin/AddCategoryButton.vue";
 import ArticleComp from "../../components/ArticleComp.vue";
 import NewArticleForm from "../../components/NewArticleForm.vue";
 import { useServiceStore } from "../../store/ServiceStore";
 import { ref } from "vue";
 const ServiceStore = useServiceStore();
-const currentTab = ref("AddCategoryButton");
+const currentTab = ref("");
+let Catégories = AddCategoryButton;
+let Utilisateurs = AccountList;
+let Articles = ArticleComp;
 const tabs = {
-  AddCategoryButton,
-  AccountList,
-  ArticleComp,
+  Catégories,
+  Utilisateurs,
+  Articles,
 };
+function selectComponent(tab) {
+  console.log(tab);
+}
 </script>
 
 <style scoped>
-.admin {
-  background-color: aqua;
-  min-height: 70vh;
-  width: 85%;
-  margin-left: 15%;
-  margin-top: 5em;
-  text-align: center;
+#container {
+  margin: -0.5em 0;
 }
 
 #sidebar {
+  margin-top: -4em;
   position: fixed;
-  height: 70vh;
+  width: 10%;
+  float: left;
+  height: 100%;
+  border-right: 0.5px solid;
   background-color: bisque;
+  padding: 0 1em;
 }
 
-li {
-  list-style-type: none;
-  margin-bottom: 1em;
-  font-size: 1.5em;
-  padding: 0 0.5em;
-  cursor: pointer;
-}
-
-ul {
-  padding: 0;
-}
-
-#router-link {
-  text-decoration: none;
-  color: black;
+#component-viewer {
+  position: relative;
+  min-height: 100vh;
+  display: block;
+  width: 90%;
+  left: 10%;
+  margin-top: 9em;
 }
 
 ul {
@@ -71,5 +79,13 @@ ul {
 #router-link {
   text-decoration: none;
   color: black;
+}
+
+#router-link {
+  text-decoration: none;
+  color: black;
+}
+#space {
+  height: 8em;
 }
 </style>

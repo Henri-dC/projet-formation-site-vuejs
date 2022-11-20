@@ -6,7 +6,7 @@ const store = useUserStore();
 </script>
 
 <template>
-  <div>
+  <div id="main-container">
     <TheHeader />
     <router-view></router-view>
     <TheFooter />

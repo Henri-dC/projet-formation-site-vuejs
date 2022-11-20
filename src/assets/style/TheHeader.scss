@@ -18,28 +18,30 @@ Nav Bar Container
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100vw;
-  border-block: 3px solid black;
+  border-block: 1px solid black;
   align-items: center;
-  text-align:center;
+  text-align: center;
   background-color: var(--main-bg-color);
-  z-index: 5;
+  z-index: 600;
 }
-  
-.menu-desktop-span{
-  display:inline-block;
+.menu-desktop {
+  width: 100px;
+}
+.menu-desktop-span {
+  display: inline-block;
   font-size: 1.4em;
-  color:white;
+  color: white;
   text-decoration: underline;
-  margin-left:1em;
+  margin-left: 1em;
   transform: rotate(-10deg);
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
-  cursor:pointer;
+  cursor: pointer;
 }
 
 /* Title */
-  
-h1{
-  display:inline-block;
+
+h1 {
+  display: inline-block;
   margin: 0;
   padding: 0.2em;
   text-align: center;
@@ -48,78 +50,112 @@ h1{
   outline: 5px solid var(--second-bg-color);
 }
 
-h1{
-  a{
+h1 {
+  a {
     text-decoration: none;
     color: white;
     text-shadow: #aaa;
   }
 }
-  
+
 .icon {
   color: white;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
   font-size: 3em;
   cursor: pointer;
 }
-   
-#user-account{
+
+#user-account {
   font-size: 1.4em;
 }
 
-#user-firstname{
-  display:none;
+#user-firstname {
+  display: none;
   margin-right: 1em;
 }
 
-#menu-desktop{
-  display:none;
+#menu-desktop {
+  display: none;
 }
-  
-  /* MENU LIST */
-  
+
+/* MENU LIST */
+
 #list-user-menu {
   padding: 0;
-  width:100%;
-  margin:0;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-  
+
 #list-user-menu > li {
   list-style-type: none;
-  text-align:center;
+  text-align: center;
   font-size: 1.5em;
   background-color: var(--second-bg-color);
-  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(147,204,213,0.30996148459383754) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(147, 204, 213, 0.30996148459383754) 100%
+  );
   cursor: pointer;
   color: black;
   border: 1px solid black;
   border-top: none;
 }
- 
-  @media screen and (min-width: 600px) {
-    .header-container {
+
+.sign-form-enter-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.sign-form-leave-active {
+  transition: all 0.6s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.sign-form-enter-from,
+.sign-form-leave-to {
+  transform: translateX(1500px);
+  opacity: 0;
+}
+
+@media screen and (min-width: 600px) {
+  .header-container {
     position: fixed;
     top: 0;
-    }
-   
-    #user-firstname{
-      display:inline-block;
-    }
-  
-    #container-user-menu{
-      position: fixed;
-      width:100%;
-      top:80px;
-    }
   }
-  
-  @media screen and (min-width: 900px) {
-    #container-user-menu, #icon-burger-menu{
-      display:none;
-    }
-   
-    #menu-desktop{
-      display:inline-block;
-    }
+
+  #user-firstname {
+    display: inline-block;
   }
+
+  #container-user-menu {
+    position: fixed;
+    width: 100%;
+    top: 80px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #container-user-menu,
+  #icon-burger-menu {
+    display: none;
+  }
+
+  #menu-desktop {
+    display: inline-block;
+  }
+}
+
+#toggle-button {
+  position: absolute;
+  margin-left: 1em;
+}
+
+@media screen and (max-width: 1000px) {
+  #icon-burger-menu {
+    width: 130%;
+  }
+}
+
+#dark-mode-toggle {
+  margin: 0;
+}

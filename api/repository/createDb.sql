@@ -82,3 +82,13 @@ CREATE TABLE `Categories`(
 
 ALTER TABLE `Categories`
   ADD PRIMARY KEY (`id`)
+
+
+--CREATE LIKES TABLE--
+
+CREATE TABLE `Likes`(
+  `article_id` char(36) NOT NULL, 
+  `account_id` char(36),
+  FOREIGN KEY (`article_id`) REFERENCES Articles(`id`),
+  FOREIGN KEY (`account_id`) REFERENCES Account(`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

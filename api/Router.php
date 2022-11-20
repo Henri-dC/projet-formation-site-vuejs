@@ -60,6 +60,15 @@ class Router {
                         return $controler->deleteImg($request);
                     }
 
+            case '/like':
+                $controler = new LikesApiControler();
+                switch($request->getMethod()){
+                    case 'POST':
+                        return $controler->proceedAddLike($request);
+                    case 'GET':
+                        return $controler->proceedGetLikes();
+                }
+
             case '/login':
                 $controler = new LoginApiControler();
                 return $controler->proceedConnexion($request);

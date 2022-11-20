@@ -7,8 +7,8 @@
   transform: translate(-50%, -50%);
   padding: 1em;
   font-size: 4vw;
-  background-color: red;
-  color: red;
+  background-color: var(--main-bg-color);
+  color: var(--main-bg-color);
   animation: example 4s infinite;
   border-radius: 10px;
 }

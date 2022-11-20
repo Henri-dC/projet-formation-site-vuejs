@@ -1,16 +1,29 @@
 <template>
   <div id="footer-container">
-    <p>Informations légales</p>
-    <p>Contact : <a href="mailto:henri.dc@hotmail.fr">email</a></p>
+    <div id="social">
+      <a href="https://github.com/TontonRitonBZH/Deskin" target="blank"
+        ><i class="fa-brands fa-github fa-2x"></i
+      ></a>
+      <a href="https://www.linkedin.com/in/henridc/" target="blank"
+        ><i class="fa-brands fa-linkedin fa-2x"></i
+      ></a>
+    </div>
   </div>
 </template>
 
 <style scoped>
 #footer-container {
-  position: relative;
+  position: absolute;
+
+  width: 100%;
   background-color: var(--main-bg-color);
   text-align: center;
-  padding: 2em;
-  border: 2px solid black;
+  padding: 2em 0;
+  border: 1px solid black;
+}
+
+i {
+  margin-left: 1em;
+  color: white;
 }
 </style>

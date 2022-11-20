@@ -150,6 +150,8 @@ async function createArticle(e) {
     } else {
       ArticleStore.queryArticles();
       closeModaleNewArticle(e);
+      ServiceStore.modaleText = "L'article a été modifié";
+      ServiceStore.displayModaleText = true;
     }
     /* Si on est en mode !edit : - on fetch photo et article
                                   - si pas d'erreur on ferme la modale
@@ -170,6 +172,8 @@ async function createArticle(e) {
       //On ferme la modale
       ArticleStore.queryArticles();
       closeModaleNewArticle(e);
+      ServiceStore.modaleText = "Votre article a été publié !";
+      ServiceStore.displayModaleText = true;
     }
   }
 }

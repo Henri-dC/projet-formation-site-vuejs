@@ -15,6 +15,7 @@ export const useUserStore = defineStore("UserStore", () => {
     window.location.reload;
     let request = new fetchData("DELETE", "?route=/logout");
     request.query();
+    window.location = "http://localhost:5173/";
   }
 
   function getUsers() {

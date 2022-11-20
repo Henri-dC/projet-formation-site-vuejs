@@ -5,6 +5,7 @@ import { fetchData } from "@/composables/useFetch";
 export const useArticleStore = defineStore("ArticleStore", () => {
   const formData = ref({ category_id: "-1" });
   const articles = ref([]);
+  let selectedArticles = ref([]);
   const viewArticle = ref([]);
   const edit = ref(false);
 
@@ -17,20 +18,29 @@ export const useArticleStore = defineStore("ArticleStore", () => {
     let query = new fetchData("PUT", "?route=/article", article);
     return query.query();
   }
+
   function queryArticles() {
     let query = new fetchData("GET", "?route=/article");
-    query.query().then((result) => (this.articles = result["data"]));
+    query
+      .query()
+      .then((result) => (this.articles = result["data"]))
+      .then((result) => (this.selectedArticles = result));
   }
   function queryArticlesByUser(userId) {
-    let user = {};
-    user["id"] = userId;
-    let request = new fetchData("POST", "?route=/article/list", user);
-    request.query().then((result) => (this.articles = result["data"]));
+    this.selectedArticles = [];
+    for (let i in this.articles) {
+      if (this.articles[i].author_id === userId) {
+        this.selectedArticles.push(this.articles[i]);
+      }
+    }
   }
   function getArticlesByCategory(cat) {
-    let route = "?route=/article/list&category=" + cat;
-    let request = new fetchData("GET", route);
-    request.query().then((result) => (this.articles = result["data"]));
+    this.selectedArticles = [];
+    for (let i in this.articles) {
+      if (this.articles[i].category_id === cat) {
+        this.selectedArticles.push(this.articles[i]);
+      }
+    }
   }
 
   async function queryArticleById(id, mode) {
@@ -59,6 +69,7 @@ export const useArticleStore = defineStore("ArticleStore", () => {
   return {
     formData,
     articles,
+    selectedArticles,
     edit,
     viewArticle,
     createArticle,

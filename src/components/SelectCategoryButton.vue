@@ -1,8 +1,12 @@
 <template>
   <div id="container-select-category">
-    <h2 v-show="windowWidth <= 900" @click="ToggleSelectCategory">
+    <span
+      id="display-categories-button"
+      v-show="windowWidth <= 900"
+      @click="ToggleSelectCategory"
+    >
       Catégories <i class="fa-solid fa-chevron-down"></i>
-    </h2>
+    </span>
     <div v-show="showSelectCategory || windowWidth > 900">
       <div
         v-for="category in storeCategories.categories"
@@ -30,9 +34,9 @@ import { ref, onMounted } from "vue";
 
 const store = useArticleStore();
 const storeCategories = useCategoryStore();
-
 let windowWidth = ref(window.innerWidth);
 let showSelectCategory = ref(false);
+
 onMounted(() => {
   storeCategories.queryCategories();
   //OnResize is watching window.innerwidth for responsive button

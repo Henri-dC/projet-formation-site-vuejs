@@ -17,7 +17,16 @@ GENERAL
 }
 
 :root {
-  --main-bg-color: rgb(235, 10, 10);
-  --second-bg-color: #93ccd5;
+  --main-bg-color: rgb(84, 54, 54);
+  --second-bg-color: #b7bab6;
+  --third-bg-color: white;
+  --main-text-color: black;
+  --dm-text-color: #87e7e1;
+  --dm-bg-color: white;
+}
+body {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--third-bg-color);
 }
 /*# sourceMappingURL=main.css.map */

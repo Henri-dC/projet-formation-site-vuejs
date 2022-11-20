@@ -1,5 +1,6 @@
 <template>
   <div class="header-container">
+    <ToggleButton id="toggle-button" @emit-value="(test) => darkMode(test)" />
     <div id="icon-burger-menu">
       <i
         v-show="userStore.user"
@@ -23,7 +24,7 @@
     </div>
     <div id="container-title">
       <h1>
-        <a id="link-title" href="/">Tonton Riton</a>
+        <a id="link-title" href="/">Deskiñ</a>
       </h1>
     </div>
     <div v-if="!userStore.user" @click="toggleSignForm">
@@ -42,7 +43,9 @@
       </li>
     </ul>
   </div>
-  <SignForm v-if="signForm" @toggle-sign-form="toggleSignForm" />
+  <Transition name="sign-form">
+    <SignForm v-if="signForm" @toggle-sign-form="toggleSignForm" />
+  </Transition>
 </template>
 
 <script setup>
@@ -50,6 +53,7 @@ import SignForm from "./SignForm.vue";
 import { useUserStore } from "@/store/UserStore.js";
 import { useArticleStore } from "../store/ArticleStore";
 import { useServiceStore } from "../store/ServiceStore";
+import ToggleButton from "../components/ToggleButton.vue";
 import { ref } from "vue";
 const store = useArticleStore();
 const userStore = useUserStore();
@@ -70,6 +74,20 @@ function addArticleDisplay() {
 }
 function queryArticlesUser() {
   store.queryArticlesByUser(userStore.user._id);
+}
+
+function darkMode(bool) {
+  let root = document.querySelector(":root");
+  if (!bool) {
+    root.style.setProperty("--main-text-color", "#87e7e1");
+    root.style.setProperty("--third-bg-color", "#121212");
+    root.style.setProperty("--dm-bg-color", "#888");
+    let body = document.querySelector("body");
+  } else {
+    root.style.setProperty("--main-text-color", "black");
+    root.style.setProperty("--third-bg-color", "white");
+    root.style.setProperty("--dm-bg-color", "white");
+  }
 }
 </script>
 
