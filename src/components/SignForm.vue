@@ -9,11 +9,11 @@
       ></i>
       <p v-if="!signUpForm">
         Vous n'êtes pas inscrit ? :
-        <span id="switch-mode" @click="switchMode">S'inscrire</span>
+        <span class="icon" @click="switchMode">S'inscrire</span>
       </p>
       <p v-if="signUpForm">
         Déjà un compte ? :
-        <span id="switch-mode" @click="switchMode">Se connecter</span>
+        <span class="icon" @click="switchMode">Se connecter</span>
       </p>
       <div class="form-container">
         <span class="success" v-if="isCreated"

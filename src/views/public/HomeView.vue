@@ -47,4 +47,9 @@ button {
   position: absolute;
   z-index: 500;
 }
+
+iframe {
+  width: 80%;
+  transform: translateX(10%);
+}
 </style>

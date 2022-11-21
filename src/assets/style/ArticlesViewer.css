@@ -9,6 +9,7 @@
   width: 80%;
   margin: auto;
   margin-bottom: 9em;
+  min-height: 100vh;
 }
 
 /************ ARTICLE *****************/

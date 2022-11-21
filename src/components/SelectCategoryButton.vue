@@ -1,5 +1,6 @@
 <template>
   <div id="container-select-category">
+    <!-- For Mobile -->
     <span
       id="display-categories-button"
       v-show="windowWidth <= 900"
@@ -7,6 +8,7 @@
     >
       Catégories <i class="fa-solid fa-chevron-down"></i>
     </span>
+    <!--******************** -->
     <div v-show="showSelectCategory || windowWidth > 900">
       <div
         v-for="category in storeCategories.categories"

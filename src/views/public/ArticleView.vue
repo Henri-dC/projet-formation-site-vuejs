@@ -74,7 +74,7 @@ time,
   width: 70%;
   margin: auto;
   padding: 1em;
-  text-align: left;
+  text-align: center;
   white-space: pre-wrap;
   border-top: 1px solid black;
 }

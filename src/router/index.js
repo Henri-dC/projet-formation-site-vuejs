@@ -3,6 +3,7 @@ import HomeView from "../views/public/HomeView.vue";
 import ArticleView from "../views/public/ArticleView.vue";
 import AdminLayout from "../views/admin/Layout.vue";
 import AdminArticle from "../views/admin/AdminArticleView.vue";
+import MorpionView from "../views/public/MorpionView.vue";
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
       return isAdmin;
     },
     component: AdminArticle,
+  },
+  {
+    path: "/morpion",
+    name: "morpion",
+    component: MorpionView,
   },
   {
     path: "/:pathMatch(.*)*",
