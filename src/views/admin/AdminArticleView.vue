@@ -1,11 +1,11 @@
 <template>
   <div id="container">
-    <ArticleComp admin="true" />
+    <ArticlesViewer admin="true" />
   </div>
 </template>
 
 <script setup>
-import ArticleComp from "../../components/ArticleComp.vue";
+import ArticlesViewer from "../../components/ArticlesViewer.vue";
 import NewArticleForm from "../../components/NewArticleForm.vue";
 import { useServiceStore } from "../../store/ServiceStore";
 const ServiceStore = useServiceStore();

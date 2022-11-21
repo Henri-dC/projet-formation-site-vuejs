@@ -1,5 +1,6 @@
 <template>
   <div id="container-list-users">
+    <h2>Liste des utilisateurs</h2>
     <table>
       <thead>
         <tr>
@@ -7,6 +8,7 @@
           <th>Nom</th>
           <th>Email</th>
           <th>Admin</th>
+          <th>Supprimer</th>
         </tr>
       </thead>
       <tr
@@ -46,7 +48,11 @@
           <input type="text" :value="user['isAdmin']" ref="isAdmin" />
         </td>
         <td>
-          <button @click="deleteUser(user['id'])">Supprimer</button>
+          <div class="icon" @click="deleteUser(user['id'])">
+            <img
+              src="../../assets/images/icon/delete_FILL0_wght400_GRAD0_opsz48.svg"
+            />
+          </div>
         </td>
       </tr>
     </table>

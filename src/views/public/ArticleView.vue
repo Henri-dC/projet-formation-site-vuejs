@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <router-link to="/"><p id="lien">Retour</p></router-link>
+      <router-link to="/"><p tabindex="4" id="lien">Retour</p></router-link>
     </div>
     <article id="article-container">
       <time>{{ articleStore.viewArticle.creation_date }}</time>
@@ -13,16 +13,7 @@
         <p>{{ articleStore.viewArticle.content }}</p>
       </div>
       <div class="footer-article">
-        <i
-          @click="
-            LikesStore.addLike(articleStore.viewArticle.id, UserStore.user._id)
-          "
-          class="fa-sharp fa-solid fa-thumbs-up fa-xl"
-          :class="{
-            active: LikesStore.isLikedByUser(articleStore.viewArticle.id),
-          }"
-        ></i
-        ><data>{{ LikesStore.getLikeByArt(articleStore.viewArticle.id) }}</data>
+        <like-and-count :article="articleStore.viewArticle.id" />
       </div>
     </article>
     <NewArticleForm v-if="ServiceStore.displayNewArticleForm" />
@@ -30,14 +21,14 @@
 </template>
 
 <script setup>
-import { useLikesStore } from "../../store/LikesStore.js";
 import { useArticleStore } from "../../store/ArticleStore.js";
 import { useServiceStore } from "../../store/ServiceStore";
 import { useUserStore } from "../../store/UserStore.js";
 import NewArticleForm from "../../components/NewArticleForm.vue";
+import LikeAndCount from "../../components/LikeAndCount.vue";
 const articleStore = useArticleStore();
 const ServiceStore = useServiceStore();
-const LikesStore = useLikesStore();
+
 const UserStore = useUserStore();
 </script>
 
@@ -72,10 +63,10 @@ img {
   position: absolute;
   left: 10%;
 }
+
 time,
 #article-title,
-.content,
-.article-footer {
+.content {
   color: var(--main-text-color);
 }
 
@@ -86,14 +77,6 @@ time,
   text-align: left;
   white-space: pre-wrap;
   border-top: 1px solid black;
-}
-
-.active {
-  color: var(--second-bg-color);
-}
-
-data {
-  margin-left: 0.5em;
 }
 
 @media screen and (min-width: 600px) {

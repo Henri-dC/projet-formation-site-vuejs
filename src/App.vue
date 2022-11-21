@@ -1,10 +1,3 @@
-<script setup>
-import TheHeader from "./components/TheHeader.vue";
-import TheFooter from "./components/TheFooter.vue";
-import { useUserStore } from "@/store/UserStore.js";
-const store = useUserStore();
-</script>
-
 <template>
   <div id="main-container">
     <TheHeader />
@@ -12,3 +5,10 @@ const store = useUserStore();
     <TheFooter />
   </div>
 </template>
+
+<script setup>
+import TheHeader from "./components/TheHeader.vue";
+import TheFooter from "./components/TheFooter.vue";
+import { useUserStore } from "@/store/UserStore.js";
+const store = useUserStore();
+</script>

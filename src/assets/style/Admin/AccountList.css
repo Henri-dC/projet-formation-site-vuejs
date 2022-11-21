@@ -1,6 +1,5 @@
 #container-list-users {
   padding-top: 4em;
-  padding-bottom: 8em;
 }
 
 table {
@@ -10,17 +9,18 @@ table {
   width: 80%;
 }
 
-td {
+td,
+th {
   border: 1px solid;
   padding: 1.2em 0em;
   background-color: white;
-  width: 10%;
+  text-align: center;
 }
 
 input {
   border: none;
-  text-align: center;
   display: inline-block;
+  text-align: center;
 }
 
 #input-id {

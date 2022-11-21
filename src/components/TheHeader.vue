@@ -1,6 +1,10 @@
 <template>
   <div class="header-container">
-    <toggle-button id="toggle-button" @emit-value="(bool) => darkMode(bool)" />
+    <toggle-button
+      tabindex="0"
+      id="toggle-button"
+      @emit-value="(bool) => darkMode(bool)"
+    />
     <div id="icon-burger-menu">
       <i
         v-show="userStore.user"
@@ -27,8 +31,8 @@
         <a id="link-title" href="/">Deskiñ</a>
       </h1>
     </div>
-    <div v-if="!userStore.user" @click="toggleSignForm">
-      <i class="icon fa-solid fa-user"></i>
+    <div v-if="!userStore.user" @click="ServiceStore.toggleDisplaySignForm()">
+      <i tabindex="1" class="icon fa-solid fa-user"></i>
     </div>
     <div v-else id="user-account" class="icon">
       <span id="user-firstname">{{ userStore.user._firstName }}</span>
@@ -57,7 +61,10 @@
     </ul>
   </div>
   <Transition name="sign-form">
-    <SignForm v-if="signForm" @toggle-sign-form="toggleSignForm" />
+    <SignForm
+      v-if="ServiceStore.displaySignForm"
+      @toggle-sign-form="toggleSignForm"
+    />
   </Transition>
 </template>
 
@@ -74,14 +81,13 @@ const userStore = useUserStore();
 const ServiceStore = useServiceStore();
 const props = defineProps(["current_user"]);
 let isDarkMode = ref(false);
-let signForm = ref(false);
 let userMenu = ref(false);
 
 function toggleMenu() {
   userMenu.value = !userMenu.value;
 }
 function toggleSignForm() {
-  signForm.value = !signForm.value;
+  ServiceStore.displaySignForm = !ServiceStore.displaySignForm;
 }
 function addArticleDisplay() {
   let container = document.querySelector(".container-for-scroll");

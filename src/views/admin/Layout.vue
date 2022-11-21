@@ -28,7 +28,7 @@ import PopUPModale from "../../components/PopUPModale.vue";
 import AccountList from "../../components/Admin/AccountList.vue";
 import SideBar from "../../components/Admin/Sidebar.vue";
 import AddCategoryButton from "../../components/Admin/AddCategoryButton.vue";
-import ArticleComp from "../../components/ArticleComp.vue";
+import ArticlesViewer from "../../components/ArticlesViewer.vue";
 import NewArticleForm from "../../components/NewArticleForm.vue";
 import { useServiceStore } from "../../store/ServiceStore";
 import { ref } from "vue";
@@ -36,7 +36,7 @@ const ServiceStore = useServiceStore();
 const currentTab = ref("");
 let Catégories = AddCategoryButton;
 let Utilisateurs = AccountList;
-let Articles = ArticleComp;
+let Articles = ArticlesViewer;
 const tabs = {
   Catégories,
   Utilisateurs,

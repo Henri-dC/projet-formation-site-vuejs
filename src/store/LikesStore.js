@@ -14,17 +14,22 @@ export const useLikesStore = defineStore("LIkesStore", () => {
   }
 
   function addLike(articleId, userId) {
+    //First, is user already liked this article ?
     if (!userLikes.value.includes(articleId)) {
+      //If not, we increase of 1 article.like
       for (var i = 0; i < likes.value.length; i++) {
         if (likes.value[i].article === articleId) {
           likes.value[i].like += 1;
         }
       }
+      //We push this article in user's likes
       userLikes.value.push(articleId);
+      //Update database
       let data = { article: articleId, user: userId };
       let query = new fetchData("POST", "?route=/like", data);
       query.query();
     } else {
+      //If user already liked this article = delete his like
       deleteOneLike(articleId, userId);
     }
   }

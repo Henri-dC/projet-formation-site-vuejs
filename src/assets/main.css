@@ -47,4 +47,13 @@ body {
   background-color: var(--third-bg-color);
   font-family: "Rubik";
 }
+
+h1,
+h2 {
+  text-align: center;
+}
+
+.icon {
+  cursor: pointer;
+}
 /*# sourceMappingURL=main.css.map */

@@ -30,26 +30,20 @@
         >
           <h2 id="title-article">{{ article.title }}</h2>
 
-          <img
-            :src="`http://localhost:5173/src/assets/images/${article.picture}`"
-          />
+          <img :src="getImage(article.picture)" />
+
+          <div class="content">
+            <p ref="p">
+              {{
+                article.content.length > 40
+                  ? article.content.split(" ").splice(0, 10).join(" ") + "..."
+                  : article.content
+              }}
+            </p>
+          </div>
         </router-link>
-        <div class="content">
-          <p ref="p">
-            {{
-              article.content.length > 40
-                ? article.content.split(" ").splice(0, 10).join(" ") + "..."
-                : article.content
-            }}
-          </p>
-        </div>
         <div class="footer-article">
-          <i
-            @click="addLike(article.id)"
-            class="fa-sharp fa-solid fa-thumbs-up fa-xl"
-            :class="{ active: LikesStore.isLikedByUser(article.id) }"
-          ></i
-          ><data>{{ likeCounter(article.id) }}</data>
+          <like-and-count :article="article.id" />
         </div>
       </article>
     </div>
@@ -57,21 +51,26 @@
 </template>
 
 <script setup>
+import LikeAndCount from "../components/LikeAndCount.vue";
 import { useUserStore } from "../store/UserStore";
 import { useArticleStore } from "../store/ArticleStore";
-import { useLikesStore } from "../store/LikesStore";
 import { useServiceStore } from "../store/ServiceStore";
 import { onMounted } from "vue";
+import { useLikesStore } from "../store/LikesStore";
+const LikesStore = useLikesStore();
 const UserStore = useUserStore();
 const ArticleStore = useArticleStore();
 const ServiceStore = useServiceStore();
-const LikesStore = useLikesStore();
 const props = defineProps(["admin"]);
 
 onMounted(() => {
   ArticleStore.queryArticles();
   LikesStore.getLikes();
 });
+
+function getImage(picture) {
+  return `http://localhost:5173/src/assets/images/${picture}`;
+}
 
 function calcUrl(url) {
   let src = new URL(url, import.meta.url);
@@ -90,16 +89,8 @@ function deleteArticle(id) {
     ServiceStore.displayModaleText = true;
   }
 }
-
-function likeCounter(articleId) {
-  return LikesStore.getLikeByArt(articleId);
-}
-
-function addLike(articleId) {
-  LikesStore.addLike(articleId, UserStore.user._id);
-}
 </script>
 
 <style scoped>
-@import "../assets/style/ArticleComp.scss";
+@import "../assets/style/ArticlesViewer.scss";
 </style>

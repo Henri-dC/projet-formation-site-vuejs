@@ -3,11 +3,15 @@ import { ref, watch } from "vue";
 
 export const useServiceStore = defineStore("ServiceStore", () => {
   const displayNewArticleForm = ref(false);
-
+  const displaySignForm = ref(false);
   let modaleText = ref("bonjour");
   let displayModaleText = ref(false);
+
   function toggleDisplayNewArticleForm() {
     this.displayNewArticleForm = !this.displayNewArticleForm;
+  }
+  function toggleDisplaySignForm() {
+    this.displaySignForm = !this.displaySignForm;
   }
 
   /*Following functions are used for opening modaleText and close it 1s later */
@@ -31,7 +35,9 @@ export const useServiceStore = defineStore("ServiceStore", () => {
   return {
     modaleText,
     displayNewArticleForm,
+    displaySignForm,
     displayModaleText,
     toggleDisplayNewArticleForm,
+    toggleDisplaySignForm,
   };
 });

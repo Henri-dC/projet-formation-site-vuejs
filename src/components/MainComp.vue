@@ -2,14 +2,14 @@
   <div>
     <SelectCategoryButton />
     <div id="main-container">
-      <ArticleComp />
+      <ArticlesViewer />
     </div>
     <NewArticleForm v-if="ServiceStore.displayNewArticleForm" />
   </div>
 </template>
 
 <script setup>
-import ArticleComp from "./ArticleComp.vue";
+import ArticlesViewer from "./ArticlesViewer.vue";
 import NewArticleForm from "./NewArticleForm.vue";
 import SelectCategoryButton from "./SelectCategoryButton.vue";
 import { useServiceStore } from "../store/ServiceStore";

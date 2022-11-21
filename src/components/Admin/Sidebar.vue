@@ -15,10 +15,10 @@
 import { ref } from "vue";
 import AccountList from "../../components/Admin/AccountList.vue";
 import AddCategoryButton from "../../components/Admin/AddCategoryButton.vue";
-import ArticleComp from "../../components/ArticleComp.vue";
+import ArticlesViewer from "../../components/ArticlesViewer.vue";
 let Catégories = AddCategoryButton;
 let Utilisateurs = AccountList;
-let Articles = ArticleComp;
+let Articles = ArticlesViewer;
 const currentTab = ref("Catégories");
 const tabs = {
   Catégories,
