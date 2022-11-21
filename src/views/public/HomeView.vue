@@ -15,8 +15,10 @@ import MainComp from "../../components/MainComp.vue";
 import PopUPModale from "../../components/PopUPModale.vue";
 import { useServiceStore } from "../../store/ServiceStore.js";
 import { useUserStore } from "../../store/UserStore.js";
+import { useLikesStore } from "../../store/LikesStore.js";
 import { ref, onMounted } from "vue";
 const ServiceStore = useServiceStore();
+const LikesStore = useLikesStore();
 const User = useUserStore();
 const displayModale = ref(ServiceStore.displayModaleText);
 let display = ref(ServiceStore.displayModaleText);
@@ -33,6 +35,9 @@ onMounted(() => {
     ServiceStore.modaleText = "Bienvenue " + User.user._firstName + " !";
     ServiceStore.displayModaleText = true;
     localStorage["welcome-modale"] = 1;
+  }
+  if (localStorage["user"]) {
+    LikesStore.getLikesByUser(User.user._id);
   }
 });
 </script>

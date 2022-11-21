@@ -4,9 +4,22 @@
 FONTS
 ************************************************************************ */
 @font-face {
-  font-family: "Rubik";
-  src: url(‘../Fonts/Rubik-Italic-VariableFont_wght.ttf’) format(‘woff2’),
-    url(‘../Fonts/Rubik-VariableFont_wght.ttf’) format(‘truetype’);
+  font-family: Rubik;
+  src: url("../assets/Fonts/Rubik-VariableFont_wght.ttf");
+  font-style: normal;
+}
+@font-face {
+  font-family: Rubik;
+  src: url("../assets/Fonts/Rubik-Italic-VariableFont_wght.ttf");
+  font-style: italic;
+}
+@font-face {
+  font-family: Merriweather;
+  src: url("../assets/Fonts/Meriweather/Merriweather-Regular.ttf");
+}
+@font-face {
+  font-family: Marhey;
+  src: url("../assets/Fonts/Marhey/Marhey-VariableFont_wght.ttf");
 }
 
 /* ************************************************************************
@@ -22,6 +35,7 @@ GENERAL
   --second-bg-color: #b7bab6;
   --third-bg-color: white;
   --main-text-color: black;
+  --second-text-color: white;
   --dm-text-color: #87e7e1;
   --dm-bg-color: white;
 }
@@ -31,4 +45,5 @@ body {
   position: relative;
   min-height: 100vh;
   background-color: var(--third-bg-color);
+  font-family: "Rubik";
 }

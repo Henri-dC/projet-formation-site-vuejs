@@ -1,13 +1,15 @@
+/**This Store is used for managing articles */
+
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { fetchData } from "@/composables/useFetch";
 
 export const useArticleStore = defineStore("ArticleStore", () => {
-  const formData = ref({ category_id: "-1" });
-  const articles = ref([]);
-  let selectedArticles = ref([]);
-  const viewArticle = ref([]);
-  const edit = ref(false);
+  const articles = ref([]); //Contain all articles
+  let selectedArticles = ref([]); //All articles selected for display
+  const viewArticle = ref([]); //Selected article for ArticleView
+  const formData = ref({ category_id: "-1" }); //Use for forms
+  const edit = ref(false); //For forms
 
   function createArticle(article) {
     let query = new fetchData("POST", "?route=/article", article);
@@ -26,6 +28,7 @@ export const useArticleStore = defineStore("ArticleStore", () => {
       .then((result) => (this.articles = result["data"]))
       .then((result) => (this.selectedArticles = result));
   }
+
   function queryArticlesByUser(userId) {
     this.selectedArticles = [];
     for (let i in this.articles) {
@@ -34,6 +37,7 @@ export const useArticleStore = defineStore("ArticleStore", () => {
       }
     }
   }
+
   function getArticlesByCategory(cat) {
     this.selectedArticles = [];
     for (let i in this.articles) {

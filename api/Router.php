@@ -67,6 +67,17 @@ class Router {
                         return $controler->proceedAddLike($request);
                     case 'GET':
                         return $controler->proceedGetLikes();
+                    case 'DELETE':
+                        return $controler->proceedDeleteLikes($request);
+                }
+
+            case '/like/user':
+                $controler = new LikesApiControler();
+                switch($request->getMethod()){
+                    case 'GET':
+                        return $controler->proceedGetLikesByUser($request);
+                    case 'DELETE':
+                        return $controler->proceedDeleteOneLike($request);
                 }
 
             case '/login':

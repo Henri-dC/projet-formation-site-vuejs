@@ -39,7 +39,7 @@ function pickFile() {
     reader.readAsDataURL(fileInput.value.files[0]);
   } else {
     previewImage.value =
-      "http://localhost:5173/src/assets/images/icon/noun-add-image-3752744.png";
+      "http://localhost:5173/src/assets/images/icon/IconeAddPicture.png";
   }
 }
 </script>
@@ -56,5 +56,9 @@ function pickFile() {
 
 #input-file {
   display: none;
+}
+
+img {
+  max-width: 70%;
 }
 </style>

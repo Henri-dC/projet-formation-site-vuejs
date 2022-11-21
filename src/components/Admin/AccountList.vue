@@ -57,7 +57,9 @@
 import { useUserStore } from "../../store/UserStore.js";
 import { User } from "../../composables/userClass.js";
 import { useServiceStore } from "../../store/ServiceStore.js";
+import { useLikesStore } from "../../store/LikesStore.js";
 const ServiceStore = useServiceStore();
+const LikesStore = useLikesStore();
 const userStore = useUserStore();
 </script>
 
@@ -92,7 +94,9 @@ export default {
       this.userStore.updateUser(user);
     },
     deleteUser(id) {
+      this.LikesStore.deleteLikesByUser(id);
       this.userStore.deleteUser(id);
+      this.userStore.getUsers();
     },
     getValue() {
       if (this.$refs.firstName !== undefined) {

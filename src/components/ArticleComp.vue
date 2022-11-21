@@ -47,8 +47,9 @@
           <i
             @click="addLike(article.id)"
             class="fa-sharp fa-solid fa-thumbs-up fa-xl"
+            :class="{ active: LikesStore.isLikedByUser(article.id) }"
           ></i
-          ><data>{{ LikesStore.getLikeByArt(article.id) }}</data>
+          ><data>{{ likeCounter(article.id) }}</data>
         </div>
       </article>
     </div>
@@ -82,11 +83,16 @@ function editDisplay(id) {
 }
 function deleteArticle(id) {
   if (confirm("Voulez-vous supprimer cet article ?")) {
+    LikesStore.deleteLikes(id);
     ArticleStore.deleteArticle(id);
     setTimeout(ArticleStore.queryArticles, 300);
     ServiceStore.modaleText = "L'article a été supprimé";
     ServiceStore.displayModaleText = true;
   }
+}
+
+function likeCounter(articleId) {
+  return LikesStore.getLikeByArt(articleId);
 }
 
 function addLike(articleId) {

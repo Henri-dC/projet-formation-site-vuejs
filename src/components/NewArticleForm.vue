@@ -1,7 +1,7 @@
 <template>
   <div class="container-for-scroll">
+    <div id="overlaye"></div>
     <div id="modale-new-article">
-      <div id="overlaye"></div>
       <form>
         <fieldset>
           <legend v-if="!editMode">Ajouter un article</legend>

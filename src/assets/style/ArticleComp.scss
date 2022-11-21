@@ -20,7 +20,7 @@
 
 .article-container:hover {
   transform: scale(1.01);
-  z-index: 500;
+  z-index: 10;
 }
 
 #delete-article {
@@ -57,32 +57,39 @@ img {
 .content {
   word-break: normal;
   white-space: pre-wrap;
+  margin-bottom: 4em;
 }
 
 .footer-article {
   position: absolute;
   bottom: 0;
   left: 50%;
-  padding-top: 3em;
   transform: translateX(-50%);
   padding-bottom: 0.5em;
   cursor: pointer;
+  color: var(--second-bg-color);
 }
 
 .fa-thumbs-up:hover {
-  color: var(--second-bg-color);
+  color: var(--main-bg-color);
+}
+
+.active {
+  color: var(--main-bg-color);
 }
 
 data {
   margin-left: 6px;
+  font-family: "Marhey";
+  font-size: 1.4em;
+  color: var(--main-text-color);
 }
 
 /* For DarkMode */
 .content,
 time,
 #title-article,
-#edit-article,
-.footer-article {
+#edit-article {
   color: var(--main-text-color);
 }
 

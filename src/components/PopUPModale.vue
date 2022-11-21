@@ -15,13 +15,12 @@ let props = defineProps(["msg"]);
 
 <style lang="scss">
 #modale {
-  position: absolute;
+  position: fixed;
   left: 50%;
   background-color: grey;
   padding: 0.2em 5em;
-
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 900;
   border-radius: 10px;
 }
 #border-div {

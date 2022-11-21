@@ -7,6 +7,9 @@
 #display-categories-button {
   display: block;
   cursor: pointer;
+  font-size: 1.5em;
+  margin: 1em 0;
+  color: var(--main-text-color);
 }
 
 #open-select-category {
@@ -15,21 +18,23 @@
 
 .select-category-button::before {
   content: "";
-  background: linear-gradient(45deg, #ff0000, #ff7300, #00ffd5, #ff00c8, #ff0000);
+  background: linear-gradient(45deg, var(--second-bg-color), var(--dm-bg-color), var(--main-bg-color), var(--second-bg-color), var(--dm-bg-color), var(--main-bg-color), var(--dm-bg-color), var(--main-bg-color));
   position: absolute;
   top: -2px;
   left: -2px;
   background-size: 400%;
   z-index: -1;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
   width: calc(100% + 4px);
   height: calc(100% + 4px);
-  -webkit-animation: glowing-button-85 40s linear infinite;
-          animation: glowing-button-85 40s linear infinite;
+  -webkit-animation: glowing-button-85 80s infinite;
+          animation: glowing-button-85 80s infinite;
   -webkit-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
   border-radius: 10px;
+}
+
+.select-category-button:hover {
+  background-color: #e5e7eb;
 }
 
 .select-category-button {
@@ -39,6 +44,7 @@
   margin: 1vw;
   padding: 0.75rem 1.65rem;
   font-size: 1rem;
+  font-style: italic;
   font-weight: 700;
   line-height: 1rem;
   background-color: var(--third-bg-color);

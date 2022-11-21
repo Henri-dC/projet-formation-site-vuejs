@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <ToggleButton id="toggle-button" @emit-value="(test) => darkMode(test)" />
+    <toggle-button id="toggle-button" @emit-value="(bool) => darkMode(bool)" />
     <div id="icon-burger-menu">
       <i
         v-show="userStore.user"
@@ -35,12 +35,25 @@
       <i class="fa-solid fa-toggle-on" @click="userStore.logout()"></i>
     </div>
   </div>
-  <div id="container-user-menu">
+  <div id="menu-mobile">
     <ul v-if="userMenu" id="list-user-menu">
-      <li @click="queryArticlesUser">Mes articles</li>
-      <li @click="ServiceStore.toggleDisplayNewArticleForm">
+      <li
+        @click="
+          queryArticlesUser();
+          toggleMenu();
+        "
+      >
+        Mes articles
+      </li>
+      <li
+        @click="
+          ServiceStore.toggleDisplayNewArticleForm();
+          toggleMenu();
+        "
+      >
         Ecrire un article
       </li>
+      <li @click="switchDarkMode">Dark Mode</li>
     </ul>
   </div>
   <Transition name="sign-form">
@@ -55,10 +68,12 @@ import { useArticleStore } from "../store/ArticleStore";
 import { useServiceStore } from "../store/ServiceStore";
 import ToggleButton from "../components/ToggleButton.vue";
 import { ref } from "vue";
+import { darkMode } from "../composables/darkMode.js";
 const store = useArticleStore();
 const userStore = useUserStore();
 const ServiceStore = useServiceStore();
 const props = defineProps(["current_user"]);
+let isDarkMode = ref(false);
 let signForm = ref(false);
 let userMenu = ref(false);
 
@@ -76,18 +91,10 @@ function queryArticlesUser() {
   store.queryArticlesByUser(userStore.user._id);
 }
 
-function darkMode(bool) {
-  let root = document.querySelector(":root");
-  if (!bool) {
-    root.style.setProperty("--main-text-color", "#87e7e1");
-    root.style.setProperty("--third-bg-color", "#121212");
-    root.style.setProperty("--dm-bg-color", "#888");
-    let body = document.querySelector("body");
-  } else {
-    root.style.setProperty("--main-text-color", "black");
-    root.style.setProperty("--third-bg-color", "white");
-    root.style.setProperty("--dm-bg-color", "white");
-  }
+function switchDarkMode() {
+  isDarkMode = !isDarkMode;
+  darkMode(isDarkMode);
+  toggleMenu();
 }
 </script>
 

@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 
 export const useServiceStore = defineStore("ServiceStore", () => {
   const displayNewArticleForm = ref(false);
+
   let modaleText = ref("bonjour");
   let displayModaleText = ref(false);
   function toggleDisplayNewArticleForm() {

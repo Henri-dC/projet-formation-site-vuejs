@@ -38,11 +38,40 @@ class LikesApiControler {
       array_push($likeByArticle, $article);
     }
 
-
     $response = new Response();
     $response->setHttpStatusCode(HttpStatusCode::OK);
     $response->setData($likeByArticle);
 
+    return $response;
+  }
+
+  public function proceedGetLikesByUser($request):Response{
+    $user = $request->getQueryParam('user');
+    $userLikes = $this->_likesRepo->getLikesByUser($user);
+    $response = new Response();
+    $response->setHttpStatusCode(HttpStatusCode::OK);
+    $response->setData($userLikes);
+
+    return $response;
+  }
+
+  public function proceedDeleteLikes(Request $request): Response{
+    $payload = $request->getQueryParam('article');
+    $delete = $this->_likesRepo->deleteLikes($payload);
+    $response = new Response();
+    $response->setHttpStatusCode(HttpStatusCode::OK);
+    $response->setData($likeByArticle);
+
+    return $response;
+  }
+
+  public function proceedDeleteOneLike(Request $request):Response{
+    $user=$request->getQueryParam('user');
+    $article=$request->getQueryParam('article');
+    $delete = $this->_likesRepo->deleteOnelike($article,$user);
+    $response = new Response();
+    $response->setHttpStatusCode(HttpStatusCode::OK);
+  
     return $response;
   }
 

@@ -1,4 +1,4 @@
-/* HEADER */
+/* HEADE */
 
 /*
 Nav Bar Container 
@@ -24,9 +24,7 @@ Nav Bar Container
   background-color: var(--main-bg-color);
   z-index: 600;
 }
-.menu-desktop {
-  width: 100px;
-}
+
 .menu-desktop-span {
   display: inline-block;
   font-size: 1.4em;
@@ -38,13 +36,19 @@ Nav Bar Container
   cursor: pointer;
 }
 
-/* Title */
+#toggle-button {
+  position: absolute;
+  margin-left: 1em;
+}
+
+/*************** TITRE ****************/
 
 h1 {
   display: inline-block;
   margin: 0;
   padding: 0.2em;
   text-align: center;
+  font-family: "Rubik";
   font-size: 3em;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
   outline: 5px solid var(--second-bg-color);
@@ -57,6 +61,8 @@ h1 {
     text-shadow: #aaa;
   }
 }
+
+/*************** ICONES **********************/
 
 .icon {
   color: white;
@@ -76,9 +82,15 @@ h1 {
 
 #menu-desktop {
   display: none;
+  margin-left: 20%;
 }
 
-/* MENU LIST */
+/***** MENU SMARTPHONE ***********************/
+
+#menu-mobile {
+  margin-top: -5px;
+  z-index: 300;
+}
 
 #list-user-menu {
   padding: 0;
@@ -91,17 +103,21 @@ h1 {
   list-style-type: none;
   text-align: center;
   font-size: 1.5em;
+  padding: 1em;
   background-color: var(--second-bg-color);
-  background: linear-gradient(
-    0deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(147, 204, 213, 0.30996148459383754) 100%
-  );
-  cursor: pointer;
-  color: black;
+  color: white;
   border: 1px solid black;
   border-top: none;
+  cursor: pointer;
 }
+
+#menu-mobile {
+  position: fixed;
+  width: 100%;
+  top: 80px;
+}
+
+/* *********************ANIMATION SIGNFORM ************************ */
 
 .sign-form-enter-active {
   transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
@@ -117,6 +133,30 @@ h1 {
   opacity: 0;
 }
 
+/*************** RESPONSIVE DESKTOP *******************************/
+
+@media screen and (min-width: 1000px) {
+  #container-user-menu,
+  #icon-burger-menu,
+  #menu-mobile {
+    display: none;
+  }
+
+  #menu-desktop {
+    display: inline-block;
+  }
+}
+
+/*************** RESPONSIVE TABLETTE *******************************/
+
+@media screen and (max-width: 1000px) {
+  #toggle-button {
+    display: none;
+  }
+}
+
+/*************** RESPONSIVE SMARTPHONE *******************************/
+
 @media screen and (min-width: 600px) {
   .header-container {
     position: fixed;
@@ -126,36 +166,4 @@ h1 {
   #user-firstname {
     display: inline-block;
   }
-
-  #container-user-menu {
-    position: fixed;
-    width: 100%;
-    top: 80px;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  #container-user-menu,
-  #icon-burger-menu {
-    display: none;
-  }
-
-  #menu-desktop {
-    display: inline-block;
-  }
-}
-
-#toggle-button {
-  position: absolute;
-  margin-left: 1em;
-}
-
-@media screen and (max-width: 1000px) {
-  #icon-burger-menu {
-    width: 130%;
-  }
-}
-
-#dark-mode-toggle {
-  margin: 0;
 }

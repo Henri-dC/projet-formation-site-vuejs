@@ -1,7 +1,7 @@
 <template>
   <div id="dark-mode-toggle">
-    <label @click="$emit('emitValue', test)" class="switch">
-      <input type="checkbox" v-model="test" />
+    <label @click="$emit('emitValue', bool)" class="switch">
+      <input type="checkbox" v-model="bool" />
       <span></span>
     </label>
   </div>
@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref } from "vue";
-let test = ref(false);
+let bool = ref(false);
 </script>
 
 <style>
