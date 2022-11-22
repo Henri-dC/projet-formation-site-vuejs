@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # projet-formation-router
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -27,3 +28,7 @@ npm run dev
 ```sh
 npm run build
 ```
+=======
+# Deskin
+My training's final project
+>>>>>>> 7376a4f62d866e4100f72d1ab53466eb47cce68a
