@@ -62,7 +62,7 @@ export const useArticleStore = defineStore("ArticleStore", () => {
 
   async function deleteArticle(id) {
     await this.queryArticleById(id, "edit");
-    let routeA = "?route=/picture&name=" + formData.picture;
+    let routeA = "?route=/picture&name=" + this.formData.picture;
     let requestA = new fetchData("DELETE", routeA);
     requestA.query();
     let route = "?route=/article&id=" + id;
