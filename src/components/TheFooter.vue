@@ -34,6 +34,8 @@
   border: 1px solid black;
 }
 
+/*Links */
+
 #social-link {
   display: flex;
   align-items: start;
