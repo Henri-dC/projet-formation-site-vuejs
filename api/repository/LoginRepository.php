@@ -1,5 +1,8 @@
 <?php
 
+/*In this repository : -getConnexion
+*/
+
 class LoginRepository {
   private PDO $_connexion;
 

@@ -1,5 +1,13 @@
 <?php
 
+/* 
+In this controller : -proceedAddLike
+                     -proceedGetLikes
+                     -proceedGetLikesByUser
+                     -proceedDeleteLikes
+                     -proceedDeleteOneLike
+*/
+
 class LikesApiControler {
   private LikesRepository $_articleRepo;
 

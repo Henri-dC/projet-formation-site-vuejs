@@ -1,5 +1,9 @@
 <?php
 
+/*In this repository : -createCategory
+                       -getCategories               
+*/
+
     class CategoryRepository{
         private PDO $_connexion;
 

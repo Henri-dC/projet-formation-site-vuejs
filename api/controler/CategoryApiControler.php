@@ -1,5 +1,10 @@
 <?php
 
+/* 
+In this controller : -proceedCreateCategory
+                     -proceedGetCategories
+*/
+
 class CategoryApiControler {
   private CategoryRepository $_categoryRepo;
 

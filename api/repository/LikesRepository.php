@@ -1,5 +1,12 @@
 <?php
 
+/*In this repository : -addLike
+                       -getLikes  
+                       -getLikesByUser
+                       -deleteLikes
+                       -deleteOneLike
+*/
+
 class LikesRepository {
   private PDO $_connexion;
 

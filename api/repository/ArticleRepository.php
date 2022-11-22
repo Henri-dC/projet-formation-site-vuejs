@@ -1,5 +1,13 @@
 <?php
 
+/*In this repository : -getArticle
+                       -createArticle
+                       -updateArticle
+                       -deleteArticle
+                       -listArticles                  
+*/
+
+//This array is for translate date in French
 const mois = array(
   'January' => 'Janvier',
   'February' => 'Février',

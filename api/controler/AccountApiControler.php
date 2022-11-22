@@ -1,5 +1,13 @@
 <?php
 
+/* 
+In this controller : -proceedListAccounts
+                     -proceedCreateAccount
+                     -proceedUpdateAccount
+                     -proceedDeleteAccount
+                     -proceedDestroySession
+*/
+
 class AccountApiControler {
   private AccountRepository $_accountRepo;
 

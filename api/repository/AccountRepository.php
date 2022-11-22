@@ -1,5 +1,13 @@
 <?php
 
+/*In this repository : -getAccount
+                       -checkIfMailExist
+                       -createAccount
+                       -updateAccount
+                       -deleteAccount
+                       -listAccounts
+*/
+
 class AccountRepository {
   private PDO $_connexion;
 

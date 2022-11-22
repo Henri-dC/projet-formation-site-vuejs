@@ -1,5 +1,14 @@
 <?php
 
+/* 
+In this controller : -proceedListArticles
+                     -proceedCreateArticle
+                     -proceedUpdateArticle
+                     -proceedDeleteArticle
+                     -proceedListArticlesByAuthor
+                     -proceedListArticlesByCategory
+*/
+
 class ArticleApiControler {
   private ArticleRepository $_articleRepo;
 

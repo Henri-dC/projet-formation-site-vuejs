@@ -1,5 +1,12 @@
 <?php
 
+/* 
+In this controller : -loadImg
+                     -nameControl
+                     -convertImage
+                     -deleteImg
+*/
+
 class ImageApiControler{
 
     public function loadImg($img){
@@ -16,13 +23,14 @@ class ImageApiControler{
           $imagename  = $this->nameControl($img['name']);
           $source = $img['tmp_name'];
           $imagepath = $imagename;
-          //Ceci est le nouveau fichier que vous enregistrez
+
+         
           $save = '../src/assets/images/' . $imagepath; 
           move_uploaded_file($source, '../src/assets/images/'.$imagepath);
          
           $info = getimagesize('../src/assets/images/'.$imagepath);
           $mime = $info['mime'];
-          var_dump($mime);
+         
           switch ($mime) {
               case 'image/jpeg':
                   $image_create_func = 'imagecreatefromjpeg';
