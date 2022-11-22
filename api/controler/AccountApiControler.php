@@ -1,7 +1,7 @@
 <?php
 
 /* 
-In this controller : -proceedListAccounts
+In this controller: -proceedListAccounts
                      -proceedCreateAccount
                      -proceedUpdateAccount
                      -proceedDeleteAccount
