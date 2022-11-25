@@ -7,7 +7,7 @@
       <time>{{ articleStore.viewArticle.creation_date }}</time>
       <h2 id="article-title">{{ articleStore.viewArticle.title }}</h2>
       <img
-        :src="`https://www.tontonriton.com/assets/images/${articleStore.viewArticle.picture}`"
+        :src="`http://localhost:5173/assets/images/${articleStore.viewArticle.picture}`"
       />
       <div class="content">
         <p>{{ articleStore.viewArticle.content }}</p>

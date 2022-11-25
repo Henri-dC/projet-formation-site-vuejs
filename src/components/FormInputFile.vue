@@ -39,7 +39,7 @@ function pickFile() {
     reader.readAsDataURL(fileInput.value.files[0]);
   } else {
     previewImage.value =
-      "https://www.tontonriton.com/assets/IconeAddPicture.png";
+      "http://localhost:5173/src/assets/Fonts/Font SVG/IconeAddPicture.png";
   }
 }
 </script>

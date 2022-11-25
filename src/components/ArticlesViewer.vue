@@ -69,7 +69,7 @@ onMounted(() => {
 });
 
 function getImage(picture) {
-  return `https://www.tontonriton.com/assets/images/${picture}`;
+  return `http://localhost:5173/src/assets/images/${picture}`;
 }
 
 function calcUrl(url) {
