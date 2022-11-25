@@ -105,7 +105,7 @@ async function loadPicture(article) {
   article.setPicture(name);
   let dataPic = new FormData();
   dataPic.append("photo", input.files[0]);
-  return fetch("http://localhost:8889/api/index.php", {
+  return fetch("https://www.tontonriton.com/api/index.php", {
     method: "post",
     credentials: "include",
     mode: "cors",

@@ -16,7 +16,7 @@
       <router-link title="jouer au morpion" to="/morpion">
         <img
           id="morpion-img"
-          src="../assets/Fonts/Font SVG/pest_control_FILL0_wght400_GRAD0_opsz48.svg"
+          src="https://www.tontonriton.com/assets/Font SVG/pest_control_FILL0_wght400_GRAD0_opsz48.svg"
           title="Jouer au morpion"
         />
       </router-link>

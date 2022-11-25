@@ -25,10 +25,10 @@ class ImageApiControler{
           $imagepath = $imagename;
 
          
-          $save = '../src/assets/images/' . $imagepath; 
-          move_uploaded_file($source, '../src/assets/images/'.$imagepath);
+          $save = '../assets/images/' . $imagepath; 
+          move_uploaded_file($source, $save);
          
-          $info = getimagesize('../src/assets/images/'.$imagepath);
+          $info = getimagesize($save);
           $mime = $info['mime'];
          
           switch ($mime) {
@@ -52,12 +52,12 @@ class ImageApiControler{
                   throw new Exception('Unknown image type.');
           }
             
-          list($width, $height) = getimagesize('../src/assets/images/'.$imagepath);
+          list($width, $height) = getimagesize($save);
           $modwidth = 600;  //target width
           $diff = $width / $modwidth;
           $modheight = $height / $diff;
           $tn = imagecreatetruecolor($modwidth, $modheight) ;
-          $image = $image_create_func('../src/assets/images/'.$imagepath) ;
+          $image = $image_create_func($save) ;
           imagecopyresampled($tn, $image, 0, 0, 0, 0, $modwidth, $modheight, $width, $height) ;
           $image_save_func($tn, $save) ;
               
@@ -65,7 +65,7 @@ class ImageApiControler{
 
     public function deleteImg(Request $request):Response{
         $picture = $request->getQueryParam('name');
-        $photoDir = '../src/assets/images/';
+        $photoDir = '../assets/images/';
         $photoPath = $photoDir . $picture;
         unlink($photoPath);
 
