@@ -42,9 +42,6 @@ const tabs = {
   Utilisateurs,
   Articles,
 };
-function selectComponent(tab) {
-  console.log(tab);
-}
 </script>
 
 <style scoped>

@@ -24,20 +24,17 @@
 import { useArticleStore } from "../../store/ArticleStore.js";
 import { useServiceStore } from "../../store/ServiceStore";
 import { useUserStore } from "../../store/UserStore.js";
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
 import NewArticleForm from "../../components/NewArticleForm.vue";
 import LikeAndCount from "../../components/LikeAndCount.vue";
+const route = useRoute();
 const articleStore = useArticleStore();
 const ServiceStore = useServiceStore();
-
 const UserStore = useUserStore();
-</script>
-
-<script>
-export default {
-  beforeMount() {
-    this.articleStore.queryArticleById(this.$route.params.id, "view");
-  },
-};
+onMounted(() => {
+  articleStore.queryArticleById(route.params.id, "view");
+});
 </script>
 
 <style scoped>

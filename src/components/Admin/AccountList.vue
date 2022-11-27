@@ -13,7 +13,7 @@
       </thead>
       <tr
         v-for="(user, key) in users"
-        v-bind:key="user.id"
+        :key="user.id"
         v-on:keyup.enter="getValue"
       >
         <input
@@ -64,68 +64,62 @@ import { useUserStore } from "../../store/UserStore.js";
 import { User } from "../../composables/userClass.js";
 import { useServiceStore } from "../../store/ServiceStore.js";
 import { useLikesStore } from "../../store/LikesStore.js";
+import { ref, onMounted } from "vue";
 const ServiceStore = useServiceStore();
 const LikesStore = useLikesStore();
 const userStore = useUserStore();
-</script>
+let users = ref({});
+let userEdit = ref({});
+let formErrors = ref({});
+let id = ref();
+let firstName = ref();
+let lastName = ref();
+let email = ref();
+let isAdmin = ref();
 
-<script>
-export default {
-  data() {
-    return {
-      users: {},
-      userEdit: {},
-    };
-  },
-  mounted() {
-    this.userStore.getUsers().then((result) => {
-      if (result["errors"]) {
-        this.formErrors = result["errors"];
-      } else {
-        this.users = result["data"];
-      }
-    });
-  },
-  methods: {
-    inputSwitch(key) {
-      for (const [user, i] of Object.entries(this.users)) {
-        if (key === parseInt(user)) {
-          i.edit = true;
-        } else {
-          i.edit = false;
-        }
-      }
-    },
-    updateUser(user) {
-      this.userStore.updateUser(user);
-    },
-    deleteUser(id) {
-      this.LikesStore.deleteLikesByUser(id);
-      this.userStore.deleteUser(id);
-      this.userStore.getUsers();
-    },
-    getValue() {
-      if (this.$refs.firstName !== undefined) {
-        console.log(this.$refs.firstName[0].value);
-        console.log(this.$refs.lastName[0].value);
-        console.log(this.$refs.email[0].value);
-        console.log(this.$refs.isAdmin[0].value);
-      }
-      if (this.$refs.firstName !== undefined) {
-        let user = new User(
-          this.$refs.id[0].value,
-          this.$refs.firstName[0].value,
-          this.$refs.lastName[0].value,
-          this.$refs.isAdmin[0].value,
-          this.$refs.email[0].value
-        );
-        this.userStore.updateUser(user);
-        this.ServiceStore.modaleText = "Modifications enregistrées";
-        this.ServiceStore.displayModaleText = true;
-      }
-    },
-  },
-};
+onMounted(() => {
+  userStore.getUsers().then((result) => {
+    if (result["errors"]) {
+      formErrors.value = result["errors"];
+    } else {
+      users.value = result["data"];
+    }
+  });
+});
+function inputSwitch(key) {
+  for (const [index, user] of Object.entries(users.value)) {
+    if (key === parseInt(index)) {
+      user.edit = true;
+    } else {
+      user.edit = false;
+    }
+  }
+}
+
+function updateUser(user) {
+  userStore.updateUser(user);
+}
+
+function deleteUser(id) {
+  LikesStore.deleteLikesByUser(id);
+  userStore.deleteUser(id);
+  userStore.getUsers();
+}
+
+function getValue() {
+  if (firstName.value !== undefined) {
+    let user = new User(
+      id.value[0].value,
+      firstName.value[0].value,
+      lastName.value[0].value,
+      isAdmin.value[0].value,
+      email.value[0].value
+    );
+    userStore.updateUser(user);
+    ServiceStore.modaleText = "Modifications enregistrées";
+    ServiceStore.displayModaleText = true;
+  }
+}
 </script>
 
 <style scoped>
