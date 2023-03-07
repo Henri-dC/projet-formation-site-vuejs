@@ -166,7 +166,7 @@ function sendForm(event) {
           //Information about user are stored in localstorage an redirection
           localStorage.setItem("user", JSON.stringify(current_user.value));
           localStorage.setItem("welcome-modale", 0);
-          window.location = "https://www.tontonriton.com";
+          window.location = "http://192.168.1.99:5173";
         }
       });
     }

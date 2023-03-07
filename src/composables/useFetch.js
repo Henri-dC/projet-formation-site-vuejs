@@ -1,6 +1,6 @@
 class fetchData {
   constructor(method, route, data) {
-    (this._url = new URL("https://www.tontonriton.com/api/index.php")),
+    (this._url = new URL("http://192.168.1.99:8889/api/index.php")),
       (this._url.search = route),
       (this._method = method),
       (this._data = data);

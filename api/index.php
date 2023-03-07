@@ -17,7 +17,7 @@ ini_set('display_errors', 1);
 
 //Settings for header
 
-header('Access-Control-Allow-Origin: http://localhost:5173');
+header('Access-Control-Allow-Origin: http://192.168.1.99:5173');
 header('Access-Control-Allow-Methods: PUT, DELETE, GET, POST');
 header('Access-Control-Allow-Credentials: true');
 
